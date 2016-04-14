@@ -1,0 +1,119 @@
+<div id="tutorial">
+<h2>Tutorial</h2>
+
+<p>
+  First, lets construct an instance of <code>Facts</code> to work with.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = Facts()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms:Immutable.Stack {size: 0}
+  history:Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  Next, lets memorize some facts about three people we know.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.advance(1, {name:"Ursula Franklan", "role":"Educator"})
+facts.advance(2, {name:"Rich Hickey", "role":"Programmer"})
+facts.advance(3, {name:"Bret Victor", "role":"Designer"})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction":"TNOW"
+  "started with": value of the database before the transaction.
+  "ended with": value of the database after the transaction.
+  "datoms":[
+    [true, 1, "name", "Bret Victor", "TNOW"],
+    [true, 1, "role", "Designer", "TNOW"],
+  ]
+}
+</pre>
+</div>
+
+<p>
+  Now, we can ask our instance of <code>facts</code> for a <code>"list"</code> of the people we know.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.query({out:"list"})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+[
+  {"id":1, "name":"Ursula Franklan", "role":"Educator"},
+  {"id":2, "name":"Rich Hickey", "role":"Programmer"},
+  {"id":3, "name":"Bret Victor", "role":"Designer"}
+]
+</pre>
+</div>
+
+<p>
+  Or we can get more specific. Lets find all the <code>"Rich"</code> people we know.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.query({
+  where: function(id, attribute, value) {
+    return attribute === "name" &amp;&amp; value.match("Rich")
+  }
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+[
+  {"id":2, "name":"Rich Hickey", "role":"Programmer"},
+]
+</pre>
+</div>
+
+<p>
+  We can <code>pull</code> one person if we already know their <code>id</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.pull(1)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{"id":1, "name":"Ursula Franklan", "role":"Educator"}
+</pre>
+</div>
+
+<p>
+  Oh snap!!! we mispelled Ursula’s last name. It should be <code>"Franklin"</code>, not <code>"Franklan"</code>.
+  Lets correct our record of the <code>facts</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.advance(1, name:"Ursula Franklin")<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction":"TNOW"
+  "started with": value of the database before the transaction.
+  "ended with": value of the database after the transaction.
+  "datoms":[
+    [true, 1, "name", "Ursula Franklin" "TNOW"],
+  ]
+}
+</pre>
+</div>
+
+<p>
+  Lets <code>pull</code> her record again to confirm it has been corrected.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.pull(1)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{"id":1, "name":"Ursula Franklin", "role":"Educator"}
+</pre>
+</div>
+
+</div>

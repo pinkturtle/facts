@@ -1,0 +1,26 @@
+{
+  "name": "facts",
+  "description": "Facts are handy for making informative representations.",
+  "version": "0.0.0",
+  "repository": "pinkturtle/facts",
+  "main": "facts.core.js",
+  "files": ["facts.core.js"],
+  "license": "Unlicense",
+  "dependencies": {
+    "immutable": "^3.7.6"
+  },
+  "devDependencies": {
+    "browserify": "5.9.x",
+    "coffee-script": "1.8.x",
+    "nodemon": "^1.9.1",
+    "tap-diff": "^0.1.1",
+    "tape": "2.14.x",
+    "uglify-js": "^2.6.2"
+  },
+  "scripts": {
+    "start": "nodemon --watch Documentation --ext html,css,js,coffee --exec 'make -B index.html'",
+    "test": "npm run window.tests; npm run node.tests",
+    "window.tests": "make facts.pack.js Tests/window.test.pack.js; open --background Tests/index.html",
+    "node.tests": "make facts.core.js; tape Tests/*Tests.js | tap-diff"
+  }
+}

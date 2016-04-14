@@ -1,0 +1,37 @@
+<div id="properties" class="section">
+  <h2>Properties</h2>
+  <div class="trapezoid"></div>
+</div>
+
+<div id="datoms" class="member">
+  <header>
+    <code>facts.datoms</code>
+  </header>
+  <p>
+    Raw access to memorized datoms.
+  </p>
+</div>
+
+<div id="history" class="member">
+  <header>
+    <code>facts.history</code>
+  </header>
+  <p>
+    <code>facts.history</code> contains a list of database values.
+  </p>
+  <p>
+    the first item is the earliest version of database:
+  </p>
+<pre class="ecmascript">
+facts.history.first()
+</pre>
+<p>
+  the last item is the latest version of database.
+</p>
+<pre class="ecmascript">
+facts.history.last()
+</pre>
+  <p>
+    <code>facts.history</code> is an isntance if <code>Immutable.List</code>
+  </p>
+</div>

@@ -1,0 +1,22 @@
+Documentation available at: https://pinkturtle.github.io/facts
+
+• Documentation    contains supporting files for the documentation.
+• Library          contains code that defines the facts programming model.
+• Tests            contains code that defines automated tests.
+• facts.pack.js    script for web agent windows that includes Immutable.js
+• facts.core.js    same as above, but without Immutable.js
+• index.html       entry point for the documentation.
+• Makefile         defines the build process.
+• package.json     defines the package.
+• README           is the file you are reading now.
+• UNLICENSE        self-explanatory.
+
+npm install pinkturtle/facts ... to install the package with NPM.
+
+npm start ... to automatically re-compile scripts when source code is changed.
+
+npm run window.tests  ... to run the test suite in a window.
+
+npm run nodes.tests ... to run the test suite in a node process.
+
+npm test ... to run the test suite in both environments.

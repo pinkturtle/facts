@@ -1,0 +1,115 @@
+<div id="constructor" class="section">
+  <h2>Constructor</h2>
+  <div class="trapezoid"></div>
+</div>
+
+<div id="Facts" class="constructor function">
+<header>
+  <code>Facts</code>
+  <div class="aliases">
+    <label>Alias:</label>
+    <code>Facts.prototype.constructor</code>
+  </div>
+</header>
+<p>
+  The constructor function returns a new instance of <code>Facts</code>.
+</p>
+
+<p>
+  Typically, we would construct an instance like so:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = Facts()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  The constructor may also be applied with the <code>new</code> operator:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = new Facts()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  Or, with the <code>new</code> operator, without the <code>()</code> syntax:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = new Facts<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  Or, with the constructor’s <code>apply</code> method:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = Facts.apply()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  Or, with the constructor’s <code>call</code> method:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = Facts.call()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  Or, finally, with the constructor’s <code>construct</code> method:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = Facts.construct()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  All of these expressions yield the same result – a new instance of <code>Facts</code> that has
+  <a href="#methods">seven lucky methods</a>
+  and
+  <a href="#properties">two magic properties</a>.
+</p>
+
+</div>

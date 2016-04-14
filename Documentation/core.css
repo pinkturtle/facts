@@ -1,0 +1,218 @@
+a, b, i, em, strong, code, var, tt { text-decoration: none; font-style: inherit; font-weight: inherit; }
+h1, h2, h3, h4, h5, h6, button, input, textarea { font: inherit; }
+pre { overflow: hidden; white-space: pre-wrap; }
+audio, video, canvas { display:block; }
+body, section, article, header, footer, nav, div, pre, blockquote, p, ol, ul, li, h1, h2, h3, h4, h5, h6, img, audio, video {
+  position: relative; box-sizing: border-box; margin: 0; padding: 0; border: 0;
+}
+
+/* Hypertext -------------------------- */
+
+a[href] { transition: color 222ms linear; text-decoration: underline; }
+nav a[href], h1 a[href] { text-decoration: none; }
+
+/* Typefaces -------------------------- */
+
+@font-face{
+  font-family: "Consolas Remote";
+  src: url("Documentation/typefaces/Consolas-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Hair.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-HairItalic.woff") format("woff");
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-UltraLight.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-UltraLightItalic.woff") format("woff");
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-LightItalic.woff") format("woff");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Italic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-MediumItalic.woff") format("woff");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-SemiBoldItalic.woff") format("woff");
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-BoldItalic.woff") format("woff");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-ExtraBold.woff") format("woff");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-ExtraBoldItalic.woff") format("woff");
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Heavy.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-HeavyItalic.woff") format("woff");
+  font-weight: 900;
+  font-style: italic;
+}
+
+html, a[download] {
+  font: 19px/30px "Fira Sans", sans-serif; font-weight: 400;
+}
+h1, h2, nav, body > header nav, cite, label, div.annotation, div.version, #downloads, .quote > div {
+  font: 14px/20px "Fira Sans", sans-serif; font-weight: 300;
+}
+pre, pre *, code {
+  font: 19px/25px "Consolas Remote", "Consolas", monospace; font-weight: 400;
+}
+
+code { padding: 3px 4px 1px; margin: 0 -1px; line-height: inherit !important; }
+
+/* Paint ------------------------------ */
+
+/* Ocean Blue */
+html, body > nav, body > header { background: hsl(213,  33%, 25%); }
+
+/* Wavy Navy */
+pre, code, #downloads, div.spread { background: hsla(223, 100%,  5%, 0.3); }
+
+/* Green Sinoté */
+pre.output {
+  background: hsla(203, 100%,  5%, 0.3);
+  color: hsla(0, 0%, 100%, 0.44);
+}
+
+/* basic */ body, pre.html strong, div.aliases code:hover, div.aliases code.selected, nav a[href].selected {
+  color: hsl(0, 0%, 89%);
+}
+/* grey */ h2, span.version, .quote > div, #downloads, a[download] .annotation, #foreword #current_release, body > nav a[href].section {
+  color: hsla(0, 0%, 100%, 0.45);
+}
+/* dim */ pre.html, div.aliases {
+  color: hsla(0, 0%, 100%, 0.22);
+}
+/* light */ .light {
+  color: hsla(0, 0%, 100%, 0.98);
+}
+/* blue */ a[href]:link, .hljs-number, .hljs-string, .hljs-literal, #downloads a strong {
+  color: hsl(209, 70%, 75%);
+} a[download] svg path {
+  fill:  hsl(209, 70%, 75%);
+}
+/* purple */ a[href]:visited, .hljs-keyword, .hljs-built_in, .hljs-regexp {
+  color: hsl(298, 66%, 75%);
+} a[download]:visited svg path {
+  fill:  hsl(298, 66%, 75%);
+}
+/* yellow */ a[href]:hover, #downloads a[href]:hover, #downloads a:hover strong, a[download]:hover .annotation {
+  color: hsl(60, 50%, 66%);
+} a[download]:hover svg path {
+  fill:  hsl(60, 50%, 66%);
+}
+
+/* Basic Body -------------------------- */
+
+body { margin: 0 auto 0 150px; z-index: 1;}
+
+body > header { position: fixed; left: 15px; top: 20px; -webkit-font-smoothing: subpixel-antialiased; font-smoothing: inherit; }
+
+body > nav { position: fixed; left: 15px; top: 50px; -webkit-font-smoothing: subpixel-antialiased; font-smoothing: inherit; }
+body > nav > div { padding-bottom: 10px; }
+body > nav a:not(.section):before { content: "– "; position: relative; opacity: 1; top: 1px; font-weight: 100; }
+
+@media screen and (max-width: 1200px) {
+  body { margin: 0 15px; }
+  body > header {display:none;}
+  body > nav {display:none;}
+  .preamble .quote { display:none;}
+}

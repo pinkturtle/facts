@@ -1,0 +1,7 @@
+.DS_Store
+*.uncompressed.js
+Documentation/play
+Library/*.js
+node_modules
+Tests/*Tests.js
+Tests/test_setup.js

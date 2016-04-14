@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="Typefaces/Fira%20Sans.css">
+<link rel="stylesheet" media="screen" href="core.css">
+<style media="screen">
+
+body { margin: auto;  min-width: none; max-width: none;}
+body > header, div.word {  position: relative; width: 50%; max-width: 720px; outline: 1px solid hsla(0, 0%, 100%, 0.1); margin: 0 0 0 150px; }
+
+cite { display:block;}
+
+nav a[href] { display:block; white-space: nowrap;}
+nav { position: fixed; left: 0px; top: 0px; margin: 25px 15px; width: 100px; overflow: hidden;}
+
+input[type="range"] { position: fixed; right: 0px; top: 0px; width: 100px; height: 100px; transform: rotate(270deg); z-index: 1;}
+
+form { margin: 5px; max-width: 700px;}
+form button { padding: 1px 5px; background: transparent; color: white; border: 1px solid white; margin: 0px 30px;}
+form.unacceptable button { color: hsla(0, 0%, 100%, 0.1); border-color: hsla(0, 0%, 100%, 0.1); }
+form.acceptable button { color: white; border-color: white; }
+input[type=text] { padding: 4px 9px; margin: 20px; width: 50%; }
+textarea, input[type=text] { display: block; box-sizing: border-box; width: 100%; background: transparent; border: 1px solid hsla(0, 0%, 100%, 0.1); font: inherit; color: inherit;}
+
+trix-toolbar { display:none; }
+trix-editor { padding: 4px 9px; min-height: 120px; margin: 20px; border: 1px solid hsla(0, 0%, 100%, 0.1);}
+trix-editor:empty::before { content: attr(placeholder); color: hsla(0, 0%, 100%, 0.33); }
+::-webkit-input-placeholder, trix-editor:empty::before, trix-editor:empty:not(:focus)::before { color: hsla(0, 0%, 100%, 0.1); transition: color 333ms; }
+:focus::-webkit-input-placeholder, trix-editor:empty:focus::before { color: hsla(0, 0%, 100%, 0.33);  }
+
+div.word { box-sizing: border-box; padding: 30px 0; }
+div.word:hover { outline: 1px solid white;}
+div.word header { margin: 0 30px; font-weight: 600;}
+div.word .definition { margin: 0 30px;}
+div.word .definition a[href].word { color: inherit; text-decoration: underline; cursor: pointer;}
+div.word .definition a[href].word:hover { color: hsl(60, 80%, 80%); }
+
+div.word input[type=button] { background: transparent; border: none; margin: 0; padding: 0; position: absolute; right: 100%; margin-right: -25px; top: 30px; color: white; display: block; height: 30px; font-size: 20px; line-height:30px;}
+div.word input[type=button] { opacity: 0;}
+div.word:hover input[type=button] { opacity: 0.33;}
+div.word input[type=button]:hover { opacity: 1; color: yellow; }
+
+table {border-collapse: collapse;border-spacing: 0;}
+
+
+.technicalities {left: 50%; margin-left: 120px; right: 0; position: fixed; top: 30px; padding: 0 30px;}
+
+table.datoms { font: 13px/1 "Consolas"; width: 100%; }
+
+/*table.relevant.datoms { right: 470px; width: 400px; top: 0px; }*/
+table.datoms th { text-align: left; font-weight: normal; opacity: 0.33; }
+table.datoms td, table.datoms th { max-width:200px; position: relative; padding-right: 10px;}
+table.datoms th.value { min-width: 90px;}
+table.datoms .entity { width: 1%; }
+table.datoms .attribute { width: 1%; }
+table.datoms .value { min-width: 90px; }
+table.datoms .credence { width: 1%; text-align: right; padding-right: 0; }
+table.datoms .transaction { width: 1%; text-align: right; padding-right: 0;}
+
+table.datoms tr:hover td { background: black;}
+
+table.datoms td span {white-space: nowrap; overflow: hidden; text-overflow: ellipsis; position: absolute; left: 0; right: 0; display:block; top: 0; height: 11px;}
+
+
+
+</style>
+<link rel="icon" type="image/png" href="icon.png">
+
+<header>
+  <h1>Glossary</h1>
+  <nav><a href="../index.html">Back to the Index</a></nav>
+  <!-- <cite>Adapted from the <a href="http://docs.datomic.com/glossary.html">Datomic Glossary</a></cite> -->
+</header>
+
+<form class="unacceptable definition" hidden>
+<input type="text" name="word" placeholder="The word goes in here" required>
+<input id="new_definition" value="" type="hidden" name="definition" required>
+<trix-editor input="new_definition" placeholder="Compose the definition..."> </trix-editor>
+<button>Add this word to the Glossary</button>
+</form>
+
+<nav></nav>
+
+<div class="technicalities">
+  <div>Current Database</div>
+  <code>facts.database()</code>
+  <table class="relevant datoms">
+  <thead>
+    <tr>
+      <th class="entity.id">entity</th>
+      <th class="attribute">attribute</th>
+      <th class="value">value</th>
+      <th class="transaction">transaction</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+  <tfoot>
+    <tr style="visibility: hidden;">
+      <th class="entity">T1459260204327</th>
+      <th class="attribute">attribute</th>
+      <th class="value">value</th>
+      <th class="transaction">T1459260204327</th>
+    </tr>
+  </tfoot>
+  </table>
+
+  <br>
+
+  <div>All Datoms</div>
+  <code>facts.datoms.toJS()</code>
+  <table class="all datoms">
+  <thead>
+    <tr>
+      <th class="entity.id">entity</th>
+      <th class="attribute">attribute</th>
+      <th class="value">value</th>
+      <th class="credence">credence</th>
+      <th class="transaction">transaction</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+  <tfoot>
+    <tr style="visibility: hidden;">
+      <th class="entity">T1459260204327</th>
+      <th class="attribute">attribute</th>
+      <th class="value">value</th>
+      <th class="credence">credence</th>
+      <th class="transaction">T1459260204327</th>
+    </tr>
+  </tfoot>
+  </table>
+</div>
+
+<script src="../facts.pack.js" charset="utf-8"></script>
+<script src="scripts/d3.v3.min.js" charset="utf-8"></script>
+<script src="scripts/trix.js" charset="utf-8"></script>
+<script src="window.js" charset="utf-8"></script>
+<script src="glossary.js" charset="utf-8"></script>

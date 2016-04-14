@@ -1,0 +1,273 @@
+<div id="methods" class="section">
+  <h2>Methods</h2>
+  <div class="trapezoid"></div>
+</div>
+
+<div id="query" class="member">
+<header>
+  <code>facts.query(params)</code>
+</header>
+<p>
+  Returns an evidence based answer to the question defined by <code>params</code>.
+  <!-- Question the facts in the database and receive an answer. -->
+</p>
+<p>
+  <code>params.where</code> specifies an optional predicate <code>function</code> to filter the fact space.
+  The <code>function</code> will be called once for every datom in the query selection.
+  It is passed four arguments: <code>id</code>, <code>attribute</code>, <code>value</code> and <code>transaction</code>.
+</p>
+<p>
+  <code>params.out</code> defines the output format.
+  It should be <code>"list"</code> or <code>"map"</code>. It left <code>undefined</code>, <code>"list"</code> will be used as the default.
+</p>
+
+<div class="console">
+<pre class="ecmascript input">
+facts.query({
+  out:"list",
+  where:function(id, attribute, value, transaction){
+    return id === 1
+  }
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+[
+  {"id":1, "name":"Ursula Franklin", "role":"Educator"}
+]
+</pre>
+</div>
+</div>
+
+
+<div id="advance" class="member">
+<header>
+  <code>facts.advance(id, attributes)</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <code>add</code>
+    <!-- <code>advance</code> -->
+    <!-- <code>affirm</code> -->
+    <code>assert</code>
+    <code>divert</code>
+    <!-- <code>declare</code> -->
+    <!-- <code>enact</code> -->
+    <!-- <code>proclaim</code> -->
+  </div>
+</header>
+<p>
+  Call <code>advance</code> to remember that something is true.
+</p>
+<p>
+  Returns a transaction report. <code>id</code> identifies the entity that should be advanced with values from the map of <code>attributes</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.assert(1, {
+  "name": "Ursula Franklin"
+  "role": "Educator"
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction": "T1459839327267"
+  "started with": database value before the transaction
+  "ended with": database value after the transaction
+  "datoms": [
+    [true, 1, "name", "Ursula Franklin" "T1459839327267"],
+    [true, 1, "role", "Educator", "T1459839327267"]
+  ]
+}
+</pre>
+</div>
+</div>
+
+
+<div id="reverse" class="member">
+<header>
+  <code>facts.reverse(id, attributes)</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <!-- <code>reclaim</code> -->
+    <!-- <code>repeal</code> -->
+    <code>retract</code>
+    <!-- <code>reverse</code> -->
+    <code>revert</code>
+    <code>subtract</code>
+  </div>
+</header>
+<p>
+  Call <code>reverse</code> to remember that something is not true.
+</p>
+<p>
+  <code>id</code> identifies the entity that should be reversed.
+  The values from the map of <code>attributes</code> should be falsehoods, not corrections.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.reverse(1, {
+  "role": "Communist"
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction": "TNOW"
+  "started with": database value before the transaction
+  "ended with": database value after the transaction
+  "datoms": [
+    [false, 1, "role", "Communist", "TNOW"]
+  ]
+}
+</pre>
+</div>
+<p>
+  Because <code>Facts</code> accretes datoms monotonically it is not possible to reverse a transaction.
+  If <code>reverse</code> receives a transaction <code>id</code> it will throw an exception.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.reverse("T1459839327267", attributes)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output exception">
+"Can’t reverse transaction T1459839327267"<a class="icon"></a>
+</pre>
+</div>
+</div>
+
+
+<div id="unknown" class="member">
+<header>
+  <code>facts.unknown(id, attributes)</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <!-- <code>ambiguous</code> -->
+    <!-- <code>dubious</code> -->
+    <!-- <code>uncertain</code> -->
+    <!-- <code>unknown</code> -->
+    <code>unsure</code>
+  </div>
+</header>
+<p>
+  Call <code>unkown</code> to remember that something is not known to be true or false.
+</p>
+<p>
+  Accepts the same form of arguments as <code>advance</code> and <code>reverse</code>.
+  <code>id</code> identifies the entity that should be marked with the values of unknown credence from the map of <code>attributes</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.unknown(1, {
+  "name": "Ursula Franklin"
+  "diet": "Vegetarian"
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction": "TNOW"
+  "started with": database value before the transaction
+  "ended with": database value after the transaction
+  "datoms": [
+    [undefined, 1, "role", "Vegetarian", "TNOW"]
+  ]
+}
+</pre>
+</div>
+</div>
+
+<div id="transact" class="member">
+<header>
+  <code>facts.transact(data)</code>
+</header>
+<p>
+  Submits a transaction to the database for writing.
+</p>
+<p>
+  <code>data</code> is a list of lists, each of which specifies a write operation, either an advancement, a reversal or an unknown.
+  Each nested list starts with a keyword identifying the operation followed by the arguments for the operation.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.transact([
+  ["reverse", 1, "name", "Dr. Ursula M. Franklan"],
+  ["advance", 1, "name", "Ursula Martius Franklin"],
+  ["advance", 1, "role", "Metallurgist"],
+])
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction":"TNOW"
+  "started with": value of the database before the transaction.
+  "ended with": value of the database after the transaction.
+  "datoms":[
+    [false, 1, "name", "Dr. Ursula M. Franklan", "T1460152022157"],
+    [true, 1, "name", "Ursula Martius Franklin", "T1460152022157"],
+    [true, 1, "role", "Metallurgist", "T1460152022157"],
+  ]
+}
+</pre>
+</div>
+</div>
+
+
+<div id="at" class="member">
+<header>
+  <code>facts.at(instant)</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <code>asOf</code>
+    <code>at</code>
+    <code>database</code>
+    <code>databaseAsOf</code>
+    <code>db</code>
+    <code>memoryAsOf</code>
+  </div>
+</header>
+<p>
+  Returns the value of the database at an <code>instant</code> in time.
+  <!-- Returns the value of memory at an <code>instant</code> in time. -->
+</p>
+<p>
+  <code>facts.at(Date.now())</code> returns the current value of the database.
+</p>
+<p>
+  <code>instant</code> may be a <code>Number</code> representing a moment in <a href="https://en.wikipedia.org/wiki/Unix_time" title="Milliseconds since the Unix Epoch: January 1, 1970 at 00:00:00 UTC">Unix Time</a>:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+database = facts.at(1460131939076)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Immutable.Set {
+  size: 3
+}
+</pre>
+</div>
+
+<p>
+  Or a transaction identifier <code>String</code>:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+database = facts.at("T1460131939076")<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Immutable.Set {
+  size: 3
+}
+</pre>
+</div>
+
+<p>
+  Or an instance of <code>Date</code>:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+database = facts.at(new Date)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Immutable.Set {
+  size: 3
+}
+</pre>
+</div>
+
+</div>

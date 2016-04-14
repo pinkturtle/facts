@@ -1,0 +1,75 @@
+<div id="functions" class="section">
+  <h2>Functions</h2>
+  <div class="trapezoid"></div>
+</div>
+<p>Instance methods of <code>Facts</code> rely on these core functions.</p>
+
+<div id="Facts.query(params)" class="function member">
+<header>
+  <code>Facts.query(params)</code>
+</header>
+<p>
+  Returns an evidence list for the sources and questions defined in <code>params</code>.
+</p>
+
+<p>
+  <code>params.in</code> defines the input source for the query.
+  It should be a database value and it is required.
+</p>
+
+<p>
+  <code>params.where</code> specifies an optional predicate <code>function</code> to filter the fact space.
+  The <code>function</code> is called once for every datom in the source database.
+  It is passed four arguments: <code>id</code>, <code>attribute</code>, <code>value</code> and <code>transaction</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+Facts.query({
+  in: facts.database()
+  where: function(id, attribute, value, transaction) {
+    return attribute === "name" &amp;&amp; value.length &lt; 12
+  }
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+[
+  {"id":2, "name":"Rich Hickey"},
+  {"id":3, "name":"Bret Victor"}
+]
+</pre>
+</div>
+
+<p>
+  <code>params.out</code> defines the output format which may be <code>"list"</code> or <code>"map"</code>.
+  By default, <code>query</code> returns answers in <code>"list"</code> format as an instance of <code>Array</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+Facts.query(in:database, out:"list")<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+[
+  {"id": 1, "name": "Ursula Franklin"},
+  {"id": 2, "name": "Rich Hickey"},
+  {"id": 3, "name": "Bret Victor"}
+]
+</pre>
+</div>
+
+<p>
+  When <code>"map"</code> is specified <code>query</code> returns an instance of <code>Object</code> indexed by <code>id</code>:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+Facts.query({in:database, out:"map"})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "1": {"id": 1, "name": "Ursula Franklin"},
+  "2": {"id": 2, "name": "Rich Hickey"},
+  "3": {"id": 3, "name": "Bret Victor"}
+}
+</pre>
+</div>
+
+</div>

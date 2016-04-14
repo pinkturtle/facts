@@ -1,0 +1,1729 @@
+<!DOCTYPE HTML><meta charset="UTF-8">
+<title>Facts • playful outformation model for ECMAScript</title>
+<script src="facts.pack.js"></script>
+<meta name="viewport" content="width=device-width">
+<link rel="icon" type="image/png" href="Documentation/images/icon.png">
+<style media="screen">
+a, b, i, em, strong, code, var, tt { text-decoration: none; font-style: inherit; font-weight: inherit; }
+h1, h2, h3, h4, h5, h6, button, input, textarea { font: inherit; }
+pre { overflow: hidden; white-space: pre-wrap; }
+audio, video, canvas { display:block; }
+body, section, article, header, footer, nav, div, pre, blockquote, p, ol, ul, li, h1, h2, h3, h4, h5, h6, img, audio, video {
+  position: relative; box-sizing: border-box; margin: 0; padding: 0; border: 0;
+}
+
+/* Hypertext -------------------------- */
+
+a[href] { transition: color 222ms linear; text-decoration: underline; }
+nav a[href], h1 a[href] { text-decoration: none; }
+
+/* Typefaces -------------------------- */
+
+@font-face{
+  font-family: "Consolas Remote";
+  src: url("Documentation/typefaces/Consolas-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Hair.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-HairItalic.woff") format("woff");
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-UltraLight.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-UltraLightItalic.woff") format("woff");
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-LightItalic.woff") format("woff");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Italic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-MediumItalic.woff") format("woff");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-SemiBoldItalic.woff") format("woff");
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-BoldItalic.woff") format("woff");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-ExtraBold.woff") format("woff");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-ExtraBoldItalic.woff") format("woff");
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-Heavy.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fira Sans";
+  src: url("Documentation/typefaces/FiraSans-HeavyItalic.woff") format("woff");
+  font-weight: 900;
+  font-style: italic;
+}
+
+html, a[download] {
+  font: 19px/30px "Fira Sans", sans-serif; font-weight: 400;
+}
+h1, h2, nav, body > header nav, cite, label, div.annotation, div.version, #downloads, .quote > div {
+  font: 14px/20px "Fira Sans", sans-serif; font-weight: 300;
+}
+pre, pre *, code {
+  font: 19px/25px "Consolas Remote", "Consolas", monospace; font-weight: 400;
+}
+
+code { padding: 3px 4px 1px; margin: 0 -1px; line-height: inherit !important; }
+
+/* Paint ------------------------------ */
+
+/* Ocean Blue */
+html, body > nav, body > header { background: hsl(213,  33%, 25%); }
+
+/* Wavy Navy */
+pre, code, #downloads, div.spread { background: hsla(223, 100%,  5%, 0.3); }
+
+/* Green Sinoté */
+pre.output {
+  background: hsla(203, 100%,  5%, 0.3);
+  color: hsla(0, 0%, 100%, 0.44);
+}
+
+/* basic */ body, pre.html strong, div.aliases code:hover, div.aliases code.selected, nav a[href].selected {
+  color: hsl(0, 0%, 89%);
+}
+/* grey */ h2, span.version, .quote > div, #downloads, a[download] .annotation, #foreword #current_release, body > nav a[href].section {
+  color: hsla(0, 0%, 100%, 0.45);
+}
+/* dim */ pre.html, div.aliases {
+  color: hsla(0, 0%, 100%, 0.22);
+}
+/* light */ .light {
+  color: hsla(0, 0%, 100%, 0.98);
+}
+/* blue */ a[href]:link, .hljs-number, .hljs-string, .hljs-literal, #downloads a strong {
+  color: hsl(209, 70%, 75%);
+} a[download] svg path {
+  fill:  hsl(209, 70%, 75%);
+}
+/* purple */ a[href]:visited, .hljs-keyword, .hljs-built_in, .hljs-regexp {
+  color: hsl(298, 66%, 75%);
+} a[download]:visited svg path {
+  fill:  hsl(298, 66%, 75%);
+}
+/* yellow */ a[href]:hover, #downloads a[href]:hover, #downloads a:hover strong, a[download]:hover .annotation {
+  color: hsl(60, 50%, 66%);
+} a[download]:hover svg path {
+  fill:  hsl(60, 50%, 66%);
+}
+
+/* Basic Body -------------------------- */
+
+body { margin: 0 auto 0 150px; z-index: 1;}
+
+body > header { position: fixed; left: 15px; top: 20px; -webkit-font-smoothing: subpixel-antialiased; font-smoothing: inherit; }
+
+body > nav { position: fixed; left: 15px; top: 50px; -webkit-font-smoothing: subpixel-antialiased; font-smoothing: inherit; }
+body > nav > div { padding-bottom: 10px; }
+body > nav a:not(.section):before { content: "– "; position: relative; opacity: 1; top: 1px; font-weight: 100; }
+
+@media screen and (max-width: 1200px) {
+  body { margin: 0 15px; }
+  body > header {display:none;}
+  body > nav {display:none;}
+  .preamble .quote { display:none;}
+}
+body:not(.initialized) { opacity:0; top: -15px; }
+body.initialized { opacity:1; top: 0px; transition: opacity 444ms linear, top 222ms ease-out; transition-delay: 1ms; }
+
+img:not(.loaded), video:not(.loaded) { opacity:0; }
+img.loaded, video.loaded { opacity:1; transition: opacity 222ms linear 1ms; }
+
+/* Basic Constraints */
+
+body { min-width:738px;}
+h2, p, ul, pre, div.console { max-width: 720px; }
+div.spread { max-width: 1050px; }
+
+/* Basic Margins */
+
+h1  { margin:  0px  0px; }
+h2  { margin:  0px 30px; }
+h3  { margin: 20px 30px; }
+p   { margin: 30px 30px 5px; }
+ul  { margin: 20px 30px; }
+pre { margin:  0px 30px; }
+
+/* Abstracts */
+
+/*pre { padding: 10px 0px 10px 14px; border-left: 1px solid hsl(213, 15%, 33%); border-right: 1px solid hsl(213, 15%, 33%); }*/
+pre { padding: 10px 0px 10px 14px; }
+
+div.console {
+	margin: 0px 30px;
+	outline: 1px solid hsla(0, 0%, 55%, 0.1);
+
+}
+div.console pre { margin: 0; background: transparent; padding: 11px 10px 8px; border:none; box-sizing: content-box;}
+
+div.console.invoked  { background: hsla(0, 0%, 100%, 0.2); }
+div.console.returned { background: transparent; transition: background 333ms linear 1ms; }
+
+div.console pre.input { background: hsla(223, 100%,  5%, 0.3); }
+div.console.returned pre.input { border-bottom: 1px dashed hsla(0, 0%, 100%, 0.2); }
+
+div.console:not(.invoked)  pre.output { display: none; }
+div.console.invoked        pre.output { display: block; }
+div.console:not(.returned) pre.output { opacity: 0; }
+div.console.returned       pre.output { opacity: 1.0; background: hsla(203, 100%,  10%, 0.3); transition: opacity 111ms linear 334ms; }
+
+div.console pre.exception { padding-left: 35px; }
+div.console pre.exception .icon { background:no-repeat url("documentation/images/exception.svg"); height: 20px; width: 20px; position: absolute; left: 9px; top: 12px; display:block;}
+
+div.console.returned pre.output.exception { background: hsla(0, 0%,  10%, 0.5); }
+
+div.console.invoked pre a.cursor { visibility: hidden; }
+div.console a.cursor {
+  display: inline-block;
+  margin-left: 2px;
+	width: 13px;
+	line-height: 0px;
+	height: 14px;
+	vertical-align: middle;
+  animation: blink-cursor 1s linear 0s infinite;
+	border-bottom: 2px solid hsl(298, 66%, 75%);
+}
+@keyframes blink-cursor {
+  0%   { opacity: 1; }
+  33%  { opacity: 1; }
+	50%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+ul > li { margin: 20px  0px; }
+
+body > div[id] { padding: 30px 0; }
+body > div[id] h2 { margin: 0px 30px 30px 30px; border-top: 1px dotted hsla(0, 0%, 100%, 0.25); padding-top: 4px; box-sizing: content-box;}
+body > div[id].section { padding-bottom: 0; }
+body > div[id].section h2 { max-width: 750px; background: hsla(0, 0%, 100%, 0.1); margin: 0 0 1px; padding: 30px 0px 4px 30px; border: none;}
+
+.trapezoid {
+	border-top: 90px solid hsla(0, 0%, 100%, 0.1);
+	border-left: 30px solid transparent;
+	border-right: 30px solid transparent;
+	height: 0;
+  max-width: 780px;
+}
+
+body > div.constructor > header { margin: 20px 30px 0;}
+body > div.member      > header { margin: 20px 30px 0;}
+
+body > div[id]:not(.section) p:first-of-type { margin-top: 0;}
+
+#node_setup { padding-top: 0;}
+
+header .aliases code:hover { cursor: pointer; }
+header .aliases label { position: absolute; right: 100%; line-height: 30px; margin-right: 5px; }
+header .aliases       label { visibility: hidden; }
+header .aliases:hover label { visibility: visible; }
+
+#foreword { position: relative; z-index:2;}
+#foreword .preamble { outline: 1px dotted hsla(0, 0%, 100%, 0.2); max-width: 780px; padding: 5px 0; }
+#foreword .preamble p { margin: 20px 30px; }
+#foreword .quote { width: 270px; margin: 0 0 0 auto; left: 100%;  padding-bottom: 35px; margin-left: 30px; position: absolute; bottom: 30px; height: 200px;}
+#foreword .quote blockquote {
+  position: absolute; bottom: 120px; left: 0; right: 30px;
+  transform: scale(1) translateZ(0); transform-origin: bottom left; transition: transform 222ms ease-out;
+  font-style: italic; font-weight: 300; line-height: 1.33em;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+#foreword .quote:hover blockquote {
+  transform: scale(1.44); color: hsla(0, 0%, 100%, 1);
+}
+#foreword .quote blockquote:before ,
+#foreword .quote blockquote:after {
+  font-family: "Georgia"; font-style:italic; font-weight: 600; font-size: 150%;
+  color: hsla(213, 100%, 5%, 0.4);
+  position: absolute; margin-top: 0.1ex;
+}
+#foreword .quote blockquote:before { content: open-quote; margin-right: 0.11ex; right: 100%; }
+#foreword .quote blockquote:after { content: close-quote; margin-left: -0.11ex; }
+#foreword .quote div:first-of-type { position: absolute; bottom: 90px; left: 0; }
+#foreword .quote:hover strong.who { color: hsl(60, 50%, 66%); transition: color linear 333ms; transition-delay: 222ms; }
+#foreword .quote       .in    { color: transparent; transition: color 222ms linear; transition-delay:    0ms; }
+#foreword .quote       .where { color: transparent; transition: color 222ms linear; transition-delay:    0ms; }
+#foreword .quote       .when  { color: transparent; transition: color 222ms linear; transition-delay:    0ms; }
+#foreword .quote:hover .in    { color: inherit;     transition: color 333ms linear; transition-delay:  555ms; }
+#foreword .quote:hover .where { color: inherit;     transition: color 333ms linear; transition-delay:  888ms; }
+#foreword .quote:hover .when  { color: inherit;     transition: color 333ms linear; transition-delay: 1221ms; }
+#foreword .quote div.what { position: absolute; bottom: 40px; left: 0; right: -10px;}
+#foreword .quote audio { position: absolute; bottom: -1px; right: 0; left: 0; width: 100%; }
+
+#downloads { max-width: 780px; padding: 10px 0; margin-top: -28px; }
+#downloads p { margin: 10px 30px; }
+#downloads .scripts { margin: 10px 30px;}
+#downloads .scripts .file { display: inline-block; padding: 0 30px 0 60px; }
+#downloads .file a[download] { font-weight: 600; text-decoration: none; transition: none;}
+#downloads .file div.version { margin-top:-1px;}
+#downloads .file svg { position: absolute; left: 0; bottom: 3px; }
+
+div.example { max-width: 1050px; }
+div.example div.text { position: absolute; top: 30px; left: 64%; width: 36%; }
+div.example a.window {
+  display: block; position: relative; left: 0; top: 0;
+  width: 64%;
+  overflow: hidden;
+  box-shadow: 0px 1px 5px hsla(0, 0%, 0%, 0.66);
+  border-top: 5px solid hsla(0, 0%, 100%, 0.15);
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+}
+div.example a.window > * { display: block; width: 100%; }
+
+
+ol.playlist li { list-style-type: none; line-height: 25px; height: 25px; display:block;}
+ol.playlist li audio { width:100%; height: 25px; }
+
+
+#unlicense { padding-bottom: 30px; }
+#unlicense blockquote.legal.document { background: hsl(50, 15%, 75%); color: black; font: bold 20px/30px "Courier New", "Apple Chancery", "Georgia", serif; margin: 0 30px; max-width: 750px; padding: 30px 0px 100px; box-shadow: 0px 2px 10px hsla(0, 0%, 0%, 0.66); transform: rotate(-1deg)translate(-20px,0px);}
+#unlicense blockquote.legal.document a[href] { color: inherit; text-decoration: none;}
+</style>
+<body>
+<header>
+  <h1><a href="" class="identity" style="font-weight: 600;">pinkturtle<span style="font-weight:100;">/</span>facts</a></h1>
+</header>
+<div id="foreword">
+  <div class="preamble">
+    <div class="quote">
+      <blockquote>
+        First come the values,<br>…by my lights…<br>and then the practice of how to impose them.
+      </blockquote>
+      <div><span class="dash">—</span> <strong class="who">Ursula Franklin</strong> <span class="in">in</span> <span class="where">Toronto,</span> <span class="when">1989</span></div>
+      <div class="what">Excerpt from the <abbr title="Question and Answer">Q&amp;A</abbr> session after her first lecture on <a href="#radix"><cite>The Real World of Technology</cite></a>.</div>
+      <audio id="and-then-the-practice-audio" controls preload="none">
+        <source type="audio/mpeg" src="https://pinkturtle.space/And%20then%20the%20practice.mp3">
+      </audio>
+    </div>
+    <!--
+      # Facts is:
+      - a way of storing facts/datoms, that supports an accurate perception of what is known now, and what was known in the past.
+      - a way of memorizing facts in a ECMAScript software program.
+      - supports exploratory information programs.
+      - playful because it can animate itself forward and backward through time.
+      - a way of "managing" state in an ECMAScript computer program.
+      - a programming for building outformations.
+      - a database abstraction? (uncertain)
+    -->
+    <p>
+      <code>Facts</code> is a support library for
+        <a href="https://en.wikipedia.org/wiki/ECMAScript">ECMAScript</a> programs
+        that render evidence based representations.
+      It supplies functions to
+        <a href="#transact">memorize facts</a>,
+        <a href="#query">query facts</a>,
+        and to <a href="#history">travel through time</a>.
+      <code>Facts</code> relies on
+        <a href="https://facebook.github.io/immutable-js/">Immutable.js</a>
+        for the nitty-gritty.
+    </p>
+    <p>
+      The <a href="https://github.com/pinkturtle/facts/tree/draft">codebase is hosted at GitHub</a>
+        where you can
+        <a href="https://github.com/pinkturtle/facts/issues">report a bug</a>,
+        <a href="https://github.com/pinkturtle/facts/pulls">propose a change</a>
+        and clone the <a href="https://github.com/pinkturtle/facts/tree/draft">source code</a>.
+      If you’re feeling particularly investigativeish,
+        please do exercise the <a href="tests/">test suite</a>
+        to verify <code>Facts</code> works as expected
+        in your <a href="Documentation/glossary.html#web-agent">web agent</a>.
+    </p>
+    <p>
+      Get started with the <a href="#tutorial">tutorial</a>
+      or skip ahead to play with the <a href="#examples">examples</a>.
+    </p>
+  </div>
+
+  <!-- <p>Also available as Node.js package: <code>npm install pinkturtle/facts</code></p> -->
+</div>
+<div id="downloads">
+  <p>
+    Version 0.0.0 has not been released yet.
+    <br>
+    Get a copy of the pre-release script:
+  </p>
+  <div class="scripts">
+    <div class="default file">
+      <a href="facts.pack.js" download="facts.pack.js">
+        <strong>facts.pack.js</strong>
+        <svg width="52" height="60" viewBox="0 0 28 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="0" fill="none" fill-rule="evenodd">
+            <path d="M26.7604167,6.78572237 L21.0729167,1.21428716 C20.3984375,0.553572088 19.0494792,0 18.0833333,0 L1.75,0 C0.783854167,0 0,0.767858058 0,1.71428776 L0,30.2857504 C0,31.2321801 0.783854167,32.0000381 1.75,32.0000381 L26.25,32.0000381 C27.2161458,32.0000381 28,31.2321801 28,30.2857504 L28,9.71429729 C28,8.76786759 27.4348958,7.44643745 26.7604167,6.78572237 L26.7604167,6.78572237 Z M18.6666667,2.42857432 C18.9765625,2.53571731 19.2864583,2.69643179 19.4140625,2.82143193 L25.1197917,8.41072431 C25.2473958,8.53572446 25.4114583,8.83929625 25.5208333,9.14286804 L18.6666667,9.14286804 L18.6666667,2.42857432 Z M25.6666667,29.7143211 L2.33333333,29.7143211 L2.33333333,2.28571701 L16.3333333,2.28571701 L16.3333333,9.71429729 C16.3333333,10.660727 17.1171875,11.4285851 18.0833333,11.4285851 L25.6666667,11.4285851 L25.6666667,29.7143211 Z M7,14.2857313 L7,15.4285898 C7,15.7500188 7.25520833,16.0000191 7.58333333,16.0000191 L20.4166667,16.0000191 C20.7447917,16.0000191 21,15.7500188 21,15.4285898 L21,14.2857313 C21,13.9643024 20.7447917,13.7143021 20.4166667,13.7143021 L7.58333333,13.7143021 C7.25520833,13.7143021 7,13.9643024 7,14.2857313 L7,14.2857313 Z M20.4166667,18.2857361 L7.58333333,18.2857361 C7.25520833,18.2857361 7,18.5357364 7,18.8571653 L7,20.0000238 C7,20.3214528 7.25520833,20.5714531 7.58333333,20.5714531 L20.4166667,20.5714531 C20.7447917,20.5714531 21,20.3214528 21,20.0000238 L21,18.8571653 C21,18.5357364 20.7447917,18.2857361 20.4166667,18.2857361 L20.4166667,18.2857361 Z M20.4166667,22.8571701 L7.58333333,22.8571701 C7.25520833,22.8571701 7,23.1071704 7,23.4285994 L7,24.5714579 C7,24.8928868 7.25520833,25.1428871 7.58333333,25.1428871 L20.4166667,25.1428871 C20.7447917,25.1428871 21,24.8928868 21,24.5714579 L21,23.4285994 C21,23.1071704 20.7447917,22.8571701 20.4166667,22.8571701 L20.4166667,22.8571701 Z"></path>
+          </g>
+        </svg>
+        <div class="size annotation">70 kilobytes compressed.</div>
+      </a>
+      <div class="immutable annotation"><a href="https://facebook.github.io/immutable-js/">Immutable.js</a> included.</div>
+    </div>
+    <div class="minimized file">
+      <a href="facts.core.js" download="facts.core.js">
+        <strong>facts.core.js</strong>
+        <svg width="52" height="60" viewBox="0 0 28 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="0" fill="none" fill-rule="evenodd">
+            <path d="M26.7604167,6.78572237 L21.0729167,1.21428716 C20.3984375,0.553572088 19.0494792,0 18.0833333,0 L1.75,0 C0.783854167,0 0,0.767858058 0,1.71428776 L0,30.2857504 C0,31.2321801 0.783854167,32.0000381 1.75,32.0000381 L26.25,32.0000381 C27.2161458,32.0000381 28,31.2321801 28,30.2857504 L28,9.71429729 C28,8.76786759 27.4348958,7.44643745 26.7604167,6.78572237 L26.7604167,6.78572237 Z M18.6666667,2.42857432 C18.9765625,2.53571731 19.2864583,2.69643179 19.4140625,2.82143193 L25.1197917,8.41072431 C25.2473958,8.53572446 25.4114583,8.83929625 25.5208333,9.14286804 L18.6666667,9.14286804 L18.6666667,2.42857432 Z M25.6666667,29.7143211 L2.33333333,29.7143211 L2.33333333,2.28571701 L16.3333333,2.28571701 L16.3333333,9.71429729 C16.3333333,10.660727 17.1171875,11.4285851 18.0833333,11.4285851 L25.6666667,11.4285851 L25.6666667,29.7143211 Z M7,14.2857313 L7,15.4285898 C7,15.7500188 7.25520833,16.0000191 7.58333333,16.0000191 L20.4166667,16.0000191 C20.7447917,16.0000191 21,15.7500188 21,15.4285898 L21,14.2857313 C21,13.9643024 20.7447917,13.7143021 20.4166667,13.7143021 L7.58333333,13.7143021 C7.25520833,13.7143021 7,13.9643024 7,14.2857313 L7,14.2857313 Z M20.4166667,18.2857361 L7.58333333,18.2857361 C7.25520833,18.2857361 7,18.5357364 7,18.8571653 L7,20.0000238 C7,20.3214528 7.25520833,20.5714531 7.58333333,20.5714531 L20.4166667,20.5714531 C20.7447917,20.5714531 21,20.3214528 21,20.0000238 L21,18.8571653 C21,18.5357364 20.7447917,18.2857361 20.4166667,18.2857361 L20.4166667,18.2857361 Z M20.4166667,22.8571701 L7.58333333,22.8571701 C7.25520833,22.8571701 7,23.1071704 7,23.4285994 L7,24.5714579 C7,24.8928868 7.25520833,25.1428871 7.58333333,25.1428871 L20.4166667,25.1428871 C20.7447917,25.1428871 21,24.8928868 21,24.5714579 L21,23.4285994 C21,23.1071704 20.7447917,22.8571701 20.4166667,22.8571701 L20.4166667,22.8571701 Z"></path>
+          </g>
+        </svg>
+        <div class="size annotation">12 kilobytes compressed.</div>
+      </a>
+      <div class="immutable annotation">Requires <a href="https://facebook.github.io/immutable-js/">Immutable.js</a></div>
+    </div>
+  </div>
+</div>
+<div class="trapezoid"></div>
+<div id="tutorial">
+<h2>Tutorial</h2>
+
+<p>
+  First, lets construct an instance of <code>Facts</code> to work with.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = Facts()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms:Immutable.Stack {size: 0}
+  history:Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  Next, lets memorize some facts about three people we know.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.advance(1, {name:"Ursula Franklan", "role":"Educator"})
+facts.advance(2, {name:"Rich Hickey", "role":"Programmer"})
+facts.advance(3, {name:"Bret Victor", "role":"Designer"})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction":"TNOW"
+  "started with": value of the database before the transaction.
+  "ended with": value of the database after the transaction.
+  "datoms":[
+    [true, 1, "name", "Bret Victor", "TNOW"],
+    [true, 1, "role", "Designer", "TNOW"],
+  ]
+}
+</pre>
+</div>
+
+<p>
+  Now, we can ask our instance of <code>facts</code> for a <code>"list"</code> of the people we know.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.query({out:"list"})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+[
+  {"id":1, "name":"Ursula Franklan", "role":"Educator"},
+  {"id":2, "name":"Rich Hickey", "role":"Programmer"},
+  {"id":3, "name":"Bret Victor", "role":"Designer"}
+]
+</pre>
+</div>
+
+<p>
+  Or we can get more specific. Lets find all the <code>"Rich"</code> people we know.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.query({
+  where: function(id, attribute, value) {
+    return attribute === "name" &amp;&amp; value.match("Rich")
+  }
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+[
+  {"id":2, "name":"Rich Hickey", "role":"Programmer"},
+]
+</pre>
+</div>
+
+<p>
+  We can <code>pull</code> one person if we already know their <code>id</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.pull(1)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{"id":1, "name":"Ursula Franklan", "role":"Educator"}
+</pre>
+</div>
+
+<p>
+  Oh snap!!! we mispelled Ursula’s last name. It should be <code>"Franklin"</code>, not <code>"Franklan"</code>.
+  Lets correct our record of the <code>facts</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.advance(1, name:"Ursula Franklin")<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction":"TNOW"
+  "started with": value of the database before the transaction.
+  "ended with": value of the database after the transaction.
+  "datoms":[
+    [true, 1, "name", "Ursula Franklin" "TNOW"],
+  ]
+}
+</pre>
+</div>
+
+<p>
+  Lets <code>pull</code> her record again to confirm it has been corrected.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.pull(1)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{"id":1, "name":"Ursula Franklin", "role":"Educator"}
+</pre>
+</div>
+
+</div>
+<div id="constructor" class="section">
+  <h2>Constructor</h2>
+  <div class="trapezoid"></div>
+</div>
+
+<div id="Facts" class="constructor function">
+<header>
+  <code>Facts</code>
+  <div class="aliases">
+    <label>Alias:</label>
+    <code>Facts.prototype.constructor</code>
+  </div>
+</header>
+<p>
+  The constructor function returns a new instance of <code>Facts</code>.
+</p>
+
+<p>
+  Typically, we would construct an instance like so:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = Facts()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  The constructor may also be applied with the <code>new</code> operator:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = new Facts()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  Or, with the <code>new</code> operator, without the <code>()</code> syntax:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = new Facts<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  Or, with the constructor’s <code>apply</code> method:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = Facts.apply()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  Or, with the constructor’s <code>call</code> method:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = Facts.call()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  Or, finally, with the constructor’s <code>construct</code> method:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts = Facts.construct()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Facts {
+  datoms: Immutable.Stack {size: 0}
+  history: Immutable.List {size: 1}
+}
+</pre>
+</div>
+
+<p>
+  All of these expressions yield the same result – a new instance of <code>Facts</code> that has
+  <a href="#methods">seven lucky methods</a>
+  and
+  <a href="#properties">two magic properties</a>.
+</p>
+
+</div>
+<div id="methods" class="section">
+  <h2>Methods</h2>
+  <div class="trapezoid"></div>
+</div>
+
+<div id="query" class="member">
+<header>
+  <code>facts.query(params)</code>
+</header>
+<p>
+  Returns an evidence based answer to the question defined by <code>params</code>.
+  <!-- Question the facts in the database and receive an answer. -->
+</p>
+<p>
+  <code>params.where</code> specifies an optional predicate <code>function</code> to filter the fact space.
+  The <code>function</code> will be called once for every datom in the query selection.
+  It is passed four arguments: <code>id</code>, <code>attribute</code>, <code>value</code> and <code>transaction</code>.
+</p>
+<p>
+  <code>params.out</code> defines the output format.
+  It should be <code>"list"</code> or <code>"map"</code>. It left <code>undefined</code>, <code>"list"</code> will be used as the default.
+</p>
+
+<div class="console">
+<pre class="ecmascript input">
+facts.query({
+  out:"list",
+  where:function(id, attribute, value, transaction){
+    return id === 1
+  }
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+[
+  {"id":1, "name":"Ursula Franklin", "role":"Educator"}
+]
+</pre>
+</div>
+</div>
+
+
+<div id="advance" class="member">
+<header>
+  <code>facts.advance(id, attributes)</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <code>add</code>
+    <!-- <code>advance</code> -->
+    <!-- <code>affirm</code> -->
+    <code>assert</code>
+    <code>divert</code>
+    <!-- <code>declare</code> -->
+    <!-- <code>enact</code> -->
+    <!-- <code>proclaim</code> -->
+  </div>
+</header>
+<p>
+  Call <code>advance</code> to remember that something is true.
+</p>
+<p>
+  Returns a transaction report. <code>id</code> identifies the entity that should be advanced with values from the map of <code>attributes</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.assert(1, {
+  "name": "Ursula Franklin"
+  "role": "Educator"
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction": "T1459839327267"
+  "started with": database value before the transaction
+  "ended with": database value after the transaction
+  "datoms": [
+    [true, 1, "name", "Ursula Franklin" "T1459839327267"],
+    [true, 1, "role", "Educator", "T1459839327267"]
+  ]
+}
+</pre>
+</div>
+</div>
+
+
+<div id="reverse" class="member">
+<header>
+  <code>facts.reverse(id, attributes)</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <!-- <code>reclaim</code> -->
+    <!-- <code>repeal</code> -->
+    <code>retract</code>
+    <!-- <code>reverse</code> -->
+    <code>revert</code>
+    <code>subtract</code>
+  </div>
+</header>
+<p>
+  Call <code>reverse</code> to remember that something is not true.
+</p>
+<p>
+  <code>id</code> identifies the entity that should be reversed.
+  The values from the map of <code>attributes</code> should be falsehoods, not corrections.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.reverse(1, {
+  "role": "Communist"
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction": "TNOW"
+  "started with": database value before the transaction
+  "ended with": database value after the transaction
+  "datoms": [
+    [false, 1, "role", "Communist", "TNOW"]
+  ]
+}
+</pre>
+</div>
+<p>
+  Because <code>Facts</code> accretes datoms monotonically it is not possible to reverse a transaction.
+  If <code>reverse</code> receives a transaction <code>id</code> it will throw an exception.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.reverse("T1459839327267", attributes)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output exception">
+"Can’t reverse transaction T1459839327267"<a class="icon"></a>
+</pre>
+</div>
+</div>
+
+
+<div id="unknown" class="member">
+<header>
+  <code>facts.unknown(id, attributes)</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <!-- <code>ambiguous</code> -->
+    <!-- <code>dubious</code> -->
+    <!-- <code>uncertain</code> -->
+    <!-- <code>unknown</code> -->
+    <code>unsure</code>
+  </div>
+</header>
+<p>
+  Call <code>unkown</code> to remember that something is not known to be true or false.
+</p>
+<p>
+  Accepts the same form of arguments as <code>advance</code> and <code>reverse</code>.
+  <code>id</code> identifies the entity that should be marked with the values of unknown credence from the map of <code>attributes</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.unknown(1, {
+  "name": "Ursula Franklin"
+  "diet": "Vegetarian"
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction": "TNOW"
+  "started with": database value before the transaction
+  "ended with": database value after the transaction
+  "datoms": [
+    [undefined, 1, "role", "Vegetarian", "TNOW"]
+  ]
+}
+</pre>
+</div>
+</div>
+
+<div id="transact" class="member">
+<header>
+  <code>facts.transact(data)</code>
+</header>
+<p>
+  Submits a transaction to the database for writing.
+</p>
+<p>
+  <code>data</code> is a list of lists, each of which specifies a write operation, either an advancement, a reversal or an unknown.
+  Each nested list starts with a keyword identifying the operation followed by the arguments for the operation.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.transact([
+  ["reverse", 1, "name", "Dr. Ursula M. Franklan"],
+  ["advance", 1, "name", "Ursula Martius Franklin"],
+  ["advance", 1, "role", "Metallurgist"],
+])
+</pre>
+<pre class="ecmascript output">
+{
+  "transaction":"TNOW"
+  "started with": value of the database before the transaction.
+  "ended with": value of the database after the transaction.
+  "datoms":[
+    [false, 1, "name", "Dr. Ursula M. Franklan", "T1460152022157"],
+    [true, 1, "name", "Ursula Martius Franklin", "T1460152022157"],
+    [true, 1, "role", "Metallurgist", "T1460152022157"],
+  ]
+}
+</pre>
+</div>
+</div>
+
+
+<div id="at" class="member">
+<header>
+  <code>facts.at(instant)</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <code>asOf</code>
+    <code>at</code>
+    <code>database</code>
+    <code>databaseAsOf</code>
+    <code>db</code>
+    <code>memoryAsOf</code>
+  </div>
+</header>
+<p>
+  Returns the value of the database at an <code>instant</code> in time.
+  <!-- Returns the value of memory at an <code>instant</code> in time. -->
+</p>
+<p>
+  <code>facts.at(Date.now())</code> returns the current value of the database.
+</p>
+<p>
+  <code>instant</code> may be a <code>Number</code> representing a moment in <a href="https://en.wikipedia.org/wiki/Unix_time" title="Milliseconds since the Unix Epoch: January 1, 1970 at 00:00:00 UTC">Unix Time</a>:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+database = facts.at(1460131939076)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Immutable.Set {
+  size: 3
+}
+</pre>
+</div>
+
+<p>
+  Or a transaction identifier <code>String</code>:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+database = facts.at("T1460131939076")<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Immutable.Set {
+  size: 3
+}
+</pre>
+</div>
+
+<p>
+  Or an instance of <code>Date</code>:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+database = facts.at(new Date)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Immutable.Set {
+  size: 3
+}
+</pre>
+</div>
+
+</div>
+<div id="properties" class="section">
+  <h2>Properties</h2>
+  <div class="trapezoid"></div>
+</div>
+
+<div id="datoms" class="member">
+  <header>
+    <code>facts.datoms</code>
+  </header>
+  <p>
+    Raw access to memorized datoms.
+  </p>
+</div>
+
+<div id="history" class="member">
+  <header>
+    <code>facts.history</code>
+  </header>
+  <p>
+    <code>facts.history</code> contains a list of database values.
+  </p>
+  <p>
+    the first item is the earliest version of database:
+  </p>
+<pre class="ecmascript">
+facts.history.first()
+</pre>
+<p>
+  the last item is the latest version of database.
+</p>
+<pre class="ecmascript">
+facts.history.last()
+</pre>
+  <p>
+    <code>facts.history</code> is an isntance if <code>Immutable.List</code>
+  </p>
+</div>
+<div id="functions" class="section">
+  <h2>Functions</h2>
+  <div class="trapezoid"></div>
+</div>
+<p>Instance methods of <code>Facts</code> rely on these core functions.</p>
+
+<div id="Facts.query(params)" class="function member">
+<header>
+  <code>Facts.query(params)</code>
+</header>
+<p>
+  Returns an evidence list for the sources and questions defined in <code>params</code>.
+</p>
+
+<p>
+  <code>params.in</code> defines the input source for the query.
+  It should be a database value and it is required.
+</p>
+
+<p>
+  <code>params.where</code> specifies an optional predicate <code>function</code> to filter the fact space.
+  The <code>function</code> is called once for every datom in the source database.
+  It is passed four arguments: <code>id</code>, <code>attribute</code>, <code>value</code> and <code>transaction</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+Facts.query({
+  in: facts.database()
+  where: function(id, attribute, value, transaction) {
+    return attribute === "name" &amp;&amp; value.length &lt; 12
+  }
+})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+[
+  {"id":2, "name":"Rich Hickey"},
+  {"id":3, "name":"Bret Victor"}
+]
+</pre>
+</div>
+
+<p>
+  <code>params.out</code> defines the output format which may be <code>"list"</code> or <code>"map"</code>.
+  By default, <code>query</code> returns answers in <code>"list"</code> format as an instance of <code>Array</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+Facts.query(in:database, out:"list")<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+[
+  {"id": 1, "name": "Ursula Franklin"},
+  {"id": 2, "name": "Rich Hickey"},
+  {"id": 3, "name": "Bret Victor"}
+]
+</pre>
+</div>
+
+<p>
+  When <code>"map"</code> is specified <code>query</code> returns an instance of <code>Object</code> indexed by <code>id</code>:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+Facts.query({in:database, out:"map"})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{
+  "1": {"id": 1, "name": "Ursula Franklin"},
+  "2": {"id": 2, "name": "Rich Hickey"},
+  "3": {"id": 3, "name": "Bret Victor"}
+}
+</pre>
+</div>
+
+</div>
+<div id="installation" class="section">
+  <h2>Installation</h2>
+  <div class="trapezoid"></div>
+  <p>
+    <code>Facts</code> works in a web agent <code>window</code> or a <a href="http://nodejs.org">Node.js</a> process.
+    The setup procedure for each enironment is different but the end result is the same – a <code>Facts</code> constructor is exposed to your program with functions to remember and query data.
+  </p>
+</div>
+
+<div id="html_setup">
+<h2>HTML Setup</h2>
+<p>
+  Get <a href="facts.pack.js" download="facts.pack.js">facts.pack.js</a>
+  and add it to your web page with a <code>&lt;script&gt;</code> tag:
+</p>
+<pre class="html">&lt;!DOCTYPE HTML&gt;
+&lt;title&gt;Untitled&lt;/title&gt;
+<strong>&lt;script src="facts.pack.js"&gt;&lt;/script&gt;</strong>
+&lt;body&gt;&lt;/body&gt;</pre>
+<p>
+  <code>Facts</code> is defined on <code>window</code> when the <code>&lt;script&gt;</code> is loaded.
+  Your program can refer to it as <code>window.Facts</code>, <code>window["Facts"]</code> or simply <code>Facts</code>.
+</p>
+<p>
+  <a href="facts.pack.js" download="facts.pack.js">facts.pack.js</a> includes <a href="">Immutable</a>.
+  If you prefer to manage this depedency yourself you can specify
+    <a href="https://github.com/facebook/immutable-js/blob/master/dist/immutable.min.js" download="immutable.min.js">immutable.min.js</a>
+    followed by
+    <a href="facts.core.js" download="facts.core.js">facts.core.js</a> in your <code>HTML</code> document:
+  </p>
+<pre class="html">&lt;!DOCTYPE HTML&gt;
+&lt;title&gt;Untitled&lt;/title&gt;
+<strong>&lt;script src="immutable.min.js"&gt;&lt;/script&gt;</strong>
+<strong>&lt;script src="facts.core.js"&gt;&lt;/script&gt;</strong>
+&lt;body&gt;&lt;/body&gt;</pre>
+<p>
+  <code>Facts</code> should work in any modern web agent.
+  It is known to work in recent releases of
+    <a href="https://www.apple.com/safari">Apple Safari</a>,
+    <a href="https://www.mozilla.org/firefox">Mozilla Firefox</a>
+    and
+    <a href="https://www.google.com/chrome">Google Chrome</a>.
+</p>
+</div>
+
+<div id="node_setup">
+  <h2>Node.js Setup</h2>
+  <p>
+    <code>npm install pinkturtle/facts</code> will add the package to your project.
+    Once it is installed you can require the module in your program like so:
+  </p>
+  <pre class="ecmascript">Facts = require("facts")</pre>
+  <p>
+    <code>Facts</code> is known to work in <a href="https://nodejs.org/">Node</a> versions <code>4.2.1</code> and <code>4.4.2</code>.
+  </p>
+</div>
+<div id="examples" class="section">
+  <h2>
+    Examples
+  </h2>
+  <div class="trapezoid"></div>
+</div>
+<div class="example" id="pile-of-words">
+  <a class="window" href="https://pinkturtle.github.io/pile-of-words/" >
+    <video id="Pile-of-Words-video" class="silent" preload="none" width="626" height="540" data-poster="https://pinkturtle.space/Pile%20of%20Words%20(Poster).png">
+      <source type="audio/mpeg" src="https://pinkturtle.space/Pile%20of%20Words.mp4#t=00:01">
+    </video>
+  </a>
+  <div class="text">
+    <p><a href="https://pinkturtle.github.io/pile-of-words/">Pile of Words</a> is a simple demonstration of the history system in <code>facts</code>.</p>
+    <p>Grab a <a href="https://github.com/pinkturtle/pile-of-words/archive/gh-pages.zip">zipped copy of the code</a> or <a href="https://github.com/pinkturtle/pile-of-words">explore it on GitHub</a>.</p>
+  </div>
+</div>
+<!-- <div class="example" id="glossary">
+
+  <a class="window" href="Documentation/glossary.html">
+    <img alt="Screenshot of the Glossary" height="768" width="1024" data-src="https://pinkturtle.space/glossary.png">
+  </a>
+
+  <div class="text">
+    <p>
+      The <a href="Documentation/glossary.html">Glossary</a> is a guide to the terminology used in <code>facts</code> code and documentation.
+      It also illustrates database changes as you add, edit and remove words.
+    </p>
+    <p>
+      Glossary is part of the <code>facts</code> source code.
+      <a href="">Clone the repository</a> or <a href="">download a zipped archive</a>
+      and then look in the <code>documentation</code> folder for the following files:
+    </p>
+    <ul>
+      <li><code>glossary.html</code></li>
+      <li><code>glossary.js</code></li>
+      <li><code>glossary.json</code></li>
+    </ul>
+  </div>
+</div> -->
+<div id="appendix" class="section">
+  <h2>
+    Appendix
+  </h2>
+  <div class="trapezoid"></div>
+</div>
+
+<div id="radix">
+  <h2>Radix</h2>
+  <p>
+    This turtle’s approach to information design was shaped by <a href="https://en.wikipedia.org/wiki/Ursula_Franklin">Ursula Franklin</a>’s classic lecture on
+    <a href="http://www.cbc.ca/radio/ideas/the-1989-cbc-massey-lectures-the-real-world-of-technology-1.2946845">The Real World of Technology</a>.
+    <code>Facts</code> is a return to these roots.
+    It is a modest demonstration of a technology derived from practice.
+    And it attempts to offer a holistic way of doing things rather than a prescription for how things should be done.
+  </p>
+  <div class="spread" style="height:300px;">
+    <div style="width:20%; height:300px; display:block; position:absolute; overflow:hidden;">
+      <img style="height:300px; position:absolute; left:-25%;" width="300" height="300" data-src="Documentation/images/Ursula%20Franklin%20(2013).jpg" alt="Monochrome photo portait of Ursula Franklin" title="Photo courtesy of Mark Balson, University of Toronto (2013)">
+    </div>
+
+    <div style="position:absolute; width:30%; left:20%; bottom: 0px; display:block;">
+      <div class="annotation" style="padding: 10px 15px;">
+        Listen to Ms. Franklin present<br>
+        The Real World of Technology<br>
+        Toronto, 1989<br>
+      </div>
+      <ol class="playlist">
+        <li>
+          <audio id="The-Real-World-of-Technology-(Introduction)-audio" controls preload="none">
+            <source type="audio/mp4" src="https://pinkturtle.space/The%20Real%20World%20of%20Technology%20(Introduction).m4a">
+          </audio>
+        </li>
+        <li>
+          <audio id="The-Real-World-of-Technology-(Part-1)-audio" controls preload="none">
+            <source type="audio/mp4" src="https://pinkturtle.space/The%20Real%20World%20of%20Technology%20(Part%201).m4a">
+          </audio>
+        </li>
+        <li>
+          <audio id="The-Real-World-of-Technology-(Part-2)-audio" controls preload="none">
+            <source type="audio/mp4" src="https://pinkturtle.space/The%20Real%20World%20of%20Technology%20(Part%202).m4a">
+          </audio>
+        </li>
+        <li>
+          <audio id="The-Real-World-of-Technology-(Part-3)-audio" controls preload="none">
+            <source type="audio/mpeg" src="https://pinkturtle.space/The%20Real%20World%20of%20Technology%20(Part%203).mp3">
+          </audio>
+        </li>
+        <li>
+          <audio controls preload="none">
+            <source type="audio/mpeg" src="https://pinkturtle.space/The%20Real%20World%20of%20Technology%20(Part%204).mp3">
+          </audio>
+        </li>
+        <li>
+          <audio controls preload="none">
+            <source type="audio/mpeg" src="https://pinkturtle.space/The%20Real%20World%20of%20Technology%20(Part%205).mp3">
+          </audio>
+        </li>
+      </ol>
+    </div>
+    <div style="width:40%; left:50%; height:300px; display:block; position:absolute;">
+      <div class="annotation" style="padding: 15px; position: absolute; left: 188px; bottom: 0;">
+        Or borrow the book from your local library.<br>
+        <br>
+        The Real World of Technology<br>
+        By Ursula M. Franklin<br>
+        Anansi (1999)<br>
+        <br>
+        Call Number: 303.483<br>
+        ISBN 10: 088784636X<br>
+        ISBN 13: 9780887846366<br>
+      </div>
+      <img alt="Book Cover (2nd Edition)" height="300" width="188" style="height:300px;" data-src="https://pinkturtle.space/The%20Real%20World%20of%20Technology%20(Book%20Cover).jpg">
+    </div>
+  </div>
+
+  <p>
+    The programming model in <code>Facts</code> was copied from
+    <a href="http://docs.datomic.com/architecture.html">Datomic</a>
+    – especially its <a href="http://docs.datomic.com/clojure/index.html">Clojure API</a>.
+    i first learned of Datomic while watching <a href="https://github.com/richhickey">Rich Hickey</a> present <a href="">The Value of Values</a>.
+    His comparisson of <a href="https://duckduckgo.com/?q=place-oriented+computer+programming">place-oriented</a> programming with
+      <a href="https://duckduckgo.com/?q=value-oriented+computer+programming">value-oriented</a> programming
+      and his observations about <a href="https://duckduckgo.com?q=space-age+information+systems">space-age information systems</a>
+      struck a chord that continues to resonate.
+    If you’re unfamiliar with Mr. Hickey, i recommend starting with this <a href="#the-value-of-values-video#t=11:50" class="play video">excerpt of him speaking about memory and records in society</a>.
+  </p>
+
+  <div class="spread" style="background:transparent;">
+    <div style="width:50%; display:block; float:left;">
+      <video id="the-value-of-values-video" style="width:100%;" width="320" height="240" controls preload="none" data-poster="Documentation/images/The%20Value%20of%20Values%20(Poster).jpg">
+        <source type="video/mp4" src="https://pinkturtle.space/12-may-thevalueofvalues.mp4">
+      </video>
+    </div>
+    <div style="width:50%; float:left; left:1px;">
+      <img style="width:100%;" width="320" height="240" data-src="Documentation/images/The%20Value%20of%20Values%20(Slide).png" alt="Memory &amp; Records">
+    </div>
+    <div style="clear:both"></div>
+  </div>
+  <!-- <div class="annotation" hidden>
+      The Value of Values<br>
+      Rich Hickey<br>
+      May 12 20??<br>
+    </div> -->
+
+  <p>
+    <code>Facts</code> was extracted from several information software prototypes that were inspired by <a href="http://worrydream.com">Bret Victor</a>’s wondrous yearnings for a dynamic media.
+    <a href="https://vimeo.com/115154289">The Humane Representation of Thought</a> captures some of his most intriguing ideas on this topic
+      and i highly recommend starting with this <a href="#humane-representation-of-thought-video#t=13:18" class="play video">excerpt of him speaking about the inhumanity of our thinking media</a> for a gentle introduction to his work.
+    Mr. Victor is also an accomplished
+      <a href="http://worrydream.com/MagicInk/">magician</a>,
+      <a href="https://vimeo.com/64895205">puppeteer</a>,
+      <a href="https://vimeo.com/36579366">life-coach</a>
+      and <a href="http://worrydream.com/ClimateChange/" title="What Can A Technologist Do About Climate Change?">author</a>.
+  </p>
+
+  <div class="spread" style="background:transparent;">
+    <div style="width:50%; float:left;">
+      <video id="humane-representation-of-thought-video" style="width:100%;" width="480" height="270" controls preload="none" data-poster="Documentation/images/The%20Humane%20Representation%20of%20Thought%20(Poster).jpg">
+        <source type="video/mp4" src="https://pinkturtle.space/The%20Humane%20Representation%20of%20Thought%20(480x270).mp4">
+        <source type="video/mp4" src="https://pinkturtle.space/The%20Humane%20Representation%20of%20Thought%20(640x360).mp4">
+        <source type="video/mp4" src="https://pinkturtle.space/The%20Humane%20Representation%20of%20Thought%20(1280x720).mp4">
+      </video>
+    </div>
+    <div style="width:50%; float:left; left:1px;">
+      <img style="width:100%;" width="480" height="270" data-src="Documentation/images/The%20Humane%20Representation%20of%20Thought%20(Cover%20Slide).jpg">
+    </div>
+    <div style="clear:both"></div>
+  </div>
+  <!-- <div class="spread" style="background: transparent">
+    <div class="annotation" hidden>
+      The Humane Representation of Thought<br>
+      Bret Victor<br>
+      2012<br>
+    </div>
+  </div> -->
+
+  <p>
+    This turtle is inclined to think the dynamic media should be playful.
+    And since play happens over time, the media might rely on a time-based model of data to compute informative representations.
+    Or maybe that’s already happening.
+  </p>
+</div>
+
+
+<div id="changelog">
+  <h2>Changelog</h2>
+  <p>
+    Version 0.0.0 is currently unreleased.
+  </p>
+</div>
+
+
+<div id="unlicense">
+  <h2>Unlicense</h2>
+  <p>
+    <code>Facts</code> is public domain.
+  </p>
+  <p>
+    For clarity and convenience it is distributed with the <a href="https://unlicense.org">Unlicense</a>:
+  </p>
+  <blockquote class="legal document">
+    <p>This is free and unencumbered software released into the public domain.</p>
+    <p>Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and by any means.</p>
+    <p>In jurisdictions that recognize copyright laws, the author or authors of this software dedicate any and all copyright interest in the software to the public domain. We make this dedication for the benefit of the public at large and to the detriment of our heirs and successors. We intend this dedication to be an overt act of relinquishment in perpetuity of all present and future rights to this software under copyright law.</p>
+    <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+    <p>For more information, please refer to &lt;<a href="https://unlicense.org">http://unlicense.org/</a>&gt;</p>
+  </blockquote>
+</div>
+<nav>
+  <div>
+    <a href="#foreword">Foreword</a><br>
+    <a href="#downloads">Downloads</a><br>
+    <a href="#tutorial">Tutorial</a><br>
+  </div>
+  <a href="#constructor" class="section">Constructor</a><br>
+  <div>
+    <a href="#Facts">Facts</a><br>
+  </div>
+  <a href="#methods" class="section">Methods</a><br>
+  <div>
+    <a href="#query">query</a><br>
+    <a href="#pull">pull</a><br>
+    <a href="#advance">advance</a><br>
+    <a href="#reverse">reverse</a><br>
+    <a href="#unknown">unknown</a><br>
+    <a href="#transact">transact</a><br>
+    <a href="#at">at</a><br>
+  </div>
+  <a href="#properties" class="section">Properties</a><br>
+  <div>
+    <a href="#datoms">datoms</a><br>
+    <a href="#history">history</a><br>
+  </div>
+  <a href="#functions" class="section">Functions</a><br>
+  <div>
+    <a href="#Facts.query(params)">query</a><br>
+    <a href="#Facts.database(facts, input)">database</a><br>
+    <a href="#Facts.transact(facts, input)">transact</a><br>
+  </div>
+  <a href="#installation" class="section">Installation</a><br>
+  <div>
+    <a href="#html_setup">HTML Setup</a><br>
+    <a href="#node_setup">Node.js Setup</a><br>
+  </div>
+  <a href="#examples" class="section">Examples</a><br>
+  <div>
+    <a href="#pile-of-words">Pile of Words</a><br>
+    <!-- <a href="#glossary">Glossary</a><br> -->
+  </div>
+  <a href="#examples" class="section">Appendix</a><br>
+  <div>
+    <a href="#radix">Radix</a><br>
+    <a href="#changelog">Changelog</a><br>
+    <a href="#unlicense">Unlicense</a><br>
+  </div>
+</nav>
+<footer>
+
+</footer>
+</body>
+<script>
+var hljs=new function(){function j(v){return v.replace(/&/gm,"&amp;").replace(/</gm,"&lt;").replace(/>/gm,"&gt;")}function t(v){return v.nodeName.toLowerCase()}function h(w,x){var v=w&&w.exec(x);return v&&v.index==0}function r(w){var v=(w.className+" "+(w.parentNode?w.parentNode.className:"")).split(/\s+/);v=v.map(function(x){return x.replace(/^lang(uage)?-/,"")});return v.filter(function(x){return i(x)||/no(-?)highlight/.test(x)})[0]}function o(x,y){var v={};for(var w in x){v[w]=x[w]}if(y){for(var w in y){v[w]=y[w]}}return v}function u(x){var v=[];(function w(y,z){for(var A=y.firstChild;A;A=A.nextSibling){if(A.nodeType==3){z+=A.nodeValue.length}else{if(A.nodeType==1){v.push({event:"start",offset:z,node:A});z=w(A,z);if(!t(A).match(/br|hr|img|input/)){v.push({event:"stop",offset:z,node:A})}}}}return z})(x,0);return v}function q(w,y,C){var x=0;var F="";var z=[];function B(){if(!w.length||!y.length){return w.length?w:y}if(w[0].offset!=y[0].offset){return(w[0].offset<y[0].offset)?w:y}return y[0].event=="start"?w:y}function A(H){function G(I){return" "+I.nodeName+'="'+j(I.value)+'"'}F+="<"+t(H)+Array.prototype.map.call(H.attributes,G).join("")+">"}function E(G){F+="</"+t(G)+">"}function v(G){(G.event=="start"?A:E)(G.node)}while(w.length||y.length){var D=B();F+=j(C.substr(x,D[0].offset-x));x=D[0].offset;if(D==w){z.reverse().forEach(E);do{v(D.splice(0,1)[0]);D=B()}while(D==w&&D.length&&D[0].offset==x);z.reverse().forEach(A)}else{if(D[0].event=="start"){z.push(D[0].node)}else{z.pop()}v(D.splice(0,1)[0])}}return F+j(C.substr(x))}function m(y){function v(z){return(z&&z.source)||z}function w(A,z){return RegExp(v(A),"m"+(y.cI?"i":"")+(z?"g":""))}function x(D,C){if(D.compiled){return}D.compiled=true;D.k=D.k||D.bK;if(D.k){var z={};var E=function(G,F){if(y.cI){F=F.toLowerCase()}F.split(" ").forEach(function(H){var I=H.split("|");z[I[0]]=[G,I[1]?Number(I[1]):1]})};if(typeof D.k=="string"){E("keyword",D.k)}else{Object.keys(D.k).forEach(function(F){E(F,D.k[F])})}D.k=z}D.lR=w(D.l||/\b[A-Za-z0-9_]+\b/,true);if(C){if(D.bK){D.b="\\b("+D.bK.split(" ").join("|")+")\\b"}if(!D.b){D.b=/\B|\b/}D.bR=w(D.b);if(!D.e&&!D.eW){D.e=/\B|\b/}if(D.e){D.eR=w(D.e)}D.tE=v(D.e)||"";if(D.eW&&C.tE){D.tE+=(D.e?"|":"")+C.tE}}if(D.i){D.iR=w(D.i)}if(D.r===undefined){D.r=1}if(!D.c){D.c=[]}var B=[];D.c.forEach(function(F){if(F.v){F.v.forEach(function(G){B.push(o(F,G))})}else{B.push(F=="self"?D:F)}});D.c=B;D.c.forEach(function(F){x(F,D)});if(D.starts){x(D.starts,C)}var A=D.c.map(function(F){return F.bK?"\\.?("+F.b+")\\.?":F.b}).concat([D.tE,D.i]).map(v).filter(Boolean);D.t=A.length?w(A.join("|"),true):{exec:function(F){return null}}}x(y)}function c(T,L,J,R){function v(V,W){for(var U=0;U<W.c.length;U++){if(h(W.c[U].bR,V)){return W.c[U]}}}function z(V,U){if(h(V.eR,U)){return V}if(V.eW){return z(V.parent,U)}}function A(U,V){return !J&&h(V.iR,U)}function E(W,U){var V=M.cI?U[0].toLowerCase():U[0];return W.k.hasOwnProperty(V)&&W.k[V]}function w(aa,Y,X,W){var U=W?"":b.classPrefix,V='<span class="'+U,Z=X?"":"</span>";V+=aa+'">';return V+Y+Z}function N(){if(!I.k){return j(C)}var U="";var X=0;I.lR.lastIndex=0;var V=I.lR.exec(C);while(V){U+=j(C.substr(X,V.index-X));var W=E(I,V);if(W){H+=W[1];U+=w(W[0],j(V[0]))}else{U+=j(V[0])}X=I.lR.lastIndex;V=I.lR.exec(C)}return U+j(C.substr(X))}function F(){if(I.sL&&!f[I.sL]){return j(C)}var U=I.sL?c(I.sL,C,true,S):e(C);if(I.r>0){H+=U.r}if(I.subLanguageMode=="continuous"){S=U.top}return w(U.language,U.value,false,true)}function Q(){return I.sL!==undefined?F():N()}function P(W,V){var U=W.cN?w(W.cN,"",true):"";if(W.rB){D+=U;C=""}else{if(W.eB){D+=j(V)+U;C=""}else{D+=U;C=V}}I=Object.create(W,{parent:{value:I}})}function G(U,Y){C+=U;if(Y===undefined){D+=Q();return 0}var W=v(Y,I);if(W){D+=Q();P(W,Y);return W.rB?0:Y.length}var X=z(I,Y);if(X){var V=I;if(!(V.rE||V.eE)){C+=Y}D+=Q();do{if(I.cN){D+="</span>"}H+=I.r;I=I.parent}while(I!=X.parent);if(V.eE){D+=j(Y)}C="";if(X.starts){P(X.starts,"")}return V.rE?0:Y.length}if(A(Y,I)){throw new Error('Illegal lexeme "'+Y+'" for mode "'+(I.cN||"<unnamed>")+'"')}C+=Y;return Y.length||1}var M=i(T);if(!M){throw new Error('Unknown language: "'+T+'"')}m(M);var I=R||M;var S;var D="";for(var K=I;K!=M;K=K.parent){if(K.cN){D=w(K.cN,"",true)+D}}var C="";var H=0;try{var B,y,x=0;while(true){I.t.lastIndex=x;B=I.t.exec(L);if(!B){break}y=G(L.substr(x,B.index-x),B[0]);x=B.index+y}G(L.substr(x));for(var K=I;K.parent;K=K.parent){if(K.cN){D+="</span>"}}return{r:H,value:D,language:T,top:I}}catch(O){if(O.message.indexOf("Illegal")!=-1){return{r:0,value:j(L)}}else{throw O}}}function e(y,x){x=x||b.languages||Object.keys(f);var v={r:0,value:j(y)};var w=v;x.forEach(function(z){if(!i(z)){return}var A=c(z,y,false);A.language=z;if(A.r>w.r){w=A}if(A.r>v.r){w=v;v=A}});if(w.language){v.second_best=w}return v}function g(v){if(b.tabReplace){v=v.replace(/^((<[^>]+>|\t)+)/gm,function(w,z,y,x){return z.replace(/\t/g,b.tabReplace)})}if(b.useBR){v=v.replace(/\n/g,"<br>")}return v}function p(A){var B=r(A);if(/no(-?)highlight/.test(B)){return}var y;if(b.useBR){y=document.createElementNS("http://www.w3.org/1999/xhtml","div");y.innerHTML=A.innerHTML.replace(/\n/g,"").replace(/<br[ \/]*>/g,"\n")}else{y=A}var z=y.textContent;var v=B?c(B,z,true):e(z);var x=u(y);if(x.length){var w=document.createElementNS("http://www.w3.org/1999/xhtml","div");w.innerHTML=v.value;v.value=q(x,u(w),z)}v.value=g(v.value);A.innerHTML=v.value;A.className+=" hljs "+(!B&&v.language||"");A.result={language:v.language,re:v.r};if(v.second_best){A.second_best={language:v.second_best.language,re:v.second_best.r}}}var b={classPrefix:"hljs-",tabReplace:null,useBR:false,languages:undefined};function s(v){b=o(b,v)}function l(){if(l.called){return}l.called=true;var v=document.querySelectorAll("pre code");Array.prototype.forEach.call(v,p)}function a(){addEventListener("DOMContentLoaded",l,false);addEventListener("load",l,false)}var f={};var n={};function d(v,x){var w=f[v]=x(this);if(w.aliases){w.aliases.forEach(function(y){n[y]=v})}}function k(){return Object.keys(f)}function i(v){return f[v]||f[n[v]]}this.highlight=c;this.highlightAuto=e;this.fixMarkup=g;this.highlightBlock=p;this.configure=s;this.initHighlighting=l;this.initHighlightingOnLoad=a;this.registerLanguage=d;this.listLanguages=k;this.getLanguage=i;this.inherit=o;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="(\\b0[xX][a-fA-F0-9]+|(\\b\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|-|-=|/=|/|:|;|<<|<<=|<=|<|===|==|=|>>>=|>>=|>=|>>>|>>|>|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.BE={b:"\\\\[\\s\\S]",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE]};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE]};this.PWM={b:/\b(a|an|the|are|I|I'm|isn't|don't|doesn't|won't|but|just|should|pretty|simply|enough|gonna|going|wtf|so|such)\b/};this.CLCM={cN:"comment",b:"//",e:"$",c:[this.PWM]};this.CBCM={cN:"comment",b:"/\\*",e:"\\*/",c:[this.PWM]};this.HCM={cN:"comment",b:"#",e:"$",c:[this.PWM]};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.CSSNM={cN:"number",b:this.NR+"(%|em|ex|ch|rem|vw|vh|vmin|vmax|cm|mm|in|pt|pc|px|deg|grad|rad|turn|s|ms|Hz|kHz|dpi|dpcm|dppx)?",r:0};this.RM={cN:"regexp",b:/\//,e:/\/[gim]*/,i:/\n/,c:[this.BE,{b:/\[/,e:/\]/,r:0,c:[this.BE]}]};this.TM={cN:"title",b:this.IR,r:0};this.UTM={cN:"title",b:this.UIR,r:0}}();hljs.registerLanguage("javascript",function(a){return{aliases:["js"],k:{keyword:"if for while finally var new function do return void else break catch instanceof with throw case default try this switch continue typeof delete let yield const class",literal:"true false null undefined NaN Infinity",built_in:"eval isFinite isNaN parseFloat parseInt decodeURI decodeURIComponent encodeURI encodeURIComponent escape unescape Object Function Boolean Error EvalError InternalError RangeError ReferenceError StopIteration SyntaxError TypeError URIError Number Math Date String RegExp Array Float32Array Float64Array Int16Array Int32Array Int8Array Uint16Array Uint32Array Uint8Array Uint8ClampedArray ArrayBuffer DataView JSON Intl arguments require module console window document"},c:[{cN:"pi",b:/^\s*('|")use strict('|")/,r:10},a.ASM,a.QSM,a.CLCM,a.CBCM,a.CNM,{b:"("+a.RSR+"|\\b(case|return|throw)\\b)\\s*",k:"return throw case",c:[a.CLCM,a.CBCM,a.RM,{b:/</,e:/>;/,r:0,sL:"xml"}],r:0},{cN:"function",bK:"function",e:/\{/,eE:true,c:[a.inherit(a.TM,{b:/[A-Za-z$_][0-9A-Za-z$_]*/}),{cN:"params",b:/\(/,e:/\)/,c:[a.CLCM,a.CBCM],i:/["'\(]/}],i:/\[|%/},{b:/\$[(.]/},{b:"\\."+a.IR,r:0}]}});hljs.registerLanguage("xml",function(a){var c="[A-Za-z0-9\\._:-]+";var d={b:/<\?(php)?(?!\w)/,e:/\?>/,sL:"php",subLanguageMode:"continuous"};var b={eW:true,i:/</,r:0,c:[d,{cN:"attribute",b:c,r:0},{b:"=",r:0,c:[{cN:"value",v:[{b:/"/,e:/"/},{b:/'/,e:/'/},{b:/[^\s\/>]+/}]}]}]};return{aliases:["html","xhtml","rss","atom","xsl","plist"],cI:true,c:[{cN:"doctype",b:"<!DOCTYPE",e:">",r:10,c:[{b:"\\[",e:"\\]"}]},{cN:"comment",b:"<!--",e:"-->",r:10},{cN:"cdata",b:"<\\!\\[CDATA\\[",e:"\\]\\]>",r:10},{cN:"tag",b:"<style(?=\\s|>|$)",e:">",k:{title:"style"},c:[b],starts:{e:"</style>",rE:true,sL:"css"}},{cN:"tag",b:"<script(?=\\s|>|$)",e:">",k:{title:"script"},c:[b],starts:{e:"<\/script>",rE:true,sL:"javascript"}},{b:"<%",e:"%>",sL:"vbscript"},d,{cN:"pi",b:/<\?\w+/,e:/\?>/,r:10},{cN:"tag",b:"</?",e:"/?>",c:[{cN:"title",b:/[^ \/><\n\t]+/,r:0},b]}]}});
+// Generated by CoffeeScript 1.8.0
+(function() {
+  if (location.hostname === "pinkturtle.github.io" && location.protocol !== "https:") {
+    window.location = location.toString().replace("http:", "https:");
+  }
+
+  Number.prototype.millisecond = Number.prototype.milliseconds = function() {
+    return this.valueOf();
+  };
+
+  Number.prototype.second = Number.prototype.seconds = function() {
+    return this.milliseconds() * 1000;
+  };
+
+  Number.prototype.minute = Number.prototype.minutes = function() {
+    return this.seconds() * 60;
+  };
+
+  Number.prototype.hour = Number.prototype.hours = function() {
+    return this.minutes() * 60;
+  };
+
+  Function.delay = function(amount, procedure) {
+    return setTimeout(procedure, amount);
+  };
+
+  Function.defer = function(procedure) {
+    return setTimeout(procedure, 1);
+  };
+
+  Function.prototype.delay = function(amount) {
+    return Function.delay(amount, this);
+  };
+
+  Function.prototype.defer = function() {
+    return Function.defer(this);
+  };
+
+  document.initialized = Date.now();
+
+  document.pull = document.querySelector;
+
+  document.query = function(selector) {
+    return Array.from(document.querySelectorAll(selector));
+  };
+
+  document.on = function(eventname, selector, procedure) {
+    var wrapped;
+    if (selector instanceof Function) {
+      procedure = selector;
+      selector = void 0;
+    }
+    if (selector) {
+      wrapped = function(event) {
+        var element;
+        if (element = event.target.closest(selector)) {
+          return procedure(event, element);
+        }
+      };
+    } else {
+      wrapped = procedure;
+    }
+    return document.addEventListener(eventname, wrapped);
+  };
+
+  document.on("DOMContentLoaded", function() {
+    return console.info("document object model is ready", Date.now() - document.initialized);
+  });
+
+  window.addEventListener("load", function() {
+    return console.info("window has loaded", Date.now() - document.initialized);
+  });
+
+  window.pointer = {
+    x: 0,
+    y: 0
+  };
+
+  document.on("DOMContentLoaded", function() {
+    return window.pointer = {
+      x: 0,
+      y: 0
+    };
+  });
+
+  document.on("mousemove", function(event) {
+    return window.pointer = {
+      x: event.clientX,
+      y: event.clientY
+    };
+  });
+
+}).call(this);
+// Generated by CoffeeScript 1.8.0
+(function() {
+  document.on("DOMContentLoaded", function(event) {
+    return Array.from(document.querySelectorAll("pre.ecmascript,code")).forEach(function(element) {
+      element.classList.add("js");
+      return hljs.highlightBlock(element);
+    });
+  });
+
+}).call(this);
+// Generated by CoffeeScript 1.8.0
+(function() {
+  var getImage;
+
+  document.on("DOMContentLoaded", function() {
+    document.query("img[width][height]").forEach(function(img) {
+      var canvas;
+      canvas = document.createElement("canvas");
+      canvas.width = img.getAttribute("width");
+      canvas.height = img.getAttribute("height");
+      img.removeAttribute("width");
+      img.removeAttribute("height");
+      return img.src = canvas.toDataURL();
+    });
+    return document.query("video[width][height]:not([poster])").forEach(function(video) {
+      var canvas;
+      canvas = document.createElement("canvas");
+      canvas.width = video.getAttribute("width");
+      canvas.height = video.getAttribute("height");
+      video.removeAttribute("width");
+      video.removeAttribute("height");
+      return video.poster = canvas.toDataURL();
+    });
+  });
+
+  window.addEventListener("load", function() {
+    return Function.delay(1..second(), function() {
+      document.query("img[data-src]").forEach(function(img) {
+        return getImage(img.getAttribute("data-src"), function(imageURL) {
+          img.src = img.getAttribute("data-src");
+          return img.classList.add("loaded");
+        });
+      });
+      return document.query("video[data-poster]").forEach(function(video) {
+        return getImage(video.getAttribute("data-poster"), function(imageURL) {
+          video.poster = imageURL;
+          return video.classList.add("loaded");
+        });
+      });
+    });
+  });
+
+  getImage = function(src, callback) {
+    var img;
+    img = document.createElement("img");
+    img.onload = function() {
+      return callback(src);
+    };
+    return img.src = src;
+  };
+
+}).call(this);
+// Generated by CoffeeScript 1.8.0
+(function() {
+  window.addEventListener("load", function() {
+    return window.requestAnimationFrame(function() {
+      return document.querySelector("body").classList.add("initialized");
+    });
+  });
+
+  document.on("mouseover", "div.console:not(.invoked)", function(event, div) {
+    var stringElement, transactionID, _i, _len, _ref;
+    transactionID = "T" + (Date.now());
+    _ref = div.querySelectorAll("pre.output .hljs-string");
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      stringElement = _ref[_i];
+      if (stringElement.innerText === '"TNOW"') {
+        stringElement.innerText = '"' + transactionID + '"';
+      }
+    }
+    return Function.delay(33, function() {
+      return window.requestAnimationFrame(function() {
+        div.classList.add("invoked");
+        return window.requestAnimationFrame(function() {
+          return div.classList.add("returned");
+        });
+      });
+    });
+  });
+
+}).call(this);
+// Generated by CoffeeScript 1.8.0
+(function() {
+  var render;
+
+  window.addEventListener("load", function() {
+    return window.requestAnimationFrame(function() {
+      if (location.hash) {
+        return render({
+          id: location.hash.replace("#", "")
+        });
+      }
+    });
+  });
+
+  document.on("click", "a[href^='#']", function(event, hyperlink) {
+    return render({
+      id: hyperlink.href.toString().split("#")[1]
+    });
+  });
+
+  document.on("mousemove", "body > div[id]", function(event, div) {
+    var baseURL, id;
+    id = div.id;
+    baseURL = location.toString().split("#")[0];
+    if (location.hash !== ("#" + id)) {
+      history.replaceState({}, "", "" + baseURL + "#" + id);
+    }
+    return render({
+      id: id
+    });
+  });
+
+  document.on("DOMContentLoaded", function() {
+    return window.sections = Array.apply(null, document.querySelectorAll("body > div[id]")).reverse();
+  });
+
+  document.on("scroll", function(event) {
+    var baseURL, div, id;
+    baseURL = location.toString().split("#")[0];
+    div = window.sections.find(function(div) {
+      var distance;
+      distance = div.offsetTop - window.scrollY - window.pointer.y;
+      return distance < 1;
+    });
+    if (div === void 0) {
+      if (location.hash !== void 0) {
+        history.replaceState({}, "", "" + baseURL);
+      }
+      return render({});
+    } else {
+      id = div.id;
+      if (location.hash !== ("#" + id)) {
+        history.replaceState({}, "", "" + baseURL + "#" + id);
+      }
+      return render({
+        id: id
+      });
+    }
+  });
+
+  render = function(data) {
+    var elem, _i, _j, _len, _len1, _ref, _ref1;
+    _ref = document.querySelectorAll("*.selected");
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      elem = _ref[_i];
+      elem.classList.remove("selected");
+    }
+    if (data.id) {
+      _ref1 = document.querySelectorAll("a[href='#" + data.id + "']");
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        elem = _ref1[_j];
+        elem.classList.add("selected");
+      }
+      return document.getElementById(data.id).classList.add("selected");
+    }
+  };
+
+}).call(this);
+// Generated by CoffeeScript 1.8.0
+(function() {
+  document.on("mouseover", "a.play.video[href]", function(event, hyperlink) {
+    var address, id, instant, query, video, _ref;
+    id = hyperlink.getAttribute("href").split("#").pop();
+    _ref = hyperlink.getAttribute("href").split("#"), address = _ref[0], id = _ref[1], query = _ref[2];
+    instant = Number(query.substr(2, 2)).minutes() + Number(query.substr(5, 7)).seconds();
+    video = document.getElementById(id);
+    if (video.readyState === 0) {
+      video.load();
+    }
+    if (video.paused === true) {
+      return video.currentTime = Math.round(instant / 1..second());
+    }
+  });
+
+  document.on("click", "a.play.video[href]", function(event, hyperlink) {
+    var address, id, instant, query, seconds, video, _ref;
+    event.preventDefault();
+    _ref = hyperlink.getAttribute("href").split("#"), address = _ref[0], id = _ref[1], query = _ref[2];
+    instant = Number(query.substr(2, 2)).minutes() + Number(query.substr(5, 7)).seconds();
+    seconds = Number(query.substr(5, 7)).seconds();
+    video = document.getElementById(id);
+    video.currentTime = Math.round(instant / 1..second());
+    return video.play();
+  });
+
+  document.on("mouseover", "video:not(.silent)", function(event, video) {
+    if (video.readyState === 0) {
+      return video.load();
+    }
+  });
+
+  document.on("mousedown", "video:not(.silent)", function(event, video) {
+    return console.info(event);
+  });
+
+  document.on("mouseover", "video.silent", function(event, video) {
+    var playWhenReady;
+    if (video.readyState === 4) {
+      return video.play();
+    } else {
+      video.addEventListener("canplay", playWhenReady = function(event) {
+        video.removeEventListener("canplay", playWhenReady);
+        return video.play();
+      });
+      if (video.readyState === 0) {
+        return video.load();
+      }
+    }
+  });
+
+  document.on("mouseout", "video.silent", function(event, video) {
+    return video.pause();
+  });
+
+}).call(this);
+</script>

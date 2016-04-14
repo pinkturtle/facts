@@ -1,0 +1,56 @@
+<div id="installation" class="section">
+  <h2>Installation</h2>
+  <div class="trapezoid"></div>
+  <p>
+    <code>Facts</code> works in a web agent <code>window</code> or a <a href="http://nodejs.org">Node.js</a> process.
+    The setup procedure for each enironment is different but the end result is the same – a <code>Facts</code> constructor is exposed to your program with functions to remember and query data.
+  </p>
+</div>
+
+<div id="html_setup">
+<h2>HTML Setup</h2>
+<p>
+  Get <a href="facts.pack.js" download="facts.pack.js">facts.pack.js</a>
+  and add it to your web page with a <code>&lt;script&gt;</code> tag:
+</p>
+<pre class="html">&lt;!DOCTYPE HTML&gt;
+&lt;title&gt;Untitled&lt;/title&gt;
+<strong>&lt;script src="facts.pack.js"&gt;&lt;/script&gt;</strong>
+&lt;body&gt;&lt;/body&gt;</pre>
+<p>
+  <code>Facts</code> is defined on <code>window</code> when the <code>&lt;script&gt;</code> is loaded.
+  Your program can refer to it as <code>window.Facts</code>, <code>window["Facts"]</code> or simply <code>Facts</code>.
+</p>
+<p>
+  <a href="facts.pack.js" download="facts.pack.js">facts.pack.js</a> includes <a href="">Immutable</a>.
+  If you prefer to manage this depedency yourself you can specify
+    <a href="https://github.com/facebook/immutable-js/blob/master/dist/immutable.min.js" download="immutable.min.js">immutable.min.js</a>
+    followed by
+    <a href="facts.core.js" download="facts.core.js">facts.core.js</a> in your <code>HTML</code> document:
+  </p>
+<pre class="html">&lt;!DOCTYPE HTML&gt;
+&lt;title&gt;Untitled&lt;/title&gt;
+<strong>&lt;script src="immutable.min.js"&gt;&lt;/script&gt;</strong>
+<strong>&lt;script src="facts.core.js"&gt;&lt;/script&gt;</strong>
+&lt;body&gt;&lt;/body&gt;</pre>
+<p>
+  <code>Facts</code> should work in any modern web agent.
+  It is known to work in recent releases of
+    <a href="https://www.apple.com/safari">Apple Safari</a>,
+    <a href="https://www.mozilla.org/firefox">Mozilla Firefox</a>
+    and
+    <a href="https://www.google.com/chrome">Google Chrome</a>.
+</p>
+</div>
+
+<div id="node_setup">
+  <h2>Node.js Setup</h2>
+  <p>
+    <code>npm install pinkturtle/facts</code> will add the package to your project.
+    Once it is installed you can require the module in your program like so:
+  </p>
+  <pre class="ecmascript">Facts = require("facts")</pre>
+  <p>
+    <code>Facts</code> is known to work in <a href="https://nodejs.org/">Node</a> versions <code>4.2.1</code> and <code>4.4.2</code>.
+  </p>
+</div>
