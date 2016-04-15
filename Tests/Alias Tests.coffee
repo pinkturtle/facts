@@ -18,11 +18,11 @@ tape "retract is an alias for reverse to mimic Datomic lingo", (test) ->
   test.ok Facts::revert is Facts::reverse
   test.end()
 
-tape "divert is an alias for advance because it feels good", (test) ->
+tape "divert is an alias for advance because it feels perceptually correct", (test) ->
   test.ok Facts::revert is Facts::reverse
   test.end()
 
-tape "revert is an alias for reverse because it feels good", (test) ->
+tape "revert is an alias for reverse because it mimis Git lingo", (test) ->
   test.ok Facts::revert is Facts::reverse
   test.end()
 
