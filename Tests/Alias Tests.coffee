@@ -53,3 +53,7 @@ tape "commit is an alias for transact to mimic Git lingo", (test) ->
 tape "pushState is an alias for transact to mimic window lingo", (test) ->
   test.ok Facts::pushState is Facts::transact
   test.end()
+
+tape "pleaseAnswerMyQuestion is an alias for query because it is playful synonym", (test) ->
+  test.ok Facts::pleaseAnswerMyQuestion is Facts::query
+  test.end()

@@ -44,6 +44,9 @@ class Facts
 # Extend Facts prototype with methods from Events.
 Facts::[name] = value for name, value of require("./events")
 
+# Define aliases for query.
+Facts::pleaseAnswerMyQuestion = Facts::query
+
 # Define aliases for at.
 Facts::database = Facts::asOf = Facts::at
 
