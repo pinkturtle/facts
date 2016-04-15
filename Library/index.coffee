@@ -55,6 +55,9 @@ Facts::unsure                                    = Facts::unknown
 # Define aliases for pull.
 Facts::get = Facts::entity = Facts::recall = Facts::retrieve = Facts::pull
 
+# Define aliases for transact.
+Facts::commit = Facts::transact
+
 # Expose Immutable for window authors.
 Facts.Immutable = Immutable
 

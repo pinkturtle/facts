@@ -45,3 +45,7 @@ tape "retrieve is an alias for pull because it seems correct", (test) ->
 tape "recall is an alias for pull because it seems correct, and mimics ECMAScript lingo, and it feels like a memory method", (test) ->
   test.ok Facts::recall is Facts::pull
   test.end()
+
+tape "commit is an alias for transact to mimic Git lingo", (test) ->
+  test.ok Facts::commit is Facts::transact
+  test.end()
