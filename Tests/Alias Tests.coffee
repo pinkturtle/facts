@@ -22,7 +22,7 @@ tape "divert is an alias for advance because it feels perceptually correct", (te
   test.ok Facts::revert is Facts::reverse
   test.end()
 
-tape "revert is an alias for reverse because it mimis Git lingo", (test) ->
+tape "revert is an alias for reverse because it mimics Git lingo", (test) ->
   test.ok Facts::revert is Facts::reverse
   test.end()
 
