@@ -744,6 +744,45 @@ facts.query({
 </div>
 
 
+<div id="pull" class="member">
+<header>
+  <code>facts.pull(id)</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <code>get</code>
+    <code>entity</code>
+    <code>recall</code>
+    <code>retrieve</code>
+  </div>
+</header>
+<p>
+  Returns the entity identified by <code>id</code>.
+</p>
+<p>
+ Returns an instance of <code>Object</code> when the <code>id</code> identifies a known entity.
+<div class="console">
+<pre class="ecmascript input">
+facts.pull(1)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+{"id":1, "name":"Ursula Franklin", "role":"Educator"}
+</pre>
+</div>
+
+<p>
+  Returns <code>undefined</code> when the <code>id</code> isn’t known to this instance of <code>Facts</code>.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.pull(0)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+undefined
+</pre>
+</div>
+</div>
+
+
 <div id="advance" class="member">
 <header>
   <code>facts.advance(id, attributes)</code>
