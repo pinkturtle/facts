@@ -49,3 +49,7 @@ tape "recall is an alias for pull because it seems correct, and mimics ECMAScrip
 tape "commit is an alias for transact to mimic Git lingo", (test) ->
   test.ok Facts::commit is Facts::transact
   test.end()
+
+tape "pushState is an alias for transact to mimic window lingo", (test) ->
+  test.ok Facts::pushState is Facts::transact
+  test.end()

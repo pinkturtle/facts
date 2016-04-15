@@ -56,7 +56,7 @@ Facts::unsure                                    = Facts::unknown
 Facts::get = Facts::entity = Facts::recall = Facts::retrieve = Facts::pull
 
 # Define aliases for transact.
-Facts::commit = Facts::transact
+Facts::commit = Facts::pushState = Facts::transact
 
 # Expose Immutable for window authors.
 Facts.Immutable = Immutable
