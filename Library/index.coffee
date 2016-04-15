@@ -53,7 +53,7 @@ Facts::revert = Facts::retract = Facts::subtract = Facts::reverse
 Facts::unsure                                    = Facts::unknown
 
 # Define aliases for pull.
-Facts::get = Facts::recall = Facts::retrieve = Facts::pull
+Facts::get = Facts::entity = Facts::recall = Facts::retrieve = Facts::pull
 
 # Expose Immutable for window authors.
 Facts.Immutable = Immutable

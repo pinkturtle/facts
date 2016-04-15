@@ -34,6 +34,10 @@ tape "get is alias for pull because it mimics ECMAScript lingo", (test) ->
   test.ok Facts::get is Facts::pull
   test.end()
 
+tape "entity is alias for pull because it is predictable", (test) ->
+  test.ok Facts::entity is Facts::pull
+  test.end()
+
 tape "retrieve is an alias for pull because it seems correct", (test) ->
   test.ok Facts::retrieve is Facts::pull
   test.end()
