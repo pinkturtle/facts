@@ -561,7 +561,7 @@ facts.pull(1)<a class="cursor">&nbsp;</a>
 </p>
 <div class="console">
 <pre class="ecmascript input">
-facts.advance(1, name:"Ursula Franklin")<a class="cursor">&nbsp;</a>
+facts.advance(1, {name:"Ursula Franklin"})<a class="cursor">&nbsp;</a>
 </pre>
 <pre class="ecmascript output">
 {
@@ -587,6 +587,29 @@ facts.pull(1)<a class="cursor">&nbsp;</a>
 </pre>
 </div>
 
+<p>
+  OK — looks good. Lets move on.
+</p>
+
+<p>
+  Or, on second thought, lets go back and look our history of Ursula.
+</p>
+
+<div class="console">
+<pre class="ecmascript input">
+facts.history.map(function(database){
+  return Facts.Immutable.Map(facts.pull(1, {from:database}))
+}).toSet().toJS()<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+[
+  {"id":1, "name":"Ursula Franklan", "role":"Educator"}
+  {"id":1, "name":"Ursula Franklin", "role":"Educator"}
+]
+</pre>
+</div>
+<p>
+  Well then, that sure is a dirty dirty history that makes us look pretty stupid. But at least it is accurate.</p>
 </div>
 <div id="constructor" class="section">
   <h2>Constructor</h2>
