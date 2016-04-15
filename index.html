@@ -920,13 +920,17 @@ facts.unknown(1, {
 <div id="transact" class="member">
 <header>
   <code>facts.transact(data)</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <code>commit</code>
+  </div>
 </header>
 <p>
-  Submits a transaction to the database for writing.
+  Commits <code>data</code> to memory.
 </p>
 <p>
-  <code>data</code> is a list of lists, each of which specifies a write operation, either an advancement, a reversal or an unknown.
-  Each nested list starts with a keyword identifying the operation followed by the arguments for the operation.
+  <code>data</code> is a list of lists, each of which specifies a memory operation.
+  Each nested list starts with a keyword identifying the operation followed by it arguments.
 </p>
 <div class="console">
 <pre class="ecmascript input">
@@ -934,7 +938,7 @@ facts.transact([
   ["reverse", 1, "name", "Dr. Ursula M. Franklan"],
   ["advance", 1, "name", "Ursula Martius Franklin"],
   ["advance", 1, "role", "Metallurgist"],
-])
+])<a class="cursor">&nbsp;</a>
 </pre>
 <pre class="ecmascript output">
 {
