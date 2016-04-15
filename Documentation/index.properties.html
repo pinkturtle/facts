@@ -8,7 +8,7 @@
     <code>facts.datoms</code>
   </header>
   <p>
-    Raw access to memorized datoms.
+    Raw access to memorized <code>datoms</code> in the form of an <code>Immutable.Stack</code>.
   </p>
 </div>
 
@@ -17,21 +17,8 @@
     <code>facts.history</code>
   </header>
   <p>
-    <code>facts.history</code> contains a list of database values.
-  </p>
-  <p>
-    the first item is the earliest version of database:
-  </p>
-<pre class="ecmascript">
-facts.history.first()
-</pre>
-<p>
-  the last item is the latest version of database.
-</p>
-<pre class="ecmascript">
-facts.history.last()
-</pre>
-  <p>
-    <code>facts.history</code> is an isntance if <code>Immutable.List</code>
+    A list of database values since this instance of <code>Facts</code> was constructed.
+    <code>history</code> is an instance of <code>Immutable.List</code>.
+    <code>facts.history.first()</code> is the earliest version of database and <code>facts.history.last()</code> is the latest version of database.
   </p>
 </div>
