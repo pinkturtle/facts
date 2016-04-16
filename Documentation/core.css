@@ -149,7 +149,7 @@ nav a[href], h1 a[href] { text-decoration: none; }
 html, a[download] {
   font: 19px/30px "Fira Sans", sans-serif; font-weight: 400;
 }
-h1, h2, nav, body > header nav, cite, label, div.annotation, div.version, #downloads, .quote > div {
+h1, h2, nav, body > header nav, cite, label, div.annotation, div.version, #downloads, .quote > div, div.example div.text p:not(:first-child) {
   font: 14px/20px "Fira Sans", sans-serif; font-weight: 300;
 }
 pre, pre *, code {

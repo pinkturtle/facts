@@ -132,11 +132,14 @@ header .aliases:hover label { visibility: visible; }
 #downloads .file div.version { margin-top:-1px;}
 #downloads .file svg { position: absolute; left: 0; bottom: 3px; }
 
-div.example { max-width: 1050px; }
-div.example div.text { position: absolute; top: 30px; left: 64%; width: 36%; }
+div.example { max-width: 720px; margin: 0 33px; }
+div.example div.text { position: absolute; bottom: 30px; left: 60%; width: 40%; }
+div.example div.text p {margin-right: -33px;}
+div.example div.text p:first-child {margin-bottom: -11px;}
+
 div.example a.window {
   display: block; position: relative; left: 0; top: 0;
-  width: 64%;
+  width: 60%;
   overflow: hidden;
   box-shadow: 0px 1px 5px hsla(0, 0%, 0%, 0.66);
   border-top: 5px solid hsla(0, 0%, 100%, 0.15);
