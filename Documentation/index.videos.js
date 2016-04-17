@@ -32,7 +32,11 @@
   });
 
   document.on("mousedown", "video:not(.silent)", function(event, video) {
-    return console.info(event);
+    if (video.paused) {
+      return video.play();
+    } else {
+      return video.pause();
+    }
   });
 
   document.on("mouseover", "video.silent", function(event, video) {

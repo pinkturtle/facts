@@ -20,16 +20,14 @@ document.on "click", "a.play.video[href]", (event, hyperlink) ->
   video.play()
 
 # Videos with Audio
-
 document.on "mouseover", "video:not(.silent)", (event, video) ->
   if video.readyState is 0 then video.load()
 
 document.on "mousedown", "video:not(.silent)", (event, video) ->
-  console.info event
-  # if video.paused then video.play() else video.pause()
+  # event.preventDefault()
+  if video.paused then video.play() else video.pause()
 
 # Silent Videos
-
 document.on "mouseover", "video.silent", (event, video) ->
   if video.readyState is 4
     video.play()
