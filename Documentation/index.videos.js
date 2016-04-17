@@ -31,14 +31,6 @@
     }
   });
 
-  document.on("mousedown", "video:not(.silent)", function(event, video) {
-    if (video.paused) {
-      return video.play();
-    } else {
-      return video.pause();
-    }
-  });
-
   document.on("mouseover", "video.silent", function(event, video) {
     var playWhenReady;
     if (video.readyState === 4) {
