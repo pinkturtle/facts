@@ -18,7 +18,7 @@
     "uglify-js": "^2.6.2"
   },
   "scripts": {
-    "start": "nodemon --watch Documentation --ext html,css,js,coffee --exec 'make -B index.html'",
+    "start": "nodemon --watch Documentation --ext html,css,coffee --exec 'make -B ECMAScript index.html'",
     "test": "npm run window.tests; npm run node.tests",
     "window.tests": "make facts.pack.js Tests/window.test.pack.js; open --background Tests/index.html",
     "node.tests": "make facts.core.js; tape Tests/*Tests.js | tap-diff"
