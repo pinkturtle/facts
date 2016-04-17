@@ -70,14 +70,10 @@ clean:
 	git config user.name "pinkturtle"
 	git config user.email "purplespots@lostpond"
 	git remote add github git@github.com:pinkturtle/facts.git
-
 	git checkout -b principle
 	git add UNLICENSE
 	git commit -m "Init principle branch."
-	# git push --set-upstream github principle:principle
-
 	git checkout -b draft
 	git add --all
 	git commit -m "Init draft branch."
-	# git push github draft:gh-pages
 	git log
