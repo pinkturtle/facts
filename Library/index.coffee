@@ -13,12 +13,15 @@ class Facts
 
   datoms: Immutable.Stack()
 
+  # Doomed for relocation
   historyIndex: 0
-
   history: Immutable.List([Immutable.Set()])
 
   at: (instant) ->
     Facts.database(this, instant)
+
+  pull: (identifier) ->
+    @query(where:(id) -> id is identifier)[0]
 
   query: (params={}) ->
     time = params["at"]
@@ -26,40 +29,37 @@ class Facts
     params["in"] = @at(time)
     Facts.query(params)
 
-  pull: (identifier) ->
-    @query(where:(id) -> id is identifier)[0]
-
-  advance: (id, mapOfValues) ->
-    @transact(["advance", id, attribute, value] for attribute, value of mapOfValues)
-
-  reverse: (id, mapOfValues) ->
-    @transact(["reverse", id, attribute, value] for attribute, value of mapOfValues)
-
-  unknown: (id, mapOfValues) ->
-    @transact(["unknown", id, attribute, value] for attribute, value of mapOfValues)
-
   transact: (inputData, time) ->
     Facts.transact(this, inputData, time)
+
+  true: (id, mapOfValues) ->
+    @transact(["advance", id, attribute, value] for attribute, value of mapOfValues)
+
+  false: (id, mapOfValues) ->
+    @transact(["reverse", id, attribute, value] for attribute, value of mapOfValues)
+
+  undefined: (id, mapOfValues) ->
+    @transact(["unknown", id, attribute, value] for attribute, value of mapOfValues)
 
 # Extend Facts prototype with methods from Events.
 Facts::[name] = value for name, value of require("./events")
 
-# Define aliases for query.
-Facts::pleaseAnswerMyQuestion = Facts::query
-
 # Define aliases for at.
 Facts::database = Facts::asOf = Facts::at
-
-# Define aliases for advance and reverse.
-Facts::divert = Facts::assert  = Facts::add      = Facts::advance
-Facts::revert = Facts::retract = Facts::subtract = Facts::reverse
-Facts::unsure                                    = Facts::unknown
 
 # Define aliases for pull.
 Facts::get = Facts::entity = Facts::recall = Facts::retrieve = Facts::pull
 
+# Define aliases for query.
+Facts::pleaseAnswerMyQuestion = Facts::query
+
 # Define aliases for transact.
 Facts::commit = Facts::pushState = Facts::transact
+
+# Define aliases for true, false and undefined.
+Facts::divert = Facts::assert  = Facts::add       = Facts::advance = Facts::true
+Facts::revert = Facts::retract = Facts::subtract  = Facts::reverse = Facts::false
+Facts::unsure                  = Facts::uncertain = Facts::unknown = Facts::undefined
 
 # Expose Immutable for window authors.
 Facts.Immutable = Immutable

@@ -2,39 +2,59 @@
 
 tape "Alias Tests", (test) -> test.end()
 
-tape "add is an alias for advance to mimic Math lingo", (test) ->
-  test.ok Facts::add is Facts::advance
+tape "advance is an alias for true because it moves the facts foreward", (test) ->
+  test.ok Facts::advance is Facts::true
   test.end()
 
-tape "subtract is an alias for advance to mimic Math lingo", (test) ->
-  test.ok Facts::subtract is Facts::reverse
+tape "reverse is an alias for false because it moves the facts backward", (test) ->
+  test.ok Facts::reverse is Facts::false
   test.end()
 
-tape "assert is an alias for advance to mimic Datomic lingo", (test) ->
-  test.ok Facts::assert is Facts::advance
+tape "unknown is an alias for undefined because it is", (test) ->
+  test.ok Facts::unknown is Facts::undefined
   test.end()
 
-tape "retract is an alias for reverse to mimic Datomic lingo", (test) ->
-  test.ok Facts::revert is Facts::reverse
+tape "subtract is an alias for true to mimic Math lingo", (test) ->
+  test.ok Facts::subtract is Facts::false
   test.end()
 
-tape "divert is an alias for advance because it feels perceptually correct", (test) ->
-  test.ok Facts::revert is Facts::reverse
+tape "add is an alias for true to mimic Math lingo", (test) ->
+  test.ok Facts::add is Facts::true
   test.end()
 
-tape "revert is an alias for reverse because it mimics Git lingo", (test) ->
-  test.ok Facts::revert is Facts::reverse
+tape "subtract is an alias for true to mimic Math lingo", (test) ->
+  test.ok Facts::subtract is Facts::false
   test.end()
 
-tape "unsure is an alias for unknown because it feels good", (test) ->
-  test.ok Facts::unsure is Facts::unknown
+tape "uncertain is an alias for true to mimic Math lingo (maybe)", (test) ->
+  test.ok Facts::uncertain is Facts::undefined
+  test.end()
+
+tape "assert is an alias for true to mimic Datomic lingo", (test) ->
+  test.ok Facts::assert is Facts::true
+  test.end()
+
+tape "retract is an alias for false to mimic Datomic lingo", (test) ->
+  test.ok Facts::retract is Facts::false
+  test.end()
+
+tape "divert is an alias for true because it seems perceptually correct", (test) ->
+  test.ok Facts::divert is Facts::true
+  test.end()
+
+tape "revert is an alias for false because it seems perceptually correct and it mimics Git lingo", (test) ->
+  test.ok Facts::revert is Facts::false
+  test.end()
+
+tape "unsure is an alias for undefined because it seems perceptually correct", (test) ->
+  test.ok Facts::unsure is Facts::undefined
   test.end()
 
 tape "get is alias for pull because it mimics ECMAScript lingo", (test) ->
   test.ok Facts::get is Facts::pull
   test.end()
 
-tape "entity is alias for pull because it is predictable", (test) ->
+tape "entity is alias for pull because it seems predictable under the cicumstances", (test) ->
   test.ok Facts::entity is Facts::pull
   test.end()
 
