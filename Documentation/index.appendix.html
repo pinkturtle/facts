@@ -19,25 +19,25 @@
     Version 0.0.1 will be the first release.
   </p>
   <p>
-    At the moment, <code>Facts</code> is floating as a pre-release at version 0.0.0 in the draft branch of the Git repository.
     This turtle anticipates that the first release will occur after we complete the following hopeless tasks:
   </p>
   <ul>
     <li>Let the constructor accept a stack of <code>datoms</code> so that instances can be reliably re-established from serialized data.</li>
     <li>Let <code>pull</code> accept a <code>from</code> parameter to explicity define the source database.</li>
     <li>Let <code>pull</code> accept an <code>at</code> parameter to explicity define the perception time.</li>
+    <li>Specify query output format with <code>Array</code>, <code>Object</code>, <code>Immutable.Map</code> or <code>Immutable.List</code> instead of the existing string identifiers.</li>
     <li>Let <code>Facts.query</code> accept a list of input sources.</li>
     <li>Remove the <code>history</code> property and replace with a function that constructs <code>history</code>-like instances on demand.</li>
     <li>Guard against operating on transaction identifiers.</li>
-    <li>Document <code>Facts.transact</code>.</li>
-    <li>Document <code>Facts.database</code>.
+    <li>Document <code>Facts.transact(facts, input)</code>.</li>
+    <li>Document <code>Facts.database(facts, time)</code>.
     <li>Complete checklist example.</li>
     <li>Complete the income tax example.</li>
     <li>Complete the scene improv example.</li>
     <li>Complete the tree building example.</li>
     <li>Complete the glossary example.</li>
     <li>Optimistically, complete the traffic policy anaysis example.</li>
-    <li>Possibly include basic <code>storage</code> models for automatic sync with localStorage in a window or the file system on a node.</li>
+    <li>Possibly include basic <code>storage</code> models for automatic sync with localStorage in a window or the file system on a node when <code>"storage keys"</code> are defined.</li>
   </ul>
 </div>
 
