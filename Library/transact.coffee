@@ -61,10 +61,10 @@ selectDatabaseForTransaction = ->
     return @history.last()
 
 selectValueForTransactionOperation = (operation) ->
-  if operation is "advance" then return true
-  if operation is "reverse" then return false
-  if operation is "unknown" then return undefined
-  throw "Oops! '#{operation}' is not a recognized transaction operation. Try 'advance', 'reverse' or 'unknown'."
+  if operation in [true, false, undefined]
+    return operation
+  else
+    throw "Oops! '#{operation}' is not a recognized transaction operation. Try true, false or undefined."
 
 now = module.exports.now = switch
   when window?.performance?.now instanceof Function

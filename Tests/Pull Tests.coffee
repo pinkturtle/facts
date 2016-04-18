@@ -4,7 +4,7 @@ tape "Pull Tests", (test) -> test.end()
 
 tape "pull returns entity identified by id", (test) ->
   facts = Facts()
-  facts.transact [["advance", 1, "en", "Hello world!"]]
+  facts.transact [[true, 1, "en", "Hello world!"]]
   test.same facts.pull(1), { "en": "Hello world!", "id": 1 }
   test.end()
 

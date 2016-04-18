@@ -25,7 +25,7 @@ tape "query throws an exception when an unrecognized output format is specified"
 
 tape "query for one entity returns a one item list", (test) ->
   facts = Facts()
-  facts.transact [["advance", 1, "en", "Hello world!"]]
+  facts.transact [[true, 1, "en", "Hello world!"]]
   entities = Facts.query in:facts.database(), where:(id) -> id is 1
   test.same entities.length, 1
   test.same entities[0], { "en": "Hello world!", "id": 1 }
@@ -34,8 +34,8 @@ tape "query for one entity returns a one item list", (test) ->
 tape "query for all entities returns list of all entities", (test) ->
   facts = Facts()
   facts.transact [
-    ["advance", 1, "en", "Hello world!"]
-    ["advance", 2, "en", "Goodbye moon"]
+    [true, 1, "en", "Hello world!"]
+    [true, 2, "en", "Goodbye moon"]
   ]
   entities = Facts.query in:facts.database()
   test.same entities.length, 2
@@ -46,8 +46,8 @@ tape "query for all entities returns list of all entities", (test) ->
 tape "query results are entity maps of all known attributes", (test) ->
   facts = Facts()
   facts.transact [
-    ["advance", 1, "en", "Hello world!"]
-    ["advance", 1, "fr", "Salut le monde!"]
+    [true, 1, "en", "Hello world!"]
+    [true, 1, "fr", "Salut le monde!"]
   ]
   entities = Facts.query in:facts.database(), where:(id) -> id is 1
   entity = entities[0]

@@ -33,13 +33,13 @@ class Facts
     Facts.transact(this, inputData, time)
 
   true: (id, mapOfValues) ->
-    @transact(["advance", id, attribute, value] for attribute, value of mapOfValues)
+    @transact([true, id, attribute, value] for attribute, value of mapOfValues)
 
   false: (id, mapOfValues) ->
-    @transact(["reverse", id, attribute, value] for attribute, value of mapOfValues)
+    @transact([false, id, attribute, value] for attribute, value of mapOfValues)
 
   undefined: (id, mapOfValues) ->
-    @transact(["unknown", id, attribute, value] for attribute, value of mapOfValues)
+    @transact([undefined, id, attribute, value] for attribute, value of mapOfValues)
 
 # Extend Facts prototype with methods from Events.
 Facts::[name] = value for name, value of require("./events")
