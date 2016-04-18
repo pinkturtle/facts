@@ -414,17 +414,17 @@ ol.playlist li audio { width:100%; height: 25px; }
       It supplies functions to
         <a href="#transact">memorize facts</a>,
         <a href="#query">query facts</a>,
-        and to <a href="#history">travel through time</a>.
+        and to <a href="#at">travel through time</a>.
       <code>Facts</code> relies on
         <a href="https://facebook.github.io/immutable-js/">Immutable</a>
         for the nitty-gritty.
     </p>
     <p>
       The <a href="https://github.com/pinkturtle/facts/tree/draft">codebase is hosted at GitHub</a>
-        where you can
+        where you might
         <a href="https://github.com/pinkturtle/facts/issues">report a bug</a>,
         <a href="https://github.com/pinkturtle/facts/pulls">propose a change</a>
-        and clone the <a href="https://github.com/pinkturtle/facts/tree/draft">source code</a>.
+        or clone the <a href="https://github.com/pinkturtle/facts/tree/draft">source code</a>.
       If you’re feeling particularly investigativeish,
         please do exercise the <a href="Tests/">test suite</a>
         to verify <code>Facts</code> works as expected
@@ -1070,7 +1070,7 @@ Immutable.Set {
   <p>
     A list of database values since this instance of <code>Facts</code> was constructed.
     <code>history</code> is an instance of <code>Immutable.List</code>.
-    <code>facts.history.first()</code> is the earliest version of database and <code>facts.history.last()</code> is the latest version of database.
+    <code>facts.history.first()</code> is the earliest version of database and <code>facts.history.last()</code> is the latest version.
   </p>
 </div>
 <div id="functions" class="section">
