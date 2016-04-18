@@ -7,15 +7,15 @@
   "files": ["facts.core.js"],
   "license": "Unlicense",
   "dependencies": {
-    "immutable": "^3.7.6"
+    "immutable": "3.7.6"
   },
   "devDependencies": {
     "browserify": "5.9.x",
     "coffee-script": "1.8.x",
-    "nodemon": "^1.9.1",
-    "tap-diff": "^0.1.1",
-    "tape": "2.14.x",
-    "uglify-js": "^2.6.2"
+    "nodemon": "1.9.x",
+    "tap-diff": "0.1.1",
+    "tape": "2.14.1",
+    "uglify-js": "2.6.2"
   },
   "scripts": {
     "start": "nodemon --watch Documentation --ext html,css,coffee --exec 'make -B ECMAScript index.html'",
