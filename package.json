@@ -7,7 +7,7 @@
   "files": ["facts.core.js"],
   "license": "Unlicense",
   "dependencies": {
-    "immutable": "3.7.6"
+    "immutable": "3.8.x"
   },
   "devDependencies": {
     "browserify": "5.9.x",
