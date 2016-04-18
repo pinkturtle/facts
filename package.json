@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "browserify": "5.9.x",
-    "coffee-script": "1.8.x",
+    "coffee-script": "1.10.x",
     "nodemon": "1.9.x",
     "tap-diff": "0.1.1",
     "tape": "2.14.1",
