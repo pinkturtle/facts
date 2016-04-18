@@ -245,14 +245,9 @@ pre { margin:  0px 30px; }
 
 /* Abstracts */
 
-/*pre { padding: 10px 0px 10px 14px; border-left: 1px solid hsl(213, 15%, 33%); border-right: 1px solid hsl(213, 15%, 33%); }*/
 pre { padding: 10px 0px 10px 14px; }
 
-div.console {
-	margin: 0px 30px;
-	outline: 1px solid hsla(0, 0%, 55%, 0.1);
-
-}
+div.console { margin: 0px 30px; outline: 1px solid hsla(0, 0%, 55%, 0.1); }
 div.console pre { margin: 0; background: transparent; padding: 11px 10px 8px; border:none; box-sizing: content-box;}
 
 div.console.invoked  { background: hsla(0, 0%, 100%, 0.2); }
@@ -289,7 +284,9 @@ div.console a.cursor {
   100% { opacity: 0; }
 }
 
-ul > li { margin: 20px  0px; }
+ul > li { margin: 30px 20px; list-style: none;}
+ul > li:before { content: "☀︎"; position: absolute; left: -25px; top: 1px; opacity: 0.33; transform: scale(0.99); transform: opacity 333ms linear;}
+ul > li:hover:before { transform: scale(1.22); opacity: 0.66; }
 
 body > div[id] { padding: 30px 0; }
 body > div[id] h2 { margin: 0px 30px 30px 30px; border-top: 1px dotted hsla(0, 0%, 100%, 0.25); padding-top: 4px; box-sizing: content-box;}
@@ -356,10 +353,10 @@ header .aliases:hover label { visibility: visible; }
 #downloads .file div.version { margin-top:-1px;}
 #downloads .file svg { position: absolute; left: 0; bottom: 3px; }
 
-div.example { max-width: 720px; margin: 0 33px; }
+div.example { max-width: 720px; margin: 0 30px; }
 div.example div.text { position: absolute; bottom: 30px; left: 60%; width: 40%; }
-div.example div.text p {margin-right: -33px;}
-div.example div.text p:first-child {margin-bottom: -11px;}
+div.example div.text p {margin-right: -30px;}
+div.example div.text p:first-child {margin-bottom: -10px;}
 
 div.example a.window {
   display: block; position: relative; left: 0; top: 0;
@@ -378,7 +375,7 @@ ol.playlist li audio { width:100%; height: 25px; }
 
 
 #unlicense { padding-bottom: 30px; }
-#unlicense blockquote.legal.document { background: hsl(50, 15%, 75%); color: black; font: bold 20px/30px "Courier New", "Apple Chancery", "Georgia", serif; margin: 0 30px; max-width: 750px; padding: 30px 0px 100px; box-shadow: 0px 2px 10px hsla(0, 0%, 0%, 0.66); transform: rotate(-1deg)translate(-20px,0px);}
+#unlicense blockquote.legal.document { background: hsl(50, 15%, 75%); color: black; font: bold 20px/30px "Courier New", "Apple Chancery", "Georgia", serif; margin: 30px 30px; max-width: 750px; padding: 30px 0px 100px; box-shadow: 0px 2px 10px hsla(0, 0%, 0%, 0.66); transform: rotate(-1deg)translate(-20px,0px);}
 #unlicense blockquote.legal.document a[href] { color: inherit; text-decoration: none;}
 </style>
 <body>
@@ -1279,11 +1276,42 @@ Facts.query({in:database, out:"map"})<a class="cursor">&nbsp;</a>
   <div class="trapezoid"></div>
 </div>
 
+
 <div id="internals">
   <h2>Internals</h2>
-  <p><code>Facts</code> relies on <code>Immutable</code> for the underlying data models.</p>
+  <p><code>Facts</code> relies on <code>Immutable</code> for its underlying data models.</p>
   <p><code>Facts</code> currently uses a modified copy of <code>Backbone.Events</code> which provides <code>on</code> and <code>off</code> methods to listen for completed transactions. This will probably be re-visited in the <code>future</code>.</p>
 </div>
+
+
+<div id="forecast">
+  <h2>Forecast</h2>
+  <p>
+    Version 0.0.1 will be the first release.
+  </p>
+  <p>
+    At the moment, <code>Facts</code> is floating as a pre-release at version 0.0.0 in the draft branch of the Git repository.
+    This turtle anticipates that the first release will occur after we complete the following hopeless tasks:
+  </p>
+  <ul>
+    <li>Let the constructor accept a stack of <code>datoms</code> so that instances can be reliably re-established from serialized data.</li>
+    <li>Let <code>pull</code> accept a <code>from</code> parameter to explicity define the source database.</li>
+    <li>Let <code>pull</code> accept an <code>at</code> parameter to explicity define the perception time.</li>
+    <li>Let <code>Facts.query</code> accept a list of input sources.</li>
+    <li>Remove the <code>history</code> property and replace with a function that constructs <code>history</code>-like instances on demand.</li>
+    <li>Guard against operating on transaction identifiers.</li>
+    <li>Document <code>Facts.transact</code>.</li>
+    <li>Document <code>Facts.database</code>.
+    <li>Complete checklist example.</li>
+    <li>Complete the income tax example.</li>
+    <li>Complete the scene improv example.</li>
+    <li>Complete the tree building example.</li>
+    <li>Complete the glossary example.</li>
+    <li>Optimistically, complete the traffic policy anaysis example.</li>
+    <li>Possibly include basic <code>storage</code> models for automatic sync with localStorage in a window or the file system on a node.</li>
+  </ul>
+</div>
+
 
 <div id="radix">
   <h2>Radix</h2>
@@ -1468,35 +1496,6 @@ Facts.query({in:database, out:"map"})<a class="cursor">&nbsp;</a>
 </div>
 
 
-<div id="changelog">
-  <h2>Changelog</h2>
-  <p>
-    Version 0.0.1 will be the first release.
-  </p>
-  <p>
-    At the moment, <code>Facts</code> is floating as a pre-release at version 0.0.0 in the draft branch of the Git repository.
-    This turtle anticipates that the first release will occur after we complete the following tasks:
-  </p>
-  <ul>
-    <li>Let the constructor accept a stack of <code>datoms</code> so that instances can be reliably re-established from serialized data.</li>
-    <li>Let <code>pull</code> accept a <code>from</code> parameter to explicity define the source database.</li>
-    <li>Let <code>pull</code> accept an <code>at</code> parameter to explicity define the perception time.</li>
-    <li>Let <code>Facts.query</code> accept a list of input sources.</li>
-    <li>Remove the <code>history</code> property and replace with a function that constructs <code>history</code>-like instances on demand.</li>
-    <li>Guard against operating on transaction identifiers.</li>
-    <li>Document <code>Facts.transact</code>.</li>
-    <li>Document <code>Facts.database</code>.
-    <li>Complete checklist example.</li>
-    <li>Complete the income tax example.</li>
-    <li>Complete the scene improv example.</li>
-    <li>Complete the tree building example.</li>
-    <li>Complete the glossary example.</li>
-    <li>Optimistically, complete the traffic policy anaysis example.</li>
-    <li>Possibly include basic <code>storage</code> models for automatic sync with localStorage in a window or the file system on a node.</li>
-  </ul>
-</div>
-
-
 <div id="unlicense">
   <h2>Unlicense</h2>
   <p>
@@ -1554,12 +1553,15 @@ Facts.query({in:database, out:"map"})<a class="cursor">&nbsp;</a>
     <a href="#pile-of-words">Pile of Words</a><br>
     <a href="#checklist">Checklist</a><br>
     <!-- <a href="#glossary">Glossary</a><br> -->
+    <!-- <a href="#income-tax">Income Tax</a><br> -->
+    <!-- <a href="#tree">Draw a Tree</a><br> -->
+    <!-- <a href="#scene">Sketch a Scene</a><br> -->
   </div>
-  <a href="#examples" class="section">Appendix</a><br>
+  <a href="#appendix" class="section">Appendix</a><br>
   <div>
     <a href="#internals">Internals</a><br>
+    <a href="#forecast">Forecast</a><br>
     <a href="#radix">Radix</a><br>
-    <a href="#changelog">Changelog</a><br>
     <a href="#unlicense">Unlicense</a><br>
   </div>
 </nav>
