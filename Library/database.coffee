@@ -10,13 +10,13 @@ module.exports = (facts, time) ->
   # Select relevant datoms for specified time.
   if time
     filtered = filtered.filter (datom) ->
-      time >= Number(datom.get(4).slice(1))
+      time >= datom.get(4)
 
   # Filter out datoms that have been redacted.
   retractions = filtered.filter (datom) -> datom.get(0) is false
   filtered = filtered.filter (datom) ->
     datomWasRetracted = retractions.find (retraction) ->
-      (retraction.get(1) is datom.get(1)) and (retraction.get(2) is datom.get(2)) and (retraction.get(3) is datom.get(3)) and (Number(retraction.get(4).slice(1)) >= Number(datom.get(4).slice(1)))
+      (retraction.get(1) is datom.get(1)) and (retraction.get(2) is datom.get(2)) and (retraction.get(3) is datom.get(3)) and (retraction.get(4) >= datom.get(4))
     if datomWasRetracted
       return no
     else

@@ -70,7 +70,7 @@ tape "last transaction is at the beginning of the stack of datoms", (test) ->
   facts.transact [ [true, 1, "name", "Ursula Franklan"] ], 123
   facts.transact [ [true, 1, "name", "Ursula Franklen"] ], 456
   facts.transact [ [true, 1, "name", "Ursula Franklin"] ], 789
-  test.same facts.datoms.first().toJS()[4], "T789"
+  test.same facts.datoms.first().toJS()[4], 789
   test.end()
 
 tape "first transaction is at the end of the stack of datoms", (test) ->
@@ -78,7 +78,7 @@ tape "first transaction is at the end of the stack of datoms", (test) ->
   facts.transact [ [true, 1, "name", "Ursula Franklan"] ], 123
   facts.transact [ [true, 1, "name", "Ursula Franklen"] ], 456
   facts.transact [ [true, 1, "name", "Ursula Franklin"] ], 789
-  test.same facts.datoms.last().toJS()[4], "T123"
+  test.same facts.datoms.last().toJS()[4], 123
   test.end()
 
 tape "transact raw access", (test) ->
@@ -86,8 +86,8 @@ tape "transact raw access", (test) ->
   report = facts.transact [ [true, 1, "name", "Ursula Franklin"] ], 123
   test.same facts.history.count(), 2
   test.same facts.datoms.toJS(), [
-    [ true, "T123", 'time', 123,               'T123' ]
-    [ true, 1,      'name', 'Ursula Franklin', 'T123' ]
+    [ true, "T123", "time", 123,               123 ]
+    [ true, 1,      "name", "Ursula Franklin", 123 ]
   ]
   test.end()
 
@@ -96,9 +96,9 @@ tape "database value after transaction", (test) ->
   facts.transact [ [true, 1, "name", "Ursula Franklan"] ], 123
   facts.transact [ [true, 1, "name", "Ursula Franklin"] ], 456
   test.same facts.database(123).toJS(), [
-    [ true, 1, 'name', 'Ursula Franklan', 'T123' ]
+    [ true, 1, 'name', 'Ursula Franklan', 123 ]
   ]
   test.same facts.database(456).toJS(), [
-    [ true, 1, 'name', 'Ursula Franklin', 'T456' ]
+    [ true, 1, 'name', 'Ursula Franklin', 456 ]
   ]
   test.end()

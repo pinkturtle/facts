@@ -1,15 +1,15 @@
 Immutable = require "immutable"
 
-module.exports = (facts, inputData, time=now()) ->
+module.exports = (facts, inputData, instant=now()) ->
   if typeof inputData?.map isnt "function"
     throw "Facts.transact can’t create a transaction without a list of input."
   if inputData.length is 0
     throw "Facts.transact can’t create a transaction with an empty list of input data."
 
   # Initialize a transaction for this set of operations.
-  transactionID = "T#{time}"
+  transactionID = "T#{instant}"
   transactionAttributes =
-    "time": time
+    "time": instant
 
   # Select the database to operate on.
   databaseBeforeTransaction = selectDatabaseForTransaction.call(facts)
@@ -21,12 +21,12 @@ module.exports = (facts, inputData, time=now()) ->
       identifyInputDatom.call(this, inputDatom),
       inputDatom[2]
       inputDatom[3]
-      transactionID
+      instant
     ]
 
   facts.datoms = facts.datoms.pushAll(newDatoms)
   facts.datoms = facts.datoms.pushAll(Immutable.fromJS [
-    [true, transactionID, "time", time, transactionID]
+    [true, transactionID, "time", instant, instant]
   ])
 
   # Add database to history.
