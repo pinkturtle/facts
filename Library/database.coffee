@@ -14,20 +14,23 @@ module.exports = (facts, time) ->
 
   # Filter out datoms that have been redacted.
   retractions = filtered.filter (datom) -> datom.get(0) is false
+
+  untruthiness = filtered.filter (datom) -> datom.get(0) in [false, undefined]
+
   filtered = filtered.filter (datom) ->
-    datomWasRetracted = retractions.find (retraction) ->
-      (retraction.get(1) is datom.get(1)) and (retraction.get(2) is datom.get(2)) and (retraction.get(3) is datom.get(3)) and (retraction.get(4) >= datom.get(4))
-    if datomWasRetracted
+    datomWasFalsified = untruthiness.find (untrue) ->
+      (untrue.get(1) is datom.get(1)) and (untrue.get(2) is datom.get(2)) and (untrue.get(3) is datom.get(3)) and (untrue.get(4) >= datom.get(4))
+    if datomWasFalsified
       return no
     else
       return yes
 
-  collected = Immutable.Set()
+  sorted = []
   memo = {}
   filtered.forEach (datom) ->
     memo[datom.get(1)] ?= {}
     if memo[datom.get(1)][datom.get(2)] is undefined
       memo[datom.get(1)][datom.get(2)] = datom.get(3)
-      collected = collected.add(datom)
+      sorted.push datom
 
-  return collected
+  return Immutable.Stack(sorted)
