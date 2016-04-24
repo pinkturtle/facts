@@ -2,21 +2,14 @@ Immutable = require "immutable"
 
 module.exports = (facts, time) ->
   if time is "now" then time = undefined
-  datoms = sample facts.datoms, {max:time, min:undefined}
-  untruthiness = []
-  mutant = []
-  memo = {}
-  datoms.forEach (datom) ->
-    return if isTransaction(datom)
-    return untruthiness.push(datom) if datom.get(0) in [false, undefined]
-    return if untruthiness.some (untrue) -> match(untrue, datom) and (untrue.get(4) > datom.get(4))
-    memo[datom.get(1)] ?= {}
-    if memo[datom.get(1)][datom.get(2)] is undefined
-      memo[datom.get(1)][datom.get(2)] = datom.get(3)
-      mutant.push datom
-  return Immutable.Stack(mutant)
+  sample = takeSampleOf facts.datoms, {max:time, min:undefined}
+  reduction = sample.reduce toTruth(), Immutable.fromJS(datoms:[], entities:{})
+  database = Immutable.Stack(reduction.get("datoms"))
+  database.entities = reduction.get("entities")
+  return database
 
-sample = (datoms, range) ->
+
+takeSampleOf = (datoms, range) ->
   switch
     when range.min is range.max is undefined
       datoms
@@ -29,8 +22,23 @@ sample = (datoms, range) ->
         .skipUntil (datom) -> datom.get(4) <= range.max
         .takeWhile (datom) -> datom.get(4) >= range.min
 
+
+toTruth = ->
+  untrue = [false, undefined]
+  untruthiness = []
+  return (memo, datom, key) ->
+    return memo if isTransaction(datom)
+    return memo if datom.get(0) in untrue and untruthiness.push(datom)
+    return memo if untruthiness.some (untrue) -> match(untrue, datom) and (untrue.get(4) > datom.get(4))
+    return memo if memo.hasIn ["entities", datom.get(1), datom.get(2)]
+    return memo
+      .setIn ["datoms"], memo.get("datoms").push(datom)
+      .setIn ["entities", datom.get(1), datom.get(2)], datom.get(3)
+
+
 isTransaction = (datom) -> isTransaction.pattern.test(datom.get(1))
 isTransaction.pattern = /T[0-9]+/
+
 
 match = (pattern, datom) ->
   (pattern.get(1) is datom.get(1)) and (pattern.get(2) is datom.get(2)) and (pattern.get(3) is datom.get(3))
