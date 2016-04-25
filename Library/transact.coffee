@@ -1,6 +1,6 @@
 Immutable = require "immutable"
 
-module.exports = (facts, inputData, instant=now()) ->
+module.exports = (facts, inputData, instant=facts.now()) ->
   if typeof inputData?.map isnt "function"
     throw "Facts.transact can’t create a transaction without a list of input."
   if inputData.length is 0
@@ -65,21 +65,3 @@ selectValueForTransactionOperation = (operation) ->
     return operation
   else
     throw "Oops! '#{operation}' is not a recognized transaction operation. Try true, false or undefined."
-
-now = module.exports.now = switch
-  when window?.performance?.now instanceof Function
-    -> performance.timing.navigationStart + performance.now()
-  when global?.process?.hrtime instanceof Function
-    programStartTime = Date.now() # there might be a more accurate source for this, open to suggestions...
-    elapsedSinceProgramStart = ->
-      time = global.process.hrtime()
-      time[0] * 1e3 + time[1] / 1e6
-    -> programStartTime + elapsedSinceProgramStart()
-  else
-    throw """
-      Facts couldn’t locate a high-resolution time source in this environment.
-
-      A high-resolution time source is required to ensure monotonic transactions.
-      Facts checked for window.performance.now and global.process.hrtime but
-      neither of these functions was available.
-    """

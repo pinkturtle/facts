@@ -17,6 +17,9 @@ class Facts
   historyIndex: 0
   history: Immutable.List([Immutable.Set()])
 
+  now: ->
+    Facts.now()
+
   at: (max) ->
     if max is "now" then max = undefined
     Facts.database(this, {max, min:undefined})
@@ -67,6 +70,8 @@ Facts.Immutable = Immutable
 
 # Define construct alias for the apply method.
 Facts.construct = Facts.apply
+
+Facts.now = require "./now"
 
 Facts.database = require "./database"
 
