@@ -1,7 +1,7 @@
 Immutable = require "immutable"
 
 module.exports = (options) ->
-  database = options["in"]
+  database = options["in"][0]
   output = options["out"] ? Array
 
   if options["where"]

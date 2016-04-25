@@ -28,9 +28,7 @@ class Facts
     @query(where:(id) -> id is identifier)[0]
 
   query: (params={}) ->
-    time = params["at"]
-    delete params["at"]
-    params["in"] = @at(time)
+    params["in"] = [@at(params["at"])]
     Facts.query(params)
 
   transact: (inputData, time) ->
