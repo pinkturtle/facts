@@ -32,7 +32,7 @@ module.exports = (facts, inputData, instant=facts.now()) ->
   newDatoms = inputData.map (inputDatom) ->
     Immutable.fromJS [
       selectValueForTransactionOperation inputDatom[0]
-      identifyInputDatom.call(this, inputDatom),
+      inputDatom[1]
       inputDatom[2]
       inputDatom[3]
       instant
@@ -53,13 +53,6 @@ module.exports = (facts, inputData, instant=facts.now()) ->
   facts.dispatch "transaction", report
   # Return the transaction report.
   return report
-
-identifyInputDatom = (inputDatom) ->
-  id = inputDatom[1]
-  if id is undefined
-    @maxEntityId += 1 # Generate and return a new identifier.
-  else
-    id # Return existing identifier.
 
 selectValueForTransactionOperation = (operation) ->
   if operation in [true, false, undefined]
