@@ -1,28 +1,18 @@
 {Map, List} = Immutable = require "immutable"
 
-module.exports = (options) ->
-  database = options["in"][0]
-  output = options["out"] ? Array
-
-  if options["where"]
+module.exports = (params) ->
+  database = params.in[0]
+  output = params.out ? Array
+  if params.where
     database = database.filter (datom) ->
-      options["where"](datom.get(1), datom.get(2), datom.get(3))
-
+      params.where datom.get(1), datom.get(2), datom.get(3), datom.get(4)
   entities = database.reduce mapEachDatom, {}
-
-  if output is Array
-    return (entity for id, entity of entities)
-
-  if output is List
-    return List(entity for id, entity of entities)
-
-  if output is Map
-    return Map(entities)
-
-  if output is Object
-    return entities
-
-  throw "Oops! #{JSON.stringify(output)} is not a recognized query output format. Try query({out:Array}) or query({out:Object})"
+  switch (params.out ? Array)
+    when Array then (entity for id, entity of entities)
+    when List then List(entity for id, entity of entities)
+    when Map then Map(entities)
+    when Object then entities
+    else throw "Oops! #{JSON.stringify(params.out)} is not a recognized query output format."
 
 mapEachDatom = (map, datom) ->
   map[datom.get(1)] ?= {}
