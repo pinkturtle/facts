@@ -10,6 +10,12 @@ tape "transactions are monotonic", (test) ->
   test.same database.size, transactionSet.size
   test.end()
 
+tape "can’t transact that advancement of a transaction", (test) ->
+  advanceTransaction = ->
+    Facts().transact [ [true, "T123", "attribute", "value"] ]
+  test.throws advanceTransaction, "Transaction was aborted because its input contained data that identified a transaction"
+  test.end()
+
 tape "transaction report has expected keys", (test) ->
   facts = Facts()
   report = facts.transact [ [true, 1, "name", "Ursula Franklin"] ]

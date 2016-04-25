@@ -899,8 +899,10 @@ facts.reverse(1, {
 <pre class="ecmascript input">
 facts.reverse("T1459839327267", attributes)<a class="cursor">&nbsp;</a>
 </pre>
-<pre class="ecmascript output exception">
-"Can’t reverse transaction T1459839327267"<a class="icon"></a>
+<pre class=" output exception">
+<a class="icon"></a>Transaction was aborted because its input contained data that identified another transaction: T1459839327267
+
+Transactions may not be explicitly advanced, reversed or unknown because Facts relies on them as its implicit record of what happened when. Facts.transact is the only function permitted to construct transactions. Transaction data from other sources will be rejected.
 </pre>
 </div>
 </div>
