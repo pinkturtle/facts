@@ -24,24 +24,26 @@ class Facts
     if max is "now" then max = undefined
     Facts.database(this, {max, min:undefined})
 
-  pull: (identifier) ->
-    @query(where:(id) -> id is identifier)[0]
+  pull: (identifier, params={}) ->
+    params.in = params.from if params.from?
+    params.where = (id) -> id is identifier
+    @query(params)[0]
 
   query: (params={}) ->
-    params["in"] = [@at(params["at"])]
+    params.in ?= [@at(params.at)]
     Facts.query(params)
 
   transact: (inputData, time) ->
     Facts.transact(this, inputData, time)
 
-  true: (id, mapOfValues) ->
-    @transact([true, id, attribute, value] for attribute, value of mapOfValues)
+  true: (identifier, mapOfValues) ->
+    @transact([true, identifier, attribute, value] for attribute, value of mapOfValues)
 
-  false: (id, mapOfValues) ->
-    @transact([false, id, attribute, value] for attribute, value of mapOfValues)
+  false: (identifier, mapOfValues) ->
+    @transact([false, identifier, attribute, value] for attribute, value of mapOfValues)
 
-  undefined: (id, mapOfValues) ->
-    @transact([undefined, id, attribute, value] for attribute, value of mapOfValues)
+  undefined: (identifier, mapOfValues) ->
+    @transact([undefined, identifier, attribute, value] for attribute, value of mapOfValues)
 
 # Extend Facts prototype with methods from Events.
 Facts::[name] = value for name, value of require("./events")
