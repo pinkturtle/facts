@@ -1,21 +1,27 @@
 Events = require("./events")
-Immutable = window?["Immutable"] or require("immutable")
+{List, Stack} = Immutable = window?["Immutable"] or require("immutable")
 
 class Facts
-  constructor: ->
+  constructor: (options) ->
     if this instanceof Facts
-      @initialize()
+      @initialize(options)
       return this
     else
-      return new Facts
+      return new Facts options
 
-  initialize: ->
+  initialize: (options={}) ->
+    @[key] = value for key, value of options when key isnt "datoms"
+    if options.datoms
+      if Stack.isStack(options.datoms)
+        @datoms = options.datoms
+      else
+        @datoms = Stack options.datoms.map List
 
-  datoms: Immutable.Stack()
+  datoms: Stack()
 
   # Doomed for relocation
   historyIndex: 0
-  history: Immutable.List([Immutable.Set()])
+  history: List([Stack()])
 
   now: ->
     Facts.now()
@@ -46,7 +52,7 @@ class Facts
     @transact([undefined, identifier, attribute, value] for attribute, value of mapOfValues)
 
 # Extend Facts prototype with methods from Events.
-Facts::[name] = value for name, value of require("./events")
+Facts::[key] = value for key, value of require("./events")
 
 # Define aliases for at.
 Facts::database = Facts::asOf = Facts::at
