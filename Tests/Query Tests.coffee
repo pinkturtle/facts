@@ -8,12 +8,12 @@ tape "query returns a list of entities when no output format is specified", (tes
   test.end()
 
 tape "query returns a list of entities when specified", (test) ->
-  entities = Facts.query in:Facts().database(), out:"list"
+  entities = Facts.query in:Facts().database(), out:Array
   test.same entities.constructor, Array
   test.end()
 
 tape "query returns a map of entities when specified", (test) ->
-  entities = Facts.query in:Facts().database(), out:"map"
+  entities = Facts.query in:Facts().database(), out:Object
   test.same entities.constructor, Object
   test.end()
 

@@ -2,8 +2,7 @@ Immutable = require "immutable"
 
 module.exports = (options) ->
   database = options["in"]
-  output = options["out"] ? "list"
-  map = {}
+  output = options["out"] ? Array
 
   if options["where"]
     database = database.filter (datom) ->
@@ -11,13 +10,13 @@ module.exports = (options) ->
 
   entities = database.reduce mapEachDatom, {}
 
-  if output is "map"
+  if output is Object
     return entities
 
-  if output is "list"
+  if output is Array
     return (entity for id, entity of entities)
 
-  throw "'#{output}' is not a recognized query output format. Try out:'list' or out:'map'."
+  throw "Oops! #{JSON.stringify(output)} is not a recognized query output format. Try query({out:Array}) or query({out:Object})"
 
 mapEachDatom = (map, datom) ->
   map[datom.get(1)] ?= {}
