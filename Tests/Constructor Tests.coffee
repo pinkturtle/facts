@@ -13,8 +13,8 @@ tape "construct instance with stack of datoms", (test) ->
   constructed = Facts datoms:source.datoms
   test.same constructed.datoms.size, 2
   test.same constructed.datoms.toJS(), [
-    [true, "T123", "time", 123,            123]
-    [true, 1,      "en",   "Hello World!", 123]
+    [true, "T123", "undecided", undefined,      123]
+    [true, 1,      "en",        "Hello World!", 123]
   ]
   test.end()
 
@@ -24,8 +24,8 @@ tape "construct instance with array of datoms", (test) ->
   constructed = Facts datoms:source.datoms.toArray()
   test.same constructed.datoms.size, 2
   test.same constructed.datoms.toJS(), [
-    [true, "T123", "time", 123,            123]
-    [true, 1,      "en",   "Hello World!", 123]
+    [true, "T123", "undecided", undefined,      123]
+    [true, 1,      "en",        "Hello World!", 123]
   ]
   test.end()
 

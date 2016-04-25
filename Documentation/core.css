@@ -156,7 +156,7 @@ pre, pre *, code {
   font: 19px/25px "Consolas Remote", "Consolas", monospace; font-weight: 400;
 }
 
-code { padding: 3px 4px 1px; margin: 0 -1px; line-height: inherit !important; }
+code { padding: 5px 5px 3px; margin: 0 -1px; line-height: inherit !important; }
 
 /* Paint ------------------------------ */
 

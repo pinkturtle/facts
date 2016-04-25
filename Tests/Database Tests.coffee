@@ -28,8 +28,8 @@ tape "database excludes false datoms", (test) ->
   facts = Facts()
   facts.transact [[false, "DC-59", "color", "Bronx Blue"]], 123
   test.same facts.datoms.toJS(), [
-    [true,  "T123",  "time",  123,          123]
-    [false, "DC-59", "color", "Bronx Blue", 123]
+    [true,  "T123",  "undecided", undefined,    123]
+    [false, "DC-59", "color",     "Bronx Blue", 123]
   ]
   test.same facts.database().size, 0
   test.end()
@@ -40,10 +40,10 @@ tape "database excludes untrue facts that were falsified", (test) ->
   facts.transact [[true,  "DC-59", "color", "Bronx Blue"]], 123
   facts.transact [[false, "DC-59", "color", "Bronx Blue"]], 789
   test.same facts.datoms.toJS(), [
-    [true,  "T789",  "time",  789,          789]
-    [false, "DC-59", "color", "Bronx Blue", 789]
-    [true,  "T123",  "time",  123,          123]
-    [true,  "DC-59", "color", "Bronx Blue", 123]
+    [true,  "T789",  "undecided", undefined,    789]
+    [false, "DC-59", "color",     "Bronx Blue", 789]
+    [true,  "T123",  "undecided", undefined,    123]
+    [true,  "DC-59", "color",     "Bronx Blue", 123]
   ]
   test.same facts.database().size, 0
   test.end()
@@ -53,8 +53,8 @@ tape "database excludes undefined datoms", (test) ->
   facts = Facts()
   facts.transact [[undefined, "DC-59", "color", "Bronx Blue"]], 123
   test.same facts.datoms.toJS(), [
-    [true,      "T123",  "time",  123,         123]
-    [undefined, "DC-59", "color", "Bronx Blue", 123]
+    [true,      "T123",  "undecided", undefined,    123]
+    [undefined, "DC-59", "color",     "Bronx Blue", 123]
   ]
   test.same facts.database().size, 0
   test.end()
@@ -65,10 +65,10 @@ tape "database excludes untrue facts that were previously true and are now unkno
   facts.transact [[true,      "DC-59", "color", "Bronx Blue"]], 123
   facts.transact [[undefined, "DC-59", "color", "Bronx Blue"]], 789
   test.same facts.datoms.toJS(), [
-    [true,      "T789",  "time",  789,          789]
-    [undefined, "DC-59", "color", "Bronx Blue", 789]
-    [true,      "T123",  "time",  123,          123]
-    [true,      "DC-59", "color", "Bronx Blue", 123]
+    [true,      "T789",  "undecided",  undefined,    789]
+    [undefined, "DC-59", "color",      "Bronx Blue", 789]
+    [true,      "T123",  "undecided",  undefined,    123]
+    [true,      "DC-59", "color",      "Bronx Blue", 123]
   ]
   test.same facts.database().size, 0
   test.end()
@@ -78,7 +78,7 @@ tape "database excludes transaction entity data", (test) ->
   facts = Facts()
   facts.transact [[true, "DC-59", "orientation", "left handed"]], 123
   test.same facts.datoms.toJS(), [
-    [true, "T123",  "time",        123,           123]
+    [true, "T123",  "undecided",   undefined,     123]
     [true, "DC-59", "orientation", "left handed", 123]
   ]
   test.same facts.database().toJS(), [
@@ -106,11 +106,11 @@ tape "database entries are sorted by time", (test) ->
   facts.transact [[true, "DC-59", "orientation", "Left Handed"]], 456
   facts.transact [[true, "DC-59", "price", 499]], 789
   test.same facts.datoms.toJS(), [
-    [true, "T789",  "time",        789,           789]
+    [true, "T789",  "undecided",   undefined,     789]
     [true, "DC-59", "price",       499,           789]
-    [true, "T456",  "time",        456,           456]
+    [true, "T456",  "undecided",   undefined,     456]
     [true, "DC-59", "orientation", "Left Handed", 456]
-    [true, "T123",  "time",        123,           123]
+    [true, "T123",  "undecided",   undefined,     123]
     [true, "DC-59", "color",       "Bronx Blue",  123]
   ]
   test.same facts.database().toJS(), [

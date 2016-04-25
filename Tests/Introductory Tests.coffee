@@ -33,7 +33,3 @@ tape "instance of Facts has unknown function", (test) ->
 tape "instance of Facts has datoms", (test) ->
   test.same typeof Facts().datoms, "object"
   test.end()
-
-tape "instance of Facts has history", (test) ->
-  test.same typeof Facts().history, "object"
-  test.end()

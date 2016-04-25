@@ -23,14 +23,10 @@ module.exports = (facts, inputData, instant=facts.now()) ->
       permitted to construct transactions. Transaction data from other sources will be rejected.
   """
 
-
   # Initialize a transaction for this set of operations.
   transactionID = "T#{instant}"
   transactionAttributes =
     "time": instant
-
-  # Select the database to operate on.
-  databaseBeforeTransaction = selectDatabaseForTransaction.call(facts)
 
   # List of new datoms
   newDatoms = inputData.map (inputDatom) ->
@@ -44,23 +40,19 @@ module.exports = (facts, inputData, instant=facts.now()) ->
 
   facts.datoms = facts.datoms.pushAll(newDatoms)
   facts.datoms = facts.datoms.pushAll(Immutable.fromJS [
-    [true, transactionID, "time", instant, instant]
+    [true, transactionID, "undecided", undefined, instant]
   ])
 
-  # Add database to history.
-  facts.history = facts.history.push(databaseAfterTransaction = facts.at())
-  facts.historyIndex = facts.history.count() - 1
   # Compose the transaction report.
   report =
+    "datoms": newDatoms
+    "instant": instant
+    "product": facts.database()
     "transaction": transactionID
-    "db before": databaseBeforeTransaction
-    "db after": databaseAfterTransaction
-    "data": newDatoms
   # Dispatch transaction event with the report.
   facts.dispatch "transaction", report
   # Return the transaction report.
   return report
-
 
 identifyInputDatom = (inputDatom) ->
   id = inputDatom[1]
@@ -68,15 +60,6 @@ identifyInputDatom = (inputDatom) ->
     @maxEntityId += 1 # Generate and return a new identifier.
   else
     id # Return existing identifier.
-
-selectDatabaseForTransaction = ->
-  if @history.last().hashCode() isnt @history.get(@historyIndex).hashCode()
-    console.info "Pushing Old Database to end"
-    @history = @history.push @history.get(@historyIndex)
-    @historyIndex = history.count() - 1
-    return @history.last()
-  else
-    return @history.last()
 
 selectValueForTransactionOperation = (operation) ->
   if operation in [true, false, undefined]

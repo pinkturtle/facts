@@ -3,22 +3,39 @@
   <div class="trapezoid"></div>
 </div>
 
+<div id="cache" class="member">
+  <header>
+    <code>facts.cache</code>
+  </header>
+  <p>
+    An <code>Immutable.Map</code> that contains references to the <code>"current database"</code>, the <code>"last transaction"</code> and the <code>"instant when last transaction occured"</code>.
+</p>
+
+<p>
+  Please feel free to <code>get</code> data out of the <code>cache</code>, like so:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.cache.get("last transaction")
+</pre>
+<pre class="ecmascript output">
+"TNOW"
+</pre>
+</div>
+
+<p>
+  However, please don’t <code>cache.set(...)</code> anything because <code>facts</code> may not interpret your changes correctly.
+</p>
+<p>
+  <code>facts.cache</code> is constructed automatically after each transaction unless the instance was constructed with <code>Facts({cache:false})</code>
+</p>
+</div>
+
 <div id="datoms" class="member">
   <header>
     <code>facts.datoms</code>
   </header>
   <p>
     Raw access to memorized <code>datoms</code> in the form of an <code>Immutable.Stack</code>.
-  </p>
-</div>
-
-<div id="history" class="member">
-  <header>
-    <code>facts.history</code>
-  </header>
-  <p>
-    A list of database values since this instance of <code>Facts</code> was constructed.
-    <code>history</code> is an instance of <code>Immutable.List</code>.
-    <code>facts.history.first()</code> is the earliest version of database and <code>facts.history.last()</code> is the latest version.
   </p>
 </div>

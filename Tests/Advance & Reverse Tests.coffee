@@ -73,10 +73,10 @@ tape "advance after reverse", (test) ->
 
 tape "advance returns transaction report", (test) ->
   report = Facts().advance 1, en: "Hello World!"
-  test.same Object.keys(report), ["transaction", "db before", "db after", "data"]
+  test.same Object.keys(report), ["datoms", "instant", "product", "transaction"]
   test.end()
 
 tape "reverse returns transaction report", (test) ->
   report = Facts().reverse 1, en: "Hello Wrrld!"
-  test.same Object.keys(report), ["transaction", "db before", "db after", "data"]
+  test.same Object.keys(report), ["datoms", "instant", "product", "transaction"]
   test.end()

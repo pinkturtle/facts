@@ -16,12 +16,14 @@ class Facts
         @datoms = options.datoms
       else
         @datoms = Stack options.datoms.map List
+    if @cache isnt no
+      @on "transaction", (report) ->
+        @cache =
+          "last transaction": report.transaction
+          "instant of last transaction": report.instant
+          "current database": report.product
 
   datoms: Stack()
-
-  # Doomed for relocation
-  historyIndex: 0
-  history: List([Stack()])
 
   now: ->
     Facts.now()

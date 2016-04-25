@@ -19,57 +19,36 @@ tape "can’t transact that advancement of a transaction", (test) ->
 tape "transaction report has expected keys", (test) ->
   facts = Facts()
   report = facts.transact [ [true, 1, "name", "Ursula Franklin"] ]
-  test.same Object.keys(report), ["transaction", "db before", "db after", "data"]
+  test.same Object.keys(report), ["datoms", "instant", "product", "transaction"]
   test.end()
 
 tape "report includes references to the value of the database before and after the transaction", (test) ->
   facts = Facts()
-  databaseBeforeTransaction = facts.history.last()
+  databaseBeforeTransaction = facts.database()
   report = facts.transact [ [true, 1, "name", "Ursula Franklin"] ]
-  databaseAfterTransaction = facts.history.last()
-  test.equal report["db before"], databaseBeforeTransaction
-  test.equal report["db before"].hashCode(), databaseBeforeTransaction.hashCode()
-  test.equal report["db after"], databaseAfterTransaction
-  test.equal report["db after"].hashCode(), databaseAfterTransaction.hashCode()
-  test.end()
-
-tape "a transaction generates a new entry in the database history", (test) ->
-  facts = Facts()
-  test.same facts.history.count(), 1
-  facts.transact [
-    [true, 1, "en", "Hello world!"]
-    [true, 1, "en", "Goodbye moon"]
-  ]
-  test.same facts.history.count(), 2
-  test.end()
-
-tape "subsequent transaction generate new entries in the database history", (test) ->
-  facts = Facts()
-  test.same facts.history.count(), 1
-  facts.transact [[true, 1, "en", "Hello world!"]]
-  test.same facts.history.count(), 2
-  facts.transact [[true, 2, "en", "Goodbye moon"]]
-  test.same facts.history.count(), 3
+  databaseAfterTransaction = facts.database()
+  # test.ok report["db before"].equals databaseBeforeTransaction
+  test.ok report.product.equals(databaseAfterTransaction)
+  test.ok report.product.equals(databaseBeforeTransaction) is false
   test.end()
 
 tape "transact one advancement", (test) ->
   facts = Facts()
   report = facts.transact [ [true, 1, "name", "Ursula Franklin"] ]
-  test.same facts.history.count(), 2
+  test.same facts.datoms.count(), 2
   test.end()
 
 tape "transact one reversal", (test) ->
   facts = Facts()
   report = facts.transact [ [false, 1, "name", "Ursula Franklan"] ]
-  test.same facts.history.count(), 2
+  test.same facts.datoms.count(), 2
   test.end()
 
 tape "transact one unknown", (test) ->
   facts = Facts()
   report = facts.transact [ [undefined, 1, "nickname", "Frankly"] ]
-  test.same facts.history.count(), 2
+  test.same facts.datoms.count(), 2
   test.end()
-
 
 tape "last transaction is at the beginning of the stack of datoms", (test) ->
   facts = Facts()
@@ -90,10 +69,9 @@ tape "first transaction is at the end of the stack of datoms", (test) ->
 tape "transact raw access", (test) ->
   facts = Facts()
   report = facts.transact [ [true, 1, "name", "Ursula Franklin"] ], 123
-  test.same facts.history.count(), 2
   test.same facts.datoms.toJS(), [
-    [ true, "T123", "time", 123,               123 ]
-    [ true, 1,      "name", "Ursula Franklin", 123 ]
+    [ true, "T123", "undecided", undefined,         123 ]
+    [ true, 1,      "name",      "Ursula Franklin", 123 ]
   ]
   test.end()
 
