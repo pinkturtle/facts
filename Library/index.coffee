@@ -17,8 +17,9 @@ class Facts
   historyIndex: 0
   history: Immutable.List([Immutable.Set()])
 
-  at: (instant) ->
-    Facts.database(this, instant)
+  at: (max) ->
+    if max is "now" then max = undefined
+    Facts.database(this, {max, min:undefined})
 
   pull: (identifier) ->
     @query(where:(id) -> id is identifier)[0]

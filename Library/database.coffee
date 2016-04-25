@@ -1,8 +1,7 @@
 Immutable = require "immutable"
 
-module.exports = (facts, time) ->
-  if time is "now" then time = undefined
-  sample = takeSampleOf facts.datoms, {max:time, min:undefined}
+module.exports = (facts, rangeOfTime) ->
+  sample = takeSampleOf facts.datoms, rangeOfTime
   reduction = sample.reduce toTruth(), Immutable.fromJS(datoms:[], entities:{})
   database = Immutable.Stack(reduction.get("datoms"))
   database.entities = reduction.get("entities")
