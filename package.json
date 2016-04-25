@@ -3,8 +3,8 @@
   "description": "Facts are handy for making informative representations.",
   "version": "0.0.0",
   "repository": "pinkturtle/facts",
-  "main": "facts.core.js",
-  "files": ["facts.core.js"],
+  "main": "Facts.core.js",
+  "files": ["Facts.core.js"],
   "license": "Unlicense",
   "dependencies": {
     "immutable": "3.8.x"
@@ -20,7 +20,7 @@
   "scripts": {
     "start": "nodemon --watch Documentation --ext html,css,coffee --exec 'make -B ECMAScript index.html'",
     "test": "npm run window.tests; npm run node.tests",
-    "window.tests": "make facts.pack.js Tests/window.test.pack.js; open --background Tests/index.html",
-    "node.tests": "make facts.core.js; tape Tests/*Tests.js | tap-diff"
+    "window.tests": "make Facts.pack.js Tests/window.test.pack.js; open --background Tests/index.html",
+    "node.tests": "make Facts.core.js; tape Tests/*Tests.js | tap-diff"
   }
 }

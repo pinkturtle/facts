@@ -1,9 +1,9 @@
-default: facts.pack.js facts.core.js index.html
+default: Facts.pack.js Facts.core.js index.html
 
 index.html: Documentation/index.*.html Documentation/core.css Documentation/index.css
 	echo '<!DOCTYPE HTML><meta charset="UTF-8">' > $@
 	echo '<title>Facts • playful outformation model for ECMAScript</title>' >> $@
-	echo '<script src="facts.pack.js"></script>' >> $@
+	echo '<script src="Facts.pack.js"></script>' >> $@
 	echo '<meta name="viewport" content="width=device-width">' >> $@
 	echo '<link rel="icon" type="image/png" href="Documentation/images/icon.png">' >> $@
 	echo '<style media="screen">' >> $@
@@ -38,31 +38,31 @@ index.html: Documentation/index.*.html Documentation/core.css Documentation/inde
 ECMAScript:
 	coffee --compile Documentation/*.coffee Library/*.coffee Tests/*.coffee
 
-facts.pack.js: facts.pack.uncompressed.js
+Facts.pack.js: Facts.pack.uncompressed.js
 	@rm -f $@
 	@echo "// https://pinkturtle.github.io/facts version 0.0.0" >> $@
 	@echo "// Includes https://facebook.github.io/immutable-js" >> $@
 	@echo "// ••••••••••••••••••••••••••••••••••••••••••••••••" >> $@
 	uglifyjs $< --mangle --screw-ie8 >> $@
 
-facts.pack.uncompressed.js: ECMAScript
+Facts.pack.uncompressed.js: ECMAScript
 	browserify Library/index.js --debug --standalone Facts > $@
 
-facts.core.js: facts.core.uncompressed.js
+Facts.core.js: Facts.core.uncompressed.js
 	@rm -f $@
 	@echo "// https://pinkturtle.github.io/facts version 0.0.0" >> $@
 	@echo "// Requires https://facebook.github.io/immutable-js" >> $@
 	@echo "// ••••••••••••••••••••••••••••••••••••••••••••••••" >> $@
 	uglifyjs $< --mangle --screw-ie8 >> $@
 
-facts.core.uncompressed.js: ECMAScript
+Facts.core.uncompressed.js: ECMAScript
 	browserify Library/index.js --debug --exclude immutable --standalone Facts > $@
 
 Tests/window.test.pack.js: ECMAScript
 	browserify Tests/*Tests.js --debug > $@
 
 clean:
-	rm -f facts.*.js Library/*.js Tests/*.js
+	rm -f Facts.*.js Library/*.js Tests/*.js
 
 .git:
 	git init
