@@ -1,4 +1,4 @@
-Immutable = require "immutable"
+{Map, List} = Immutable = require "immutable"
 
 module.exports = (options) ->
   database = options["in"][0]
@@ -10,11 +10,17 @@ module.exports = (options) ->
 
   entities = database.reduce mapEachDatom, {}
 
-  if output is Object
-    return entities
-
   if output is Array
     return (entity for id, entity of entities)
+
+  if output is List
+    return List(entity for id, entity of entities)
+
+  if output is Map
+    return Map(entities)
+
+  if output is Object
+    return entities
 
   throw "Oops! #{JSON.stringify(output)} is not a recognized query output format. Try query({out:Array}) or query({out:Object})"
 
