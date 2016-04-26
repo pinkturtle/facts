@@ -1,4 +1,7 @@
-module.exports = require("tape").createHarness()
+tape = require("tape")
+
+module.exports = tape.createHarness()
+module.exports.Test = tape.Test
 
 testTemplate = document.getElementById("test_template")
 failureTemplate = document.getElementById("failure_template")
