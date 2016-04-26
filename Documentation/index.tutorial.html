@@ -1,8 +1,20 @@
 <div id="tutorial">
 <h2>Tutorial</h2>
+<p>
+  Before we get into it,
+  lets setup shortcuts to <code>Immutable.List</code>, <code>Immutable.Map</code> and <code>Immutable.Stack</code>
+  so that the example code is a little less verbose.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+var List  = Immutable.List
+var Map   = Immutable.Map
+var Stack = Immutable.Stack
+</pre>
+</div>
 
 <p>
-  First, lets construct an instance of <code>Facts</code> to work with.
+  OK, lets construct an instance of <code>Facts</code> to work with.
 </p>
 <div class="console">
 <pre class="ecmascript input">
@@ -10,8 +22,7 @@ facts = Facts()<a class="cursor">&nbsp;</a>
 </pre>
 <pre class="ecmascript output">
 Facts {
-  datoms:Immutable.Stack {size: 0}
-  history:Immutable.List {size: 1}
+  datoms:Stack {size: 0}
 }
 </pre>
 </div>
@@ -21,35 +32,83 @@ Facts {
 </p>
 <div class="console">
 <pre class="ecmascript input">
-facts.advance(1, {name:"Ursula Franklan", "role":"Educator"})
-facts.advance(2, {name:"Rich Hickey", "role":"Programmer"})
-facts.advance(3, {name:"Bret Victor", "role":"Designer"})<a class="cursor">&nbsp;</a>
+facts.advance(1, {name:"Ursula Franklan", role:"Educator"})
 </pre>
 <pre class="ecmascript output">
-{
-  "transaction":"TNOW"
-  "started with": value of the database before the transaction.
-  "ended with": value of the database after the transaction.
-  "datoms":[
-    [true, 1, "name", "Bret Victor", "TNOW"],
-    [true, 1, "role", "Designer", "TNOW"],
+Object {
+  instant:<span class="instant hljs-number">NOW</span>
+  transaction:"TNOW"
+  product:Stack [value of the database after the transaction]
+  datoms:List [
+    List [true, 1, "name", "Ursula Franklan", <span class="instant hljs-number">NOW</span>],
+    List [true, 1, "role", "Educator",        <span class="instant hljs-number">NOW</span>],
+  ]
+}
+</pre>
+</div>
+<div class="console">
+<pre class="ecmascript input">
+facts.advance(2, {name:"Rich Hickey", role:"Programmer"})
+</pre>
+<pre class="ecmascript output">
+Object {
+  instant:<span class="instant hljs-number">NOW</span>
+  transaction:"TNOW"
+  product:Stack [value of the database after the transaction]
+  datoms:List [
+    List [true, 1, "name", "Rich Hickey", <span class="instant hljs-number">NOW</span>],
+    List [true, 1, "role", "Programmer",  <span class="instant hljs-number">NOW</span>],
+  ]
+}
+</pre>
+</div>
+<div class="console">
+<pre class="ecmascript input">
+facts.advance(3, {name:"Bret Victor", role:"Designer"})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Object {
+  instant:<span class="instant hljs-number">NOW</span>
+  transaction:"TNOW"
+  product:Stack [value of the database after the transaction]
+  datoms:List [
+    List [true, 1, "name", "Bret Victor", <span class="instant hljs-number">NOW</span>],
+    List [true, 1, "role", "Designer",    <span class="instant hljs-number">NOW</span>],
   ]
 }
 </pre>
 </div>
 
 <p>
-  Now, we can ask <code>facts</code> for a <code>"list"</code> of the people we know.
+  Now, we can ask <code>facts</code> for an <code>Array</code> of the people we know.
 </p>
 <div class="console">
 <pre class="ecmascript input">
-facts.query({out:"list"})<a class="cursor">&nbsp;</a>
+facts.query({out:Array})<a class="cursor">&nbsp;</a>
 </pre>
 <pre class="ecmascript output">
-[
-  {"id":1, "name":"Ursula Franklan", "role":"Educator"},
-  {"id":2, "name":"Rich Hickey", "role":"Programmer"},
-  {"id":3, "name":"Bret Victor", "role":"Designer"}
+Array [
+  {id:1, name:"Ursula Franklan", role:"Educator"  },
+  {id:2, name:"Rich Hickey",     role:"Programmer"},
+  {id:3, name:"Bret Victor",     role:"Designer"  }
+]
+</pre>
+</div>
+
+<p>
+  <code>Array</code>, <code>List</code>, <code>Map</code> and <code>Object</code> are the output formats that are available.
+  <code>List</code> and <code>Map</code> map return <code>Immutable</code> instances
+  while <code>Array</code> and <code>Object</code> return plain old ECMAScript instances.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.query({out:List})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+List [
+  {id:1, name:"Ursula Franklan", role:"Educator"  },
+  {id:2, name:"Rich Hickey",     role:"Programmer"},
+  {id:3, name:"Bret Victor",     role:"Designer"  }
 ]
 </pre>
 </div>
@@ -60,14 +119,15 @@ facts.query({out:"list"})<a class="cursor">&nbsp;</a>
 <div class="console">
 <pre class="ecmascript input">
 facts.query({
-  where: function(id, attribute, value) {
+  out:Array,
+  where:function(id, attribute, value) {
     return attribute === "name" &amp;&amp; value.match("Rich")
   }
 })<a class="cursor">&nbsp;</a>
 </pre>
 <pre class="ecmascript output">
-[
-  {"id":2, "name":"Rich Hickey", "role":"Programmer"},
+Array [
+  {id:2, name:"Rich Hickey", role:"Programmer"},
 ]
 </pre>
 </div>
@@ -80,7 +140,7 @@ facts.query({
 facts.pull(1)<a class="cursor">&nbsp;</a>
 </pre>
 <pre class="ecmascript output">
-{"id":1, "name":"Ursula Franklan", "role":"Educator"}
+{id:1, name:"Ursula Franklan", role:"Educator"}
 </pre>
 </div>
 
@@ -93,11 +153,11 @@ facts.pull(1)<a class="cursor">&nbsp;</a>
 facts.advance(1, {name:"Ursula Franklin"})<a class="cursor">&nbsp;</a>
 </pre>
 <pre class="ecmascript output">
-{
-  "transaction":"TNOW"
-  "started with": value of the database before the transaction.
-  "ended with": value of the database after the transaction.
-  "datoms":[
+Object {
+  instant:<span class="instant hljs-number">NOW</span>
+  transaction:"TNOW"
+  product:Stack [value of the database after the transaction]
+  datoms:List [
     [true, 1, "name", "Ursula Franklin" "TNOW"],
   ]
 }
@@ -112,7 +172,7 @@ facts.advance(1, {name:"Ursula Franklin"})<a class="cursor">&nbsp;</a>
 facts.pull(1)<a class="cursor">&nbsp;</a>
 </pre>
 <pre class="ecmascript output">
-{"id":1, "name":"Ursula Franklin", "role":"Educator"}
+{id:1, name:"Ursula Franklin", role:"Educator"}
 </pre>
 </div>
 
@@ -132,8 +192,8 @@ facts.history.map(function(database){
 </pre>
 <pre class="ecmascript output">
 [
-  {"id":1, "name":"Ursula Franklan", "role":"Educator"}
-  {"id":1, "name":"Ursula Franklin", "role":"Educator"}
+  {id:1, name:"Ursula Franklan", role:"Educator"}
+  {id:1, name:"Ursula Franklin", role:"Educator"}
 ]
 </pre>
 </div>
