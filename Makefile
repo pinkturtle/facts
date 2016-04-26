@@ -1,6 +1,4 @@
-default: Facts.js Facts.pack.js index.html
-
-index.html: Documentation/index.*.html Documentation/core.css Documentation/index.css
+index.html: Facts.pack.js Documentation/index.*.html Documentation/core.css Documentation/index.css Documentation/window.coffee Documentation/width.height.coffee Documentation/index.*.coffee
 	echo '<!DOCTYPE HTML><meta charset="UTF-8">' > $@
 	echo '<title>Facts • playful outformation model for ECMAScript</title>' >> $@
 	echo '<script src="Facts.pack.js"></script>' >> $@
@@ -27,16 +25,13 @@ index.html: Documentation/index.*.html Documentation/core.css Documentation/inde
 	echo '</body>' >> $@
 	echo '<script>' >> $@
 	cat Documentation/scripts/highlight.pack.js >> $@
-	cat Documentation/window.js >> $@
-	cat Documentation/syntax.highlight.js >> $@
-	cat Documentation/width.height.js >> $@
-	cat Documentation/index.js >> $@
-	cat Documentation/index.scroll.js >> $@
-	cat Documentation/index.videos.js >> $@
+	coffee --compile --print Documentation/window.coffee >> $@
+	coffee --compile --print Documentation/syntax.highlight.coffee >> $@
+	coffee --compile --print Documentation/width.height.coffee >> $@
+	coffee --compile --print Documentation/index.coffee >> $@
+	coffee --compile --print Documentation/index.scroll.coffee >> $@
+	coffee --compile --print Documentation/index.videos.coffee >> $@
 	echo '</script>' >> $@
-
-ECMAScript: Facts.js
-	coffee --compile Documentation/*.coffee Tests/*.coffee
 
 Facts.js: Facts.coffee
 	@rm -f $@
