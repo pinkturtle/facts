@@ -18,9 +18,8 @@ tape "query returns a map of entities when specified", (test) ->
   test.end()
 
 tape "query throws an exception when an unrecognized output format is specified", (test) ->
-  executeQueryWithUnrecognizedOutputFormat = ->
+  test.exception "is not a recognized query output format", ->
     Facts.query in:[Facts().database()], out:"turtle food"
-  test.throws executeQueryWithUnrecognizedOutputFormat, /is not a recognized query output format/
   test.end()
 
 tape "query for one entity returns a one item list", (test) ->
