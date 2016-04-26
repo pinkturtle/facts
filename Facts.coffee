@@ -146,15 +146,29 @@ Facts.query = (params) ->
   database = params.in[0]
   output = params.out ? Array
   if params.where
-    database = database.filter (datom) ->
+    filtered = database.filter (datom) ->
       params.where datom.get(1), datom.get(2), datom.get(3), datom.get(4)
-  entities = database.reduce mapEachDatom, {}
+  else
+    filtered = database
+
+  identifiers = Immutable.Set(filtered.map (datom) -> datom.get(1))
+
+  {entities} = database.reduce toIdentifiedEntities, {identifiers, entities:{}}
   switch (params.out ? Array)
     when Array then (entity for id, entity of entities)
     when List then List(entity for id, entity of entities)
     when Map then Map(entities)
     when Object then entities
     else throw "Oops! #{JSON.stringify(params.out)} is not a recognized query output format."
+
+toIdentifiedEntities = (reduction, datom) ->
+  if reduction.identifiers.contains identifier = datom.get(1)
+    reduction.entities[datom.get(1)] ?= {}
+    reduction.entities[datom.get(1)]["id"] = identifier
+    reduction.entities[datom.get(1)][datom.get(2)] = if (value = datom.get(3)).toJS? then value.toJS() else value
+    reduction
+  else
+    reduction
 
 mapEachDatom = (map, datom) ->
   map[datom.get(1)] ?= {}

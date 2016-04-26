@@ -2,6 +2,17 @@
 
 tape "Query Tests", (test) -> test.end()
 
+tape "entities returned by query contain all attributes in the database", (test) ->
+  facts = Facts()
+  facts.advance(2, {name:"Rich Hickey", role:"Language Designer"})
+  riches = facts.query
+    where:(id, attribute, value, time) ->
+      attribute is "name" and value.match("Rich")
+  test.same riches, [
+    {id: 2, name:"Rich Hickey", role:"Language Designer"}
+  ]
+  test.end()
+
 tape "query returns a list of entities when no output format is specified", (test) ->
   entities = Facts.query in:[Facts().database()]
   test.same entities.constructor, Array
