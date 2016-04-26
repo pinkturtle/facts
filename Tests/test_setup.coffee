@@ -3,7 +3,7 @@ if window?
   exports.Facts = window.Facts
 else
   exports.tape = require("tape")
-  exports.Facts = require("../facts.core")
+  exports.Facts = require("..")
 
 exports.Immutable = exports.Facts.Immutable
 

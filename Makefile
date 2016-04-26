@@ -1,4 +1,4 @@
-default: Facts.pack.js Facts.core.js index.html
+default: Facts.js Facts.pack.js index.html
 
 index.html: Documentation/index.*.html Documentation/core.css Documentation/index.css
 	echo '<!DOCTYPE HTML><meta charset="UTF-8">' > $@
@@ -35,34 +35,35 @@ index.html: Documentation/index.*.html Documentation/core.css Documentation/inde
 	cat Documentation/index.videos.js >> $@
 	echo '</script>' >> $@
 
-ECMAScript:
-	coffee --compile Documentation/*.coffee Library/*.coffee Tests/*.coffee
+ECMAScript: Facts.js
+	coffee --compile Documentation/*.coffee Tests/*.coffee
 
-Facts.pack.js: Facts.pack.uncompressed.js
-	@rm -f $@
-	@echo "// https://pinkturtle.github.io/facts version 0.0.0" >> $@
-	@echo "// Includes https://facebook.github.io/immutable-js" >> $@
-	@echo "// ••••••••••••••••••••••••••••••••••••••••••••••••" >> $@
-	uglifyjs $< --mangle --screw-ie8 >> $@
-
-Facts.pack.uncompressed.js: ECMAScript
-	browserify Library/index.js --debug --standalone Facts > $@
-
-Facts.core.js: Facts.core.uncompressed.js
+Facts.js: Facts.coffee
 	@rm -f $@
 	@echo "// https://pinkturtle.github.io/facts version 0.0.0" >> $@
 	@echo "// Requires https://facebook.github.io/immutable-js" >> $@
 	@echo "// ••••••••••••••••••••••••••••••••••••••••••••••••" >> $@
-	uglifyjs $< --mangle --screw-ie8 >> $@
+	@echo "// Facts.js (Public Domain)" >> $@
+	coffee --compile --print Facts.coffee >> $@
 
-Facts.core.uncompressed.js: ECMAScript
-	browserify Library/index.js --debug --exclude immutable --standalone Facts > $@
+Facts.pack.js: node_modules/immutable/dist/immutable.min.js Facts.js
+	@rm -f $@
+	@echo "// https://pinkturtle.github.io/facts version 0.0.0" >> $@
+	@echo "// Includes https://facebook.github.io/immutable-js" >> $@
+	@echo "// ••••••••••••••••••••••••••••••••••••••••••••••••" >> $@
+	@echo "// immutable.min.js (© Facebook, Inc.)" >> $@
+	cat node_modules/immutable/dist/immutable.min.js >> $@
+	@echo "" >> $@
+	@echo "// ••••••••••••••••••••••••••••••••••••••••••••••••" >> $@
+	@echo "// Facts.compressed.js (Public Domain)" >> $@
+	uglifyjs Facts.js --mangle >> $@
 
-Tests/window.test.pack.js: ECMAScript
-	browserify Tests/*Tests.js --debug > $@
+node_modules/immutable/dist/immutable.min.js:
+	npm install
 
-clean:
-	rm -f Facts.*.js Library/*.js Tests/*.js
+Tests/window.test.pack.js: Tests/*.coffee
+	coffee --compile Tests/*.coffee
+	browserify Tests/*Tests.js > Tests/window.test.pack.js
 
 .git:
 	git init
