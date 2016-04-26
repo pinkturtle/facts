@@ -2,7 +2,7 @@
 
 tape "Transaction Tests", (test) -> test.end()
 
-tape "transactions are monotonic", (test) ->
+tape "transactions are constructed with monotonic integrity", (test) ->
   facts = Facts()
   facts.transact [ [true, 1, i, yes] ] for i in [100..0]
   database = facts.database()
@@ -10,10 +10,9 @@ tape "transactions are monotonic", (test) ->
   test.same database.size, transactionSet.size
   test.end()
 
-tape "can’t transact that advancement of a transaction", (test) ->
-  advanceTransaction = ->
+tape "can’t transact advancement of a transaction", (test) ->
+  test.exception "Transaction was aborted because its input contained data that identified a transaction", ->
     Facts().transact [ [true, "T123", "attribute", "value"] ]
-  test.throws advanceTransaction, "Transaction was aborted because its input contained data that identified a transaction"
   test.end()
 
 tape "transaction report has expected keys", (test) ->
@@ -22,14 +21,31 @@ tape "transaction report has expected keys", (test) ->
   test.same Object.keys(report), ["datoms", "instant", "product", "transaction"]
   test.end()
 
-tape "report includes references to the value of the database before and after the transaction", (test) ->
+tape "report includes instant", (test) ->
+  report = Facts().transact [ [true, "ok", "yes", "please"] ], 123
+  test.same report.instant, 123
+  test.end()
+
+tape "report includes list of novel datoms", (test) ->
+  report = Facts().transact [ [true, "ok", "yes", "please"] ], 123
+  test.same report.datoms.constructor, Immutable.List
+  test.same report.datoms.size, 1
+  test.same report.datoms.toJS(), [
+    [true, "ok", "yes", "please", 123]
+  ]
+  test.end()
+
+tape "report includes its product: the value of the database after the transaction", (test) ->
   facts = Facts()
   databaseBeforeTransaction = facts.database()
   report = facts.transact [ [true, 1, "name", "Ursula Franklin"] ]
-  databaseAfterTransaction = facts.database()
-  # test.ok report["db before"].equals databaseBeforeTransaction
-  test.ok report.product.equals(databaseAfterTransaction)
+  test.ok report.product.equals(facts.database("now"))
   test.ok report.product.equals(databaseBeforeTransaction) is false
+  test.end()
+
+tape "report includes transaction", (test) ->
+  report = Facts().transact [ [true, "ok", "yes", "please"] ], 123
+  test.ok report.transaction, "T123"
   test.end()
 
 tape "transact one advancement", (test) ->

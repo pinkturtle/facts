@@ -6,3 +6,6 @@ else
   exports.Facts = require("../facts.core")
 
 exports.Immutable = exports.Facts.Immutable
+
+exports.tape.Test.prototype.exception = (string, procedure) ->
+  this.throws procedure, string

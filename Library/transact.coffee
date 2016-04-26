@@ -1,14 +1,14 @@
 Immutable = require "immutable"
 
 module.exports = (facts, input, instant=facts.now()) ->
-  novelty = validate(input).map (values) -> Datom.fromInput(values, instant)
+  novelty = Immutable.List(validate(input)).map (values) -> Datom.fromInput(values, instant)
   transactionDatom = Datom true, "T#{instant}", "undecided", undefined, instant
   facts.datoms = facts.datoms.unshiftAll(novelty).unshift(transactionDatom)
   dispatch facts, "transaction", report =
     datoms: novelty
     instant: instant
     product: facts.database()
-    transaction: facts.datoms.last().get(1)
+    transaction: "T#{instant}"
 
 Datom = (fact, identifier, attribute, value, instant) ->
   Immutable.List.of fact, identifier, attribute, value, instant
