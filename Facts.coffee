@@ -1,4 +1,4 @@
-{List, Map, Stack} = Immutable = window?["Immutable"] or require("immutable")
+{List, Map, Set, Stack} = Immutable = window?["Immutable"] or require("immutable")
 
 class Facts
   window["Facts"] = this if window?
@@ -144,37 +144,31 @@ match = (pattern, datom) ->
 # -----------------------------------------------------------------------------
 Facts.query = (params) ->
   database = params.in[0]
-  output = params.out ? Array
   if params.where
     filtered = database.filter (datom) ->
       params.where datom.get(1), datom.get(2), datom.get(3), datom.get(4)
   else
     filtered = database
 
-  identifiers = Immutable.Set(filtered.map (datom) -> datom.get(1))
+  identifiers = Set(filtered.map (datom) -> datom.get(1))
 
-  {entities} = database.reduce toIdentifiedEntities, {identifiers, entities:{}}
-  switch (params.out ? Array)
-    when Array then (entity for id, entity of entities)
-    when List then List(entity for id, entity of entities)
-    when Map then Map(entities)
-    when Object then entities
+  {entities} = database.reduce toIdentifiedEntities, {identifiers, entities:Map()}
+
+  switch (params.out or Array)
+    when Array  then entities.toList().toJS()
+    when List   then entities.toList()
+    when Map    then entities
+    when Object then entities.toJS()
     else throw "Oops! #{JSON.stringify(params.out)} is not a recognized query output format."
 
 toIdentifiedEntities = (reduction, datom) ->
-  if reduction.identifiers.contains identifier = datom.get(1)
-    reduction.entities[datom.get(1)] ?= {}
-    reduction.entities[datom.get(1)]["id"] = identifier
-    reduction.entities[datom.get(1)][datom.get(2)] = if (value = datom.get(3)).toJS? then value.toJS() else value
-    reduction
+  {entities, identifiers} = reduction
+  if identifiers.contains identifier = datom.get(1)
+    entities = entities.setIn([datom.get(1), "id"], datom.get(1))
+    entities = entities.setIn([datom.get(1), datom.get(2)], datom.get(3))
+    {identifiers, entities}
   else
     reduction
-
-mapEachDatom = (map, datom) ->
-  map[datom.get(1)] ?= {}
-  map[datom.get(1)]["id"] = datom.get(1)
-  map[datom.get(1)][datom.get(2)] = if (value = datom.get(3)).toJS? then value.toJS() else value
-  return map
 
 # -----------------------------------------------------------------------------
 Facts.transact = (facts, input, instant=facts.now()) ->
