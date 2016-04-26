@@ -1,3 +1,5 @@
+Facts: Facts.js Facts.pack.js index.html
+
 index.html: Facts.pack.js Documentation/index.*.html Documentation/core.css Documentation/index.css Documentation/window.coffee Documentation/width.height.coffee Documentation/index.*.coffee
 	echo '<!DOCTYPE HTML><meta charset="UTF-8">' > $@
 	echo '<title>Facts • playful outformation model for ECMAScript</title>' >> $@
