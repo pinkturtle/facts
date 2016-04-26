@@ -122,15 +122,15 @@ takeSampleOf = (datoms, range) ->
 
 
 toTruth = ->
-  untrue = [false, undefined]
   untruthiness = []
   return (memo, datom, key) ->
     return memo if isTransaction(datom)
-    return memo if datom.get(0) in untrue and untruthiness.push(datom)
+    return memo if datom.get(0) isnt true and untruthiness.push(datom)
     return memo if untruthiness.some (untrue) -> match(untrue, datom) and (untrue.get(4) > datom.get(4))
     return memo if memo.hasIn ["entities", datom.get(1), datom.get(2)]
     return memo
       .setIn ["datoms"], memo.get("datoms").push(datom)
+      .setIn ["entities", datom.get(1), "id"], datom.get(1)
       .setIn ["entities", datom.get(1), datom.get(2)], datom.get(3)
 
 
@@ -149,11 +149,8 @@ Facts.query = (params) ->
       params.where datom.get(1), datom.get(2), datom.get(3), datom.get(4)
   else
     filtered = database
-
   identifiers = Set(filtered.map (datom) -> datom.get(1))
-
-  {entities} = database.reduce toIdentifiedEntities, {identifiers, entities:Map()}
-
+  entities = database.entities.filter (entity, identifier) -> identifiers.contains(identifier)
   switch (params.out or Array)
     when Array  then entities.toList().toJS()
     when List   then entities.toList()

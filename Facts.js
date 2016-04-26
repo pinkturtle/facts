@@ -217,15 +217,13 @@
   };
 
   toTruth = function() {
-    var untrue, untruthiness;
-    untrue = [false, void 0];
+    var untruthiness;
     untruthiness = [];
     return function(memo, datom, key) {
-      var ref1;
       if (isTransaction(datom)) {
         return memo;
       }
-      if ((ref1 = datom.get(0), indexOf.call(untrue, ref1) >= 0) && untruthiness.push(datom)) {
+      if (datom.get(0) !== true && untruthiness.push(datom)) {
         return memo;
       }
       if (untruthiness.some(function(untrue) {
@@ -236,7 +234,7 @@
       if (memo.hasIn(["entities", datom.get(1), datom.get(2)])) {
         return memo;
       }
-      return memo.setIn(["datoms"], memo.get("datoms").push(datom)).setIn(["entities", datom.get(1), datom.get(2)], datom.get(3));
+      return memo.setIn(["datoms"], memo.get("datoms").push(datom)).setIn(["entities", datom.get(1), "id"], datom.get(1)).setIn(["entities", datom.get(1), datom.get(2)], datom.get(3));
     };
   };
 
@@ -263,10 +261,9 @@
     identifiers = Set(filtered.map(function(datom) {
       return datom.get(1);
     }));
-    entities = database.reduce(toIdentifiedEntities, {
-      identifiers: identifiers,
-      entities: Map()
-    }).entities;
+    entities = database.entities.filter(function(entity, identifier) {
+      return identifiers.contains(identifier);
+    });
     switch (params.out || Array) {
       case Array:
         return entities.toList().toJS();
