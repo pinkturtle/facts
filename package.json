@@ -18,7 +18,7 @@
     "uglify-js": "2.6.2"
   },
   "scripts": {
-    "start": "nodemon --exec 'make index.html' --watch Facts.coffee --watch Documentation --ext html,css,coffee",
+    "start": "nodemon --exec 'make' --watch Facts.coffee --watch Documentation --ext html,css,coffee,js",
     "test": "make Facts.js Facts.pack.js Tests/window.test.pack.js; open --background Tests/index.html; tape Tests/*Tests.js | tap-diff",
     "window.tests": "make Facts.pack.js Tests/window.test.pack.js; open Tests/index.html",
     "node.tests": "make Facts.js; coffee --compile Tests/*.coffee; tape Tests/*Tests.js | tap-diff"
