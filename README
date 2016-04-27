@@ -11,9 +11,9 @@ Documentation available at: https://pinkturtle.github.io/facts
 • README           is the file you are reading now.
 • UNLICENSE        self-explanatory.
 
-npm install pinkturtle/facts ... to install the package with NPM.
+npm install pinkturtle/facts#draft ... to install the package with NPM.
 
-npm start ... to automatically re-compile scripts when source code is changed.
+npm start ... to compile and open the documentation at localhost:8080
 
 npm run window.tests  ... to run the test suite in a window.
 
