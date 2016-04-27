@@ -17,6 +17,6 @@ npm start ... to compile and open the documentation at localhost:8080
 
 npm run window.tests  ... to run the test suite in a window.
 
-npm run nodes.tests ... to run the test suite in a node process.
+npm run node.tests ... to run the test suite in a node process.
 
 npm test ... to run the test suite in both environments.
