@@ -804,21 +804,21 @@ Facts {
   It is passed four arguments: <code>id</code>, <code>attribute</code>, <code>value</code> and <code>transaction</code>.
 </p>
 <p>
-  <code>params.out</code> defines the output format.
-  It should be <code>"list"</code> or <code>"map"</code>. If left <code>undefined</code>, <code>"list"</code> will be used as the default.
+  <code>params.out</code> defines the output format as <code>Array</code>, <code>List</code>, <code>Map</code> or <code>Object</code>.
+  If <code>params.out</code> is <code>undefined</code> then <code>Array</code> will be used as the default.
 </p>
 
 <div class="console">
 <pre class="ecmascript input">
 facts.query({
-  out:"list",
+  out:Array,
   where:function(id, attribute, value, transaction){
     return id === 1
   }
 })<a class="cursor">&nbsp;</a>
 </pre>
 <pre class="ecmascript output">
-[
+Array [
   {"id":1, "name":"Ursula Franklin", "role":"Educator"}
 ]
 </pre>
