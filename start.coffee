@@ -121,10 +121,10 @@ initialize = (identifier, done) ->
     done()
 
 memorize = (identifier, done) ->
-  read identifier, "UTF8", (error, data) ->
+  read identifier, (error, data) ->
     files.add identifier,
       size:data.length
-      data:data
+      data:data.toString("UTF-8")
     console.info memorized:identifier
     if done then done()
 
