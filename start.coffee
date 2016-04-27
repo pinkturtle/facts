@@ -74,7 +74,7 @@ service = require("http").createServer (request, response) ->
         write identifier, HTML, "UTF8"
     when /js/.test identifier
       sendScript(identifier, response)
-    when /png|jpg|woff/.test identifier
+    when /png|jpg|svg|woff/.test identifier
       sendBinary(identifier, response)
     else
       console.error unhandled:identifier
