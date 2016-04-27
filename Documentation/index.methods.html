@@ -3,6 +3,84 @@
   <div class="trapezoid"></div>
 </div>
 
+
+<div id="at" class="member">
+<header>
+  <code>facts.at(instant)</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <code>asOf</code>
+    <code>at</code>
+    <code>database</code>
+    <!-- <code>databaseAsOf</code> -->
+    <code>db</code>
+    <code>memoryAsOf</code>
+  </div>
+</header>
+<p>
+  Returns the value of the database at an <code>instant</code> in time.
+  <!-- Returns the value of memory at an <code>instant</code> in time. -->
+</p>
+<p>
+  <code>facts.at(Date.now())</code> returns the current value of the database.
+</p>
+<p>
+  <code>instant</code> may be a <code>Number</code> representing a moment in <a href="https://en.wikipedia.org/wiki/Unix_time" title="Milliseconds since the Unix Epoch: January 1, 1970 at 00:00:00 UTC">Unix Time</a>:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+database = facts.at(1460131939076)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Immutable.Set {
+  size: 3
+}
+</pre>
+</div>
+
+<p>
+  Or a transaction identifier <code>String</code>:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+database = facts.at("T1460131939076")<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Immutable.Set {
+  size: 3
+}
+</pre>
+</div>
+
+<p>
+  Or an instance of <code>Date</code>:
+</p>
+<div class="console">
+<pre class="ecmascript input">
+database = facts.at(new Date)<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Immutable.Set {
+  size: 3
+}
+</pre>
+</div>
+</div>
+
+
+<div id="now" class="member">
+<header>
+  <code>facts.now()</code>
+  <div class="aliases">
+    <label>Aliases:</label>
+    <code>instant</code>
+    <code>now</code>
+    <code>time</code>
+  </div>
+</header>
+</div>
+
+
 <div id="query" class="member">
 <header>
   <code>facts.query(params)</code>
@@ -14,7 +92,26 @@
 <p>
   Returns an evidence based answer to the question defined by <code>params</code>.
   <!-- Question the facts in the database and receive an answer. -->
+  <!-- Returns an evidence list for the sources and questions defined in <code>params</code>. -->
 </p>
+<p>
+  <code>params.in</code> defines a set of input sources for the query.
+  Each input source should be a database.
+  If <code>params.in</code> is <code>undefined</code> then <code>[facts.database()]</code> will be used as the default set of input.
+</p>
+<div class="console">
+<pre class="ecmascript input">
+facts.query({in:[database]})<a class="cursor">&nbsp;</a>
+</pre>
+<pre class="ecmascript output">
+Array [
+  {id:1, name:"Ursula Franklan", role:"Educator"  },
+  {id:2, name:"Rich Hickey",     role:"Programmer"},
+  {id:3, name:"Bret Victor",     role:"Designer"  }
+]
+</pre>
+</div>
+
 <p>
   <code>params.where</code> specifies an optional predicate <code>function</code> to filter the fact space.
   The <code>function</code> will be called once for every datom in the query selection.
@@ -255,69 +352,4 @@ facts.transact([
 }
 </pre>
 </div>
-</div>
-
-
-<div id="at" class="member">
-<header>
-  <code>facts.at(instant)</code>
-  <div class="aliases">
-    <label>Aliases:</label>
-    <code>asOf</code>
-    <code>at</code>
-    <code>database</code>
-    <code>databaseAsOf</code>
-    <code>db</code>
-    <code>memoryAsOf</code>
-  </div>
-</header>
-<p>
-  Returns the value of the database at an <code>instant</code> in time.
-  <!-- Returns the value of memory at an <code>instant</code> in time. -->
-</p>
-<p>
-  <code>facts.at(Date.now())</code> returns the current value of the database.
-</p>
-<p>
-  <code>instant</code> may be a <code>Number</code> representing a moment in <a href="https://en.wikipedia.org/wiki/Unix_time" title="Milliseconds since the Unix Epoch: January 1, 1970 at 00:00:00 UTC">Unix Time</a>:
-</p>
-<div class="console">
-<pre class="ecmascript input">
-database = facts.at(1460131939076)<a class="cursor">&nbsp;</a>
-</pre>
-<pre class="ecmascript output">
-Immutable.Set {
-  size: 3
-}
-</pre>
-</div>
-
-<p>
-  Or a transaction identifier <code>String</code>:
-</p>
-<div class="console">
-<pre class="ecmascript input">
-database = facts.at("T1460131939076")<a class="cursor">&nbsp;</a>
-</pre>
-<pre class="ecmascript output">
-Immutable.Set {
-  size: 3
-}
-</pre>
-</div>
-
-<p>
-  Or an instance of <code>Date</code>:
-</p>
-<div class="console">
-<pre class="ecmascript input">
-database = facts.at(new Date)<a class="cursor">&nbsp;</a>
-</pre>
-<pre class="ecmascript output">
-Immutable.Set {
-  size: 3
-}
-</pre>
-</div>
-
 </div>
