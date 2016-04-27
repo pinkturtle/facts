@@ -1,39 +1,4 @@
-Facts: Facts.js Facts.pack.js index.html
-
-index.html: Facts.pack.js Documentation/index.*.html Documentation/core.css Documentation/index.css Documentation/window.coffee Documentation/width.height.coffee Documentation/index.*.coffee
-	echo '<!DOCTYPE HTML><meta charset="UTF-8">' > $@
-	echo '<title>Facts • playful outformation model for ECMAScript</title>' >> $@
-	echo '<script src="Facts.pack.js"></script>' >> $@
-	echo '<meta name="viewport" content="width=device-width">' >> $@
-	echo '<link rel="icon" type="image/png" href="Documentation/images/icon.png">' >> $@
-	echo '<style media="screen">' >> $@
-	cat Documentation/core.css >> $@
-	cat Documentation/index.css >> $@
-	echo '</style>' >> $@
-	echo '<body>' >> $@
-	cat Documentation/index.header.html >> $@
-	cat Documentation/index.foreword.html >> $@
-	cat Documentation/index.downloads.html >> $@
-	cat Documentation/index.tutorial.html >> $@
-	cat Documentation/index.constructor.html >> $@
-	cat Documentation/index.methods.html >> $@
-	cat Documentation/index.properties.html >> $@
-	cat Documentation/index.functions.html >> $@
-	cat Documentation/index.installation.html >> $@
-	cat Documentation/index.examples.html >> $@
-	cat Documentation/index.appendix.html >> $@
-	cat Documentation/index.nav.html >> $@
-	cat Documentation/index.footer.html >> $@
-	echo '</body>' >> $@
-	echo '<script>' >> $@
-	cat Documentation/scripts/highlight.pack.js >> $@
-	coffee --compile --print Documentation/window.coffee >> $@
-	coffee --compile --print Documentation/syntax.highlight.coffee >> $@
-	coffee --compile --print Documentation/width.height.coffee >> $@
-	coffee --compile --print Documentation/index.coffee >> $@
-	coffee --compile --print Documentation/index.scroll.coffee >> $@
-	coffee --compile --print Documentation/index.videos.coffee >> $@
-	echo '</script>' >> $@
+Facts: Facts.js Facts.pack.js
 
 Facts.js: Facts.coffee
 	@rm -f $@
